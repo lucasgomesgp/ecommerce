@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@/assets/Logo";
+import { Logo } from "../../public/assets/logo";
 import Link from "next/link";
 import { ButtonMenu } from "./ButtonMenu";
 import {

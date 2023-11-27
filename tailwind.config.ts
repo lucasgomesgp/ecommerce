@@ -13,6 +13,7 @@ const config: Config = {
       "gray-light" : "#807D7E",
       "gray-text": "#1E1E1E",
       "gray-text-menu": "#3C4242",
+      "gray-border-one": "#666666",
       "gray-border": "#BEBCBD",
       "purple-principal": "#8A33FD",
 
