@@ -17,7 +17,9 @@ interface Props {
 export function Header({ isLoginPage }: Props) {
   return (
     <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8">
-      <Logo />
+      <Link href={"/"}>
+        <Logo />
+      </Link>
       <nav className={`${isLoginPage ? "hidden" : ""}`}>
         <ul className="flex gap-10 text-gray-light font-thin">
           <li>
@@ -39,15 +41,20 @@ export function Header({ isLoginPage }: Props) {
       </nav>
       <form>
         <div className="relative">
-          <input type="text" name="elementSearch" placeholder="Search"  className="w-full px-5 py-3 bg-white-light placeholder:p-7 rounded-lg outline-none"/>
+          <input
+            type="text"
+            name="elementSearch"
+            placeholder="Search"
+            className="w-full px-5 py-3 bg-white-light placeholder:p-7 rounded-lg outline-none"
+          />
           <button className="absolute left-5 top-1/3">
             <MagnifyingGlassIcon width={14} height={14} color="#807D7E" />
           </button>
         </div>
       </form>
       <div className={`${!isLoginPage ? "hidden" : "flex gap-7"} `}>
-        <ButtonAuth isActive text="Login" onClick={() => {}} />
-        <ButtonAuth text="Sign Up" onClick={() => {}} />
+        <ButtonAuth isActive text="Login" href="/login" />
+        <ButtonAuth text="Sign Up" href="/" />
       </div>
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
         <ButtonMenu>
