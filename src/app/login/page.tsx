@@ -1,14 +1,15 @@
 "use client";
+import { useState } from "react";
+import Link from "next/link";
 import { Header } from "@/components/Header";
 import Image from "next/image";
-import { Google } from "../../public/assets/google";
-import { Twitter } from "../../public/assets/twitter";
 import { BtnSocialLogin } from "@/components/BtnSocialLogin";
 import { InputForm } from "@/components/InputForm";
-import { Eye } from "../../public/assets/eye";
-import Link from "next/link";
-import { useState } from "react";
+import { Eye } from "../../svgs/eye";
 import { ButtonAuth } from "@/components/ButtonAuth";
+import { Google } from "../../svgs/google";
+import { Github } from "../../svgs/github";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [passwordToggle, setPasswordToggle] = useState(false);
@@ -32,9 +33,13 @@ export default function Login() {
               <Google />
               Continue With Google
             </BtnSocialLogin>
-            <BtnSocialLogin>
-              <Twitter />
-              Continue With Twitter
+            <BtnSocialLogin
+              onClick={() => {
+                signIn("github", { callbackUrl: "/" });
+              }}
+            >
+              <Github />
+              Continue With Github
             </BtnSocialLogin>
           </div>
           <div className="mt-14 relative text-center w-full before:absolute before:left-0 before before:h-[2px] before:w-60 before:bg-gray-border-one before:top-[50%] before:translate-y-[50%]  after:absolute after:right-0 after:h-[2px] after:w-60 after:bg-gray-border-one after:top-[50%] after:translate-y-[50%]">

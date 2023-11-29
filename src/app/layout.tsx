@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import AuthClientProvider from "./context/auth-client-provider";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 import "./globals.css";
 
 const causten = localFont({
@@ -33,14 +36,17 @@ export const metadata: Metadata = {
   description: "Place where you can buy and choose your favorite products",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-      <body className={causten.className}>{children}</body>
+      <body className={causten.className}>
+        <AuthClientProvider session={session}>{children}</AuthClientProvider>
+      </body>
     </html>
   );
 }

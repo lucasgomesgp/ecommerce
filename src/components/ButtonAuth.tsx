@@ -10,7 +10,7 @@ export function ButtonAuth({ text, isActive, href : linkSended, ...rest }: Props
     <Link
       className={`${
         isActive ? "bg-purple-principal text-white" : " text-purple-principal bg-transparent border-gray-text"
-      }  w-36  py-3 border rounded-lg`}
+      }  w-36  py-3 border rounded-lg text-center`}
       href={linkSended || "/"}
       {...rest}
     >
