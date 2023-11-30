@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import AuthClientProvider from "./context/auth-client-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import "./globals.css";
+import AuthClientProvider from "./context/AuthClientProvider";
 
 const causten = localFont({
   src: [
