@@ -29,7 +29,11 @@ export default function Login() {
         <div className="flex flex-col items-start justify-start mt-16 pr-[100px]">
           <h1 className="text-[34px] font-bold">Sign In Page</h1>
           <div className="flex flex-col gap-5 mt-12">
-            <BtnSocialLogin>
+            <BtnSocialLogin
+              onClick={() => {
+                signIn("google", { callbackUrl: "/" });
+              }}
+            >
               <Google />
               Continue With Google
             </BtnSocialLogin>
