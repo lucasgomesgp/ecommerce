@@ -32,7 +32,7 @@ const causten = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Ecommerce",
+  title: "Euphoria",
   description: "Place where you can buy and choose your favorite products",
 };
 

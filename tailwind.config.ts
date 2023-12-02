@@ -14,6 +14,7 @@ const config: Config = {
       "gray-text": "#1E1E1E",
       "gray-text-menu": "#3C4242",
       "gray-border-one": "#66666640",
+      "gray-icon":"#404040",
       "gray-border": "#BEBCBD",
       "purple-principal": "#8A33FD",
 

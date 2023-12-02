@@ -31,7 +31,7 @@ export function Header({ isLoginPage }: Props) {
       <Link href={"/"}>
         <Logo />
       </Link>
-      <nav className={`${isLoginPage ? "hidden" : ""}`}>
+      <nav className={`${isLoginPage ? "hidden" : ""} mt-8 mb-8 md:m-0`}>
         <ul className="flex gap-10 text-gray-light font-thin">
           <li>
             <Link href="/shop">Shop</Link>
