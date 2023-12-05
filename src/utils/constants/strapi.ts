@@ -1,0 +1,4 @@
+const STRAPI_API_URL = process.env.STRAPI_API_URL;
+const STRAPI_TOKEN = process.env.STRAPI_TOKEN;
+
+export {STRAPI_API_URL, STRAPI_TOKEN};

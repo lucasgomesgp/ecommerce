@@ -1,12 +1,11 @@
 import Link from "next/link";
 import FooterLink from "./FooterLink";
-import { links1, links2, links3 } from "@/utils/LinksToFooter";
+import { links1, links2, links3 } from "@/utils/data/LinksToFooter";
 import { ButtonSocialMedia } from "./ButtonSocialMedia";
 import { Facebook } from "@/svgs/facebook";
 import { Instagram } from "@/svgs/instagram";
 import { Twitter } from "@/svgs/twitter";
 import { Linkedin } from "@/svgs/linkedin";
-import Image from "next/image";
 import ButtonAppShopping from "./ButtonAppShopping";
 
 export function Footer() {

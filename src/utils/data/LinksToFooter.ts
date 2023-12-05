@@ -1,4 +1,4 @@
-import { IFooterLinks } from "./IFooterLinks";
+import { IFooterLinks } from "../types/IFooterLinks";
 
 const links1: Array<IFooterLinks> = [
     { id: 1, name: "Contact Us", destination: "/" },
