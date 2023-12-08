@@ -5,12 +5,60 @@
 #triangle::before{
   clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
 }
-#project-details > summary::before{
+.project-details > summary::before{
   content: url("../../public/arrow-down.svg");
   position: absolute;
   right: 0;
 }
 
-#project-details[open] > summary::before{
+.project-details[open] > summary::before{
   content: url("../../public/arrow-up.svg");
+}
+.filterType > summary::before{
+  content: url("../../public/arrow-down-black.svg");
+  position: absolute;
+  right: 30px;
+  cursor: pointer;
+}
+
+.filterType[open] > summary::before{
+  content: url("../../public/arrow-up-black.svg");
+}
+
+.filterType[data-active="true"] > summary::before{
+  content: url("../../public/arrow-black-up.svg");
+}
+.filterType[data-active="true"][open] > summary::before{
+  content: url("../../public/arrow-black-down.svg");
+}
+.filterType[open] > summary::before{
+  content: url("../../public/arrow-up-black.svg");
+}
+
+#filter > summary::before{
+  content: url("../../public/filter.svg");
+  position: absolute;
+  right: 30px;
+  cursor: pointer;
+}
+
+#filter[open] > summary::before{
+  content: url("../../public/filter.svg");
+}
+
+#range {
+  height: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  background-color: #807D7E;
+  border-radius: 4px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  width: 16px;
+  -webkit-appearance: none;
+  height: 16px;
+  background-color: #8A33FD;
+  border-radius: 2px;
+  border-radius: 50%;
 }

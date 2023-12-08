@@ -61,8 +61,7 @@ export function Footer() {
         </div>
       </section>
       <details
-        className="relative text-white w-full px-12 text-left cursor-pointer  border-opacity-40 border-t-gray-border  border-b-gray-border  border-t-[1px] border-b-[1px] pt-[29px] pb-[34px]"
-        id="project-details"
+        className="relative text-white w-full px-12 text-left cursor-pointer  border-opacity-40 border-t-gray-border  border-b-gray-border  border-t-[1px] border-b-[1px] pt-[29px] pb-[34px] project-details"
       >
         <summary className="list-none text-white-light  text-[28px] font-bold">
           Popular Categories

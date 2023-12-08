@@ -21,7 +21,7 @@ export function Card({ id, title, image, subTitle, price }: Props) {
       <Image src={image} alt={title} width={282} height={370} quality={100} className="rounded-xl mb-[30px]"/>
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-1">
-          <p className="font-bold">{title}</p>
+          <p className="font-bold overflow-hidden whitespace-nowrap text-ellipsis w-[152px]">{title}</p>
           <span>{subTitle}</span>
         </div>
         <p className="font-bold text-sm text-gray-text-menu bg-white-light px-4 py-[10px] rounded-lg">{currencyFormatter(price)}</p>
