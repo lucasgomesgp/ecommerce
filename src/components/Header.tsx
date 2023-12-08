@@ -18,10 +18,10 @@ import {  useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  isLoginPage: boolean;
+  isLoginPage?: boolean;
 }
 
-export function Header({ isLoginPage }: Props) {
+export function Header({ isLoginPage = false }: Props) {
   const { data: session } = useSession();
   const [toogleProfileInfo, setToggleProfileInfo] = useState(false);
   const router = useRouter();

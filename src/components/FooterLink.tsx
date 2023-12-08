@@ -1,4 +1,4 @@
-import { IFooterLinks } from "@/utils/IFooterLinks";
+import { IFooterLinks } from "@/utils/types/IFooterLinks";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 
@@ -12,7 +12,7 @@ export default function FooterLink({ title, links, children }: Props) {
     <div className="flex flex-col">
       <h4 className="font-bold">{title}</h4>
       {links?.map(({ id, name, destination }) => (
-        <Link href={destination} key={id}>
+        <Link href={destination} key={id} className="hover:opacity-80 transition-all">
           {name}
         </Link>
       ))}
