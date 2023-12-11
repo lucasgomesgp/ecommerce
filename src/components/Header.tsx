@@ -28,7 +28,7 @@ export function Header({ isLoginPage = false }: Props) {
   const router = useRouter();
 
   return (
-    <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8">
+    <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-50 bg-white">
       <Link href={"/"}>
         <Logo />
       </Link>

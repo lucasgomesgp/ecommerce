@@ -1,10 +1,12 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Slider } from "@/components/Slider";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <main className="w-full min-h-full">
+    <main>
       <Header isLoginPage={false} />
+      <Slider />
       <Footer />
     </main>
   );

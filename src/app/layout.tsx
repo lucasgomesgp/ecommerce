@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import "./globals.css";
 import AuthClientProvider from "./context/AuthClientProvider";
+import "./utils.css";
+import "./globals.css";
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const causten = localFont({
   src: [
