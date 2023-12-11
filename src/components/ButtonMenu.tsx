@@ -7,7 +7,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 export function ButtonMenu({ children, anotherClassName, ...rest }: Props) {
   return (
     <button
-      className={`bg-white-light w-11 h-11 flex items-center justify-center rounded-lg hover:opacity-70 transition-all ${anotherClassName}`}
+      className={`bg-white-light w-11 h-11 flex items-center justify-center rounded-lg transition-all hover:scale-110 z-50 ${anotherClassName}`}
       {...rest}
     >
       {children}

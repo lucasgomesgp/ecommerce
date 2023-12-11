@@ -13,7 +13,7 @@ export default async function Women() {
     <main className="flex flex-col w-full ">
       <Header />
       <section className="flex flex-col justify-center items-center w-full">
-        <section className="flex gap-[50px] justify-center items-center ">
+        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center items-center ">
           <details
             className="flex flex-col border border-gray-border w-[295px] self-start relative border-t-transparent"
             id="filter"
@@ -27,11 +27,7 @@ export default async function Women() {
             </div>
             <FilterType title="Price">
               <div className="flex items-center justify-center flex-col border border-t-gray-border py-10">
-                <input
-                  type="range"
-                  id="range"
-                  className="overflow-visible"
-                />
+                <input type="range" id="range" className="overflow-visible" />
                 <div className="flex items-center justify-center mt-5">
                   <input
                     className="w-24 h-8 border rounded-lg border-gray-border"
@@ -48,14 +44,14 @@ export default async function Women() {
             </FilterType>
           </details>
           <div className="flex flex-col">
-            <div className="flex justify-between my-[50px]">
+            <div className="flex justify-between my-[50px] text-[22px]">
               <h3 className="font-bold text-[22px]">Women’s Clothing</h3>
-              <div className="flex gap-6">
-                <p className="font-semibold text-[22px]">New</p>
-                <p className="font-semibold text-[22px]">Recommended</p>
+              <div className="flex gap-6 font-semibold">
+                <p>New</p>
+                <p>Recommended</p>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
               {data.length &&
                 data.map(
                   ({ id, attributes: { title, subTitle, image, price } }) => (

@@ -14,8 +14,9 @@ import {
 import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import {  useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { settingsClass } from "@/utils/constants/settingsClass";
 
 interface Props {
   isLoginPage?: boolean;
@@ -31,8 +32,12 @@ export function Header({ isLoginPage = false }: Props) {
       <Link href={"/"}>
         <Logo />
       </Link>
-      <nav className={`${isLoginPage ? "hidden" : ""} mt-8 mb-8 md:m-0`}>
-        <ul className="flex gap-10 text-gray-light font-thin">
+      <nav
+        className={`${
+          isLoginPage ? "hidden" : ""
+        } mt-8 mb-8 md:m-0 font-medium`}
+      >
+        <ul className="flex gap-10 text-gray-light ">
           <li>
             <Link href="/shop">Shop</Link>
           </li>
@@ -81,6 +86,11 @@ export function Header({ isLoginPage = false }: Props) {
               router.push("/login");
             }
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setToggleProfileInfo(false);
+            }
+          }}
         >
           {session?.user?.image ? (
             <Image
@@ -93,34 +103,33 @@ export function Header({ isLoginPage = false }: Props) {
           ) : (
             <UserIcon width={20} height={20} />
           )}
-            {toogleProfileInfo &&
-              session?.user?.image && (
-          <div
-            className="border w-40 min-h-20 absolute -bottom-[150px] right-0 flex flex-col shadow-lg rounded-md before:absolute before:w-8 before:h-8 before:bg-white-light before:right-0 before:-top-[30px] before:shadow-2xl"
-            id="triangle"
-          >
-                  <Link
-                    className="flex gap-3 items-center justify-center w-full h-full bg-white-light py-4 rounded-t-md hover:opacity-70 transition-all"
-                    href="/"
-                  >
-                    <Cog6ToothIcon width={20} height={20} />
-                    Settings
-                  </Link>
-                  <button
-                    className="flex gap-3 items-center justify-center w-full h-full bg-red-500 text-white py-4 rounded-b-md hover:opacity-70 transition-all"
-                    onClick={() => {
-                      signOut();
-                    }}
-                  >
-                    <ArrowLeftOnRectangleIcon
-                      width={20}
-                      height={20}
-                      color="#FFFFFF"
-                    />
-                    Logout
-                  </button>
-          </div>
-              )}
+          {toogleProfileInfo && session?.user?.image && (
+            <div
+              className="border z-[99] w-40 min-h-20 absolute -bottom-[150px] right-0 flex flex-col shadow-lg rounded-md before:absolute before:w-8 before:h-8 before:bg-white-light before:right-0 before:-top-[30px] before:shadow-2xl"
+              id="triangle"
+            >
+              <Link
+                className={`${settingsClass} bg-white-light  rounded-t-md `}
+                href="/"
+              >
+                <Cog6ToothIcon width={20} height={20} />
+                Settings
+              </Link>
+              <button
+                className={`${settingsClass} bg-red-500 text-white rounded-b-md `}
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                <ArrowLeftOnRectangleIcon
+                  width={20}
+                  height={20}
+                  color="#FFFFFF"
+                />
+                Logout
+              </button>
+            </div>
+          )}
         </ButtonMenu>
         <ButtonMenu>
           <ShoppingCartIcon width={20} height={20} />
