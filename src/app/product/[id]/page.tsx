@@ -2,7 +2,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import ImageProduct from "@/components/ImageProduct";
 import { getProducts } from "@/services/getProducts";
-import Image from "next/image";
+import { IProduct } from "@/utils/types/IProducts";
 interface ProductData {
   data: IProduct;
 }

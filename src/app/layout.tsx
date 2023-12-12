@@ -53,10 +53,10 @@ const causten = localFont({
       weight: "700",
       style: "italic",
     },
+    
   ],
   variable: "--font-causten",
 });
-
 export const metadata: Metadata = {
   title: "Euphoria",
   description: "Place where you can buy and choose your favorite products",

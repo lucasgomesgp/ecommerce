@@ -9,3 +9,7 @@
   --swiper-pagination-bullet-height:10px;
   --swiper-pagination-bottom: 100px;
 }
+
+body{
+  font-family: "Causten", sans-serif;
+}
