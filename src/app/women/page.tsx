@@ -3,11 +3,12 @@ import { FilterType } from "@/components/FilterType";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { getWomansProduct } from "@/services/getWomansProduct";
+import { IProduct } from "@/utils/types/IProducts";
 interface ResponseData {
   data: IProduct[];
 }
 
-export default async function Women() {
+export default async function Woman() {
   const { data }: ResponseData = await getWomansProduct("");
   return (
     <main className="flex flex-col w-full ">
@@ -68,8 +69,8 @@ export default async function Women() {
             </div>
           </div>
         </section>
-        <section>Clothing for Women Online in India</section>
-        <section>Buy Women's Clothing at Best Price</section>
+        <section>Clothing for Woman Online in India</section>
+        <section>Buy Woman's Clothing at Best Price</section>
       </section>
       <Footer />
     </main>

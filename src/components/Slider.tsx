@@ -3,15 +3,10 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { register } from "swiper/element/bundle";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
+import { ISlides } from "@/utils/types/ISlides";
 register();
 
-export function Slider() {
-  const data = [
-    { id: 1, src: "http://localhost:1337/uploads/banner_55de528580.png" },
-    { id: 2, src: "http://localhost:1337/uploads/banner_55de528580.png" },
-    { id: 3, src: "http://localhost:1337/uploads/banner_55de528580.png" },
-    { id: 4, src: "http://localhost:1337/uploads/banner_55de528580.png" },
-  ];
+export function Slider({ data }: ISlides) {
   return (
     <Swiper
       slidesPerView={1}
@@ -26,21 +21,21 @@ export function Slider() {
         disableOnInteraction: true,
       }}
     >
-      {data.map(({ id, src }) => (
-        <>
-          <SwiperSlide className="">
+      {data.map(({ id, attributes }) => {
+        return (
+          <SwiperSlide className="" key={id}>
             <Image
               key={id}
-              src={src}
+              src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image.data.attributes.url}`}
               className=" w-full h-full bg-left-top"
-              alt={`Product thumb gallery`}
+              alt={`Slider image`}
               width={1449}
               height={716}
               priority
             />
           </SwiperSlide>
-        </>
-      ))}
+        );
+      })}
     </Swiper>
   );
 }
