@@ -42,7 +42,7 @@ export function Footer() {
           <h3 className="text-white font-bold text-[28px]">
             Download The App
           </h3>
-          <div className="flex gap-[22px] mt-5">
+          <div className="flex flex-wrap gap-[22px] mt-5">
             <ButtonAppShopping
               link="/"
               srcImage="/google-play.svg"

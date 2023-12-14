@@ -21,7 +21,7 @@ export default function ButtonAppShopping({
       href={link}
       className="text-white flex items-center gap-3 pl-[9px] pr-5 justify-center bg-gray-icon py-[14px] min-w-[150px] h-[50px] hover:opacity-70 transition-all"
     >
-      <Image src={srcImage} width={30} height={32} alt={altImage} />
+      <Image src={srcImage} width={30} height={32} alt={altImage} className="w-auto h-auto"/>
       <div className="flex flex-col">
         <p className="text-[10px]">{title}</p>
         <span className="text-lg">{subtitle}</span>

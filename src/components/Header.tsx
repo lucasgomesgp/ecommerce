@@ -37,7 +37,7 @@ export function Header({ isLoginPage = false }: Props) {
           isLoginPage ? "hidden" : ""
         } mt-8 mb-8 md:m-0 font-medium`}
       >
-        <ul className="flex gap-10 text-gray-light ">
+        <ul className="flex flex-wrap gap-10 text-gray-light ">
           <li>
             <Link href="/shop">Shop</Link>
           </li>

@@ -6,46 +6,52 @@ import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { ISlides } from "@/utils/types/ISlides";
 import Link from "next/link";
 import localFont from "next/font/local";
+import { info } from "@/utils/data/InfoSlides";
+import { useEffect, useState } from "react";
 register();
 
 const coreSans = localFont({
-  src:[
-   {
-    path: "../fonts/CoreSansG-Medium.ttf",
-    weight: "500",
-    style: "normal",
-  },
-  {
-    path: "../fonts/CoreSansG-Heavy.ttf",
-    weight: "800",
-    style: "normal",
-  }],
-  variable: "--font-coresans"
-})
+  src: [
+    {
+      path: "../fonts/CoreSansG-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/CoreSansG-Heavy.ttf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-coresans",
+});
 
 export function Slider({ data }: ISlides) {
-  const info = [
-    {
-      title: "T-shirt / Tops",
-      centralTitle: "Summer Value Pack",
-      downTitle: "cool / colorful / comfy",
-      link: "/woman",
-    },
-    {
-      title: "Suits / T-shirt",
-      centralTitle: "Fashion Value Pack",
-      downTitle: "cool / colorful / comfy",
-      link: "/men",
-    },
-  ];
+  let widthPage = 0;
+  if (typeof window !== "undefined") {
+    widthPage = window.innerWidth;
+  }
+  const [widthOfPage, setWidthOfPage] = useState(widthPage);
 
+  useEffect(() => {
+    function getWidhtOfPage() {
+      setWidthOfPage(() => {
+        const width = window.innerWidth;
+        return width;
+      });
+    }
+    window.addEventListener("resize", getWidhtOfPage);
+    return () => {
+      window.removeEventListener("resize", getWidhtOfPage);
+    };
+  }, []);
   return (
     <Swiper
       slidesPerView={1}
       spaceBetween={30}
-      pagination={{ clickable: true }}
-      navigation
-      className={`w-full h-[716px] max-h-[716px] pb-4 ${coreSans.className}`}
+      pagination={{ clickable: widthOfPage >= 1024 ? true : false }}
+      navigation={widthOfPage >= 1024 ? true : false}
+      className={`max-w-full h-[716px] max-h-[716px] pb-4 ${coreSans.className}`}
       centeredSlides={true}
       modules={[Autoplay, Navigation, EffectFade]}
       autoplay={{
@@ -59,19 +65,25 @@ export function Slider({ data }: ISlides) {
             <Image
               key={id}
               src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image.data.attributes.url}`}
-              className=" w-full h-full bg-left-top"
+              className=" w-auto h-auto bg-left-top"
               alt={`Slider image`}
               width={1449}
-              height={716}
+              height={740}
               priority
             />
-            <div className="flex flex-col gap-10 absolute left-48 bottom-48">
-              <p className="text-white text-[32px] font-coreSans font-medium">{info[id-1].title}</p>
-              <h1 className="text-white text-[78px] font-bold word-break w-[470px] leading-none">{info[id-1].centralTitle}</h1>
-              <p className="text-white text-[32px] font-medium">{info[id-1].downTitle}</p>
+            <div className="flex flex-col -bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
+              <p className="text-white text-sm md:text-base lg:text-[32px] font-coreSans font-medium">
+                {info[id - 1].title}
+              </p>
+              <h1 className="text-white text-sm md:text-[39px] lg:text-[78px] font-bold word-break md:w-[470px] leading-none">
+                {info[id - 1].centralTitle}
+              </h1>
+              <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
+                {info[id - 1].downTitle}
+              </p>
               <Link
                 href={info[id - 1].link}
-                className="bg-white text-center text-gray-text-menu font-semibold text-2xl w-[250px] rounded-lg py-4  hover:opacity-80 hover:transition-all"
+                className="bg-white text-center text-gray-text-menu py-2 font-semibold md:text-2xl md:w-[250px] rounded-lg md:py-4  hover:opacity-80 hover:transition-all"
               >
                 Shop Now
               </Link>

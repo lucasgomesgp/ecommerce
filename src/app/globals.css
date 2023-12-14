@@ -8,6 +8,7 @@
   --swiper-pagination-bullet-width:62px;
   --swiper-pagination-bullet-height:10px;
   --swiper-pagination-bottom: 100px;
+  --swiper-button-prev-color: red;
 }
 
 body{
