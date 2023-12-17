@@ -15,6 +15,7 @@ const config: Config = {
       "gray-border-one": "#66666640",
       "gray-icon":"#404040",
       "gray-border": "#BEBCBD",
+      "gray-border-opacity": "#BEBCBD66",
       "purple-principal": "#8A33FD",
 
      }
