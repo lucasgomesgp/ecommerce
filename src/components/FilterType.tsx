@@ -9,7 +9,7 @@ interface Props {
 export function FilterType({ title, isActive = false, children }: Props) {
   return (
     <details
-      className="filterType flex flex-col w-[295px] border border-t-gray-border  project-details"
+      className="filterType font-semibold flex flex-col w-[295px] border border-t-gray-border  project-details"
       open
       data-active={isActive}
     >

@@ -98,6 +98,7 @@ export function Header({ isLoginPage = false }: Props) {
               width={40}
               height={40}
               alt="User profile"
+              priority
               className="w-full h-full rounded-lg"
             />
           ) : (

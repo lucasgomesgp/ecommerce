@@ -22,7 +22,7 @@ const config: Config = {
     },
     fontFamily:{
       causten: ['var(--font-causten)'],
-      coreSans: ['var(--font-coreSans)'],
+      coreSans: ['var(--font-core-sans)'],
     },
  
   },

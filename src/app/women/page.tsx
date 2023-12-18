@@ -2,18 +2,19 @@ import { Card } from "@/components/Card";
 import { Filters } from "@/components/Filters";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { TitleWithBar } from "@/components/TitleWithBar";
 import { getWomansProduct } from "@/services/getWomansProduct";
 import { IProduct } from "@/utils/types/IProducts";
 interface ResponseData {
   data: IProduct[];
 }
 
-export default async function Woman() {
+export default async function Women() {
   const { data }: ResponseData = await getWomansProduct("");
   return (
     <main className="flex flex-col w-full ">
       <Header />
-      <section className="flex flex-col justify-center items-center w-full">
+      <section className="flex flex-col justify-center w-full">
         <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center items-center ">
           <Filters />
           <div className="flex flex-col">
@@ -41,8 +42,68 @@ export default async function Woman() {
             </div>
           </div>
         </section>
-        <section>Clothing for Woman Online in India</section>
-        <section>Buy Woman's Clothing at Best Price</section>
+        <section className="flex flex-col pl-8 gap-[100px] my-[100px] lg:pl-[121px]">
+          <div className="flex flex-col gap-5">
+            <TitleWithBar title="Clothing for Woman Online in India" />
+            <p className="text-xl font-bold text-gray-light lg:mt-[10px]">
+              Reexplore Women's Clothing Collection Online at Euphoria
+            </p>
+            <p className="text-xl text-gray-light lg:mt-[5px]">
+              Women's Clothing – Are you searching for the best website to buy
+              Clothing for Women online in India? Well, your search for the
+              coolest and most stylish womens clothing ends here. From trendy
+              Casual Womens Wear Online shopping to premium quality cotton
+              women's apparel,
+              <span className="text-xl font-bold">Euphoria</span> has closet of
+              Women Collection covered with the latest and best designs of
+              Women's Clothing Online.
+            </p>
+            <p className="text-xl text-gray-light lg:mt-[3px]">
+              Our collection of clothes for women will make you the trendsetter
+              with an iconic resemblance of choice in Womens Wear.
+            </p>
+            <p className="text-xl font-bold text-gray-light lg:mt-[2px]">
+              One-Stop Destination to Shop Every Clothing for Women: Euphoria
+            </p>
+            <p className="text-xl text-gray-light lg:mt-[5px]">
+              Today, Clothing for Women is gaining more popularity above all.
+              This is because gone are the days when women were used to carrying
+              uncomfortable fashion. Today, a lady looks prettier when she is in
+              Casual Womens Wear which is a comfortable outfit. Concerning this,
+              <span className="text-xl font-bold">Euphoria</span> has a big fat
+              range of Stylish Women's Clothing that would make her the winner
+              wherever she goes.
+            </p>
+            <p className="text-xl text-gray-light">
+              Our collection of clothes for women will make you the trendsetter
+              with an iconic resemblance of choice in Womens Wear. It is quite
+              evident to say that there are very few Womens Clothing online
+              stores where you can buy Western Wear for Women comprising the
+              premium material and elegant design that you are always seeking
+              for. Basically,
+            </p>
+            <p className="text-xl font-bold text-gray-light">See More</p>
+          </div>
+          <div>
+            <TitleWithBar title="Buy Woman's Clothing at Best Price" />
+            <table className="w-[500px]  max-w-[720px] lg:w-[1220px] lg:max-w-[1220px] mt-12 bg-white-light">
+              <tbody>
+                <tr className="border border-transparent border-b-gray-border-opacity ">
+                  <th className="items-start font-semibold text-2xl py-12">
+                    Women's Clothing
+                  </th>
+                  <th className="text-center font-semibold text-2xl border border-l-gray-border-opacity border-r-transparent border-t-transparent">
+                    Best Price
+                  </th>
+                </tr>
+                <tr>
+                  <td>Pick Any 4- Womens Plain T-shirt Combo</td>
+                  <td className="text-center">₹1099</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
       <Footer />
     </main>

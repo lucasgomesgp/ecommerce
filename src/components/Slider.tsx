@@ -5,26 +5,9 @@ import { register } from "swiper/element/bundle";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { ISlides } from "@/utils/types/ISlides";
 import Link from "next/link";
-import localFont from "next/font/local";
 import { info } from "@/utils/data/InfoSlides";
 import { useEffect, useState } from "react";
 register();
-
-const coreSans = localFont({
-  src: [
-    {
-      path: "../fonts/CoreSansG-Medium.ttf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../fonts/CoreSansG-Heavy.ttf",
-      weight: "800",
-      style: "normal",
-    },
-  ],
-  variable: "--font-coresans",
-});
 
 export function Slider({ data }: ISlides) {
   let widthPage = 0;
@@ -51,7 +34,7 @@ export function Slider({ data }: ISlides) {
       spaceBetween={30}
       pagination={{ clickable: widthOfPage >= 1024 ? true : false }}
       navigation={widthOfPage >= 1024 ? true : false}
-      className={`max-w-full h-[716px] max-h-[716px] pb-4 ${coreSans.className}`}
+      className={`max-w-full h-[716px] max-h-[716px] pb-4 font-coreSans`}
       centeredSlides={true}
       modules={[Autoplay, Navigation, EffectFade]}
       autoplay={{
@@ -71,8 +54,8 @@ export function Slider({ data }: ISlides) {
               height={740}
               priority
             />
-            <div className="flex flex-col -bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
-              <p className="text-white text-sm md:text-base lg:text-[32px] font-coreSans font-medium">
+            <div className="flex font-coreSans flex-col -bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
+              <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
                 {info[id - 1].title}
               </p>
               <h1 className="text-white text-sm md:text-[39px] lg:text-[78px] font-bold word-break md:w-[470px] leading-none">

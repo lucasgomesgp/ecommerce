@@ -3,12 +3,12 @@ import { FilterType } from "./FilterType";
 export function Filters() {
   return (
     <details
-      className="flex flex-col  w-[295px] self-start relative border-gray-border-opacity"
+      className="flex flex-col w-[295px] self-start relative border-gray-border-opacity"
       id="filter"
       open
     >
       <summary className="flex justify-between items-center px-7 py-5 ">
-        <h3 className="text-[22px] font-bold text-gray-border">Filter</h3>
+        <h3 className="text-[22px] font-semibold text-gray-border">Filter</h3>
       </summary>
       <div className="border border-t-gray-border-opacity">
         <p>Tops</p>

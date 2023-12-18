@@ -39,9 +39,7 @@ export function Footer() {
           </ButtonSocialMedia>
         </div>
         <div className="flex flex-col mt-[50px]">
-          <h3 className="text-white font-bold text-[28px]">
-            Download The App
-          </h3>
+          <h3 className="text-white font-bold text-[28px]">Download The App</h3>
           <div className="flex flex-wrap gap-[22px] mt-5">
             <ButtonAppShopping
               link="/"
@@ -60,16 +58,16 @@ export function Footer() {
           </div>
         </div>
       </section>
-      <details
-        className="relative text-white w-full px-12 text-left cursor-pointer  border-opacity-40 border-t-gray-border  border-b-gray-border  border-t-[1px] border-b-[1px] pt-[29px] pb-[34px] project-details"
-      >
+      <details className="relative text-white w-full px-12 text-left cursor-pointer  border-opacity-40 border-t-gray-border  border-b-gray-border  border-t-[1px] border-b-[1px] pt-[29px] pb-[34px] project-details">
         <summary className="list-none text-white-light  text-[28px] font-bold">
           Popular Categories
         </summary>
+        <ul>
           <li>T-Shirt</li>
           <li>Jacket</li>
           <li>Raven hoodie</li>
           <li>Crop Top</li>
+        </ul>
       </details>
       <p className="font-bold text-white mt-9">
         Copyright &copy; 2023 Euphoria Folks Pvt Ltd. All rights reserved.
