@@ -14,7 +14,7 @@ export default function ImageProduct({ src, title }: Props) {
       height={785}
       priority
       alt={title}
-      className="transition-opacity opactiy-0 duration-200"
+      className="transition-opacity opactiy-0 duration-200 w-[520px]"
       onLoadingComplete={(image) => image.classList.remove("opacity-0")}
     />
   );
