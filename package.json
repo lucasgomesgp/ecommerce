@@ -15,12 +15,14 @@
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
-    "swiper": "^11.0.5"
+    "swiper": "^11.0.5",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.7",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",

@@ -1,4 +1,8 @@
+import { colorsFilters } from "@/utils/constants/colorsFilters";
 import { FilterType } from "./FilterType";
+import { ColorFilter } from "./ColorFilter";
+import { sizesFilters } from "@/utils/constants/sizesFilters";
+import { SizeFilter } from "./SizeFilter";
 
 export function Filters() {
   return (
@@ -31,10 +35,18 @@ export function Filters() {
         </div>
       </FilterType>
       <FilterType title="Colors">
-        <p className="border border-t-gray-border">Colors</p>
+        <div className="grid grid-cols-4 justify-center px-9 grid-rows-3 gap-[18px] pb-10">
+          {colorsFilters.map(({ id, color, name }) => (
+            <ColorFilter key={id} color={color} title={name} />
+          ))}
+        </div>
       </FilterType>
       <FilterType title="Size">
-        <p className="border border-t-gray-border">Size</p>
+        <div className="grid grid-cols-3 justify-center px-9 grid-rows-3 gap-[18px] pb-10">
+          {sizesFilters.map(({ id, value }) => (
+            <SizeFilter key={id} title={value} />
+          ))}
+        </div>{" "}
       </FilterType>
       <FilterType title="Dress Style">
         <p className="border border-t-gray-border">Dress Style</p>

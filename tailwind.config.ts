@@ -11,6 +11,7 @@ const config: Config = {
       "white-light": "#F6F6F6",
       "gray-light" : "#807D7E",
       "gray-text": "#1E1E1E",
+      "gray-text-colors": "#8A8989",
       "gray-text-menu": "#3C4242",
       "gray-border-one": "#66666640",
       "gray-icon":"#404040",
