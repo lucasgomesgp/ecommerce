@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { TitleWithBar } from "@/components/TitleWithBar";
 import { getWomansProduct } from "@/services/getWomansProduct";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { IProduct } from "@/utils/types/IProducts";
 interface ResponseData {
   data: IProduct[];
@@ -11,6 +12,15 @@ interface ResponseData {
 
 export default async function Women() {
   const { data }: ResponseData = await getWomansProduct("");
+
+  function sortArray() {
+    const arr = data.sort(function (objA, objB) {
+      // Order BY DESC (objB- objA), BY ASC (objA-objB)
+      return objB.attributes.price - objA.attributes.price;
+    });
+    return arr;
+  }
+  const dataByPrice = sortArray();
   return (
     <main className="flex flex-col w-full ">
       <Header />
@@ -43,7 +53,7 @@ export default async function Women() {
           </div>
         </section>
         <section className="flex flex-col pl-8 gap-[100px] my-[100px] lg:pl-[121px]">
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 lg:w-[1100px] lg:max-w-[1220px] text-justify">
             <TitleWithBar title="Clothing for Woman Online in India" />
             <p className="text-xl font-bold text-gray-light lg:mt-[10px]">
               Reexplore Women's Clothing Collection Online at Euphoria
@@ -86,9 +96,9 @@ export default async function Women() {
           </div>
           <div>
             <TitleWithBar title="Buy Woman's Clothing at Best Price" />
-            <table className="w-[500px]  max-w-[720px] lg:w-[1220px] lg:max-w-[1220px] mt-12 bg-white-light">
+            <table className="w-[500px] max-w-[720px] lg:w-[1100px] lg:max-w-[1220px] mt-12 bg-white-light">
               <tbody>
-                <tr className="border border-transparent border-b-gray-border-opacity ">
+                <tr className="border border-transparent border-b-gray-border-opacity font-coreSans">
                   <th className="items-start font-semibold text-2xl py-12">
                     Women's Clothing
                   </th>
@@ -96,10 +106,18 @@ export default async function Women() {
                     Best Price
                   </th>
                 </tr>
-                <tr>
-                  <td>Pick Any 4- Womens Plain T-shirt Combo</td>
-                  <td className="text-center">₹1099</td>
-                </tr>
+                {dataByPrice.length &&
+                  dataByPrice.map(({ id, attributes: { title, price } }) => (
+                    <tr
+                      key={id}
+                      className={"font-causten text-gray-light text-2xl"}
+                    >
+                      <td className="pl-[84px] pt-[52px] mt-[52px]">{title}</td>
+                      <td className="mt-[52px] pt-[52px] text-center border border-l-gray-border-opacity border-r-transparent  border-b-transparent border-t-transparent">
+                        {currencyFormatter(price)}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
