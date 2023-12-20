@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import ImageProduct from "@/components/ImageProduct";
+import { SlidesImageProduct } from "@/components/SlidesImageProduct";
 import { getProducts } from "@/services/getProducts";
 import { ArrowMenu } from "@/svgs/arrow-menu";
 import { ArrowSizes } from "@/svgs/arrow-sizes";
@@ -12,21 +13,26 @@ interface ProductData {
 }
 export default async function Page({ params }: { params: { id: number } }) {
   const { data }: ProductData = await getProducts(`/${params.id}`);
-  const { image } = data.attributes;
 
   const sizesFilter = data.attributes.sizes.filter((sizeItem) =>
     sizesProduct.includes(sizeItem)
   );
-  console.log(data.attributes);
   return (
     <main className="w-full h-full">
       <Header />
       <section className="flex flex-col">
         <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
-          <ImageProduct
-            title={data.attributes.title}
-            src={image.data.attributes.url}
-          />
+          {data.attributes.slides ? (
+            <SlidesImageProduct
+              title={data.attributes.title}
+              content={data.attributes.slides.data}
+            />
+          ) : (
+            <ImageProduct
+              src={data.attributes.image.data.attributes.url}
+              title={data.attributes.title}
+            />
+          )}
           <div className="flex flex-col items-start gap-[35px] lg:mt-[30px]">
             <div className="flex items-center justify-center text-gray-light font-causten text-lg">
               Shop

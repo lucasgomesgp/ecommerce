@@ -14,6 +14,18 @@ export interface IProduct {
         };
       };
     };
+    slides: {
+      data: [
+        {
+          id: number;
+          attributes: {
+            width: number;
+            height: number;
+            url: string;
+          };
+        }
+      ];
+    };
     price: number;
     sizes: Array<string>;
     colors: Array<string>;
