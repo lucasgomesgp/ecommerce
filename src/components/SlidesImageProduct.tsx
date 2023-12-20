@@ -7,23 +7,22 @@ import { IImagesProductFormatted } from "@/utils/types/IImagesProductFormatted";
 
 interface Props {
   title: string;
-  content: Array<ISlidesProduct>;
+  content?: Array<ISlidesProduct>;
 }
 export function SlidesImageProduct({ title, content }: Props) {
-  const [positionSlide, setPositionSlide] = useState(0);
-  let slideFormatted: Array<IImagesProductFormatted> = [];
   let idsSlides = 0;
-  let imageSrc = content[positionSlide].attributes.url;
+  const [positionSlide, setPositionSlide] = useState(0);
+  let slideFormatted: Array<IImagesProductFormatted> | undefined = [];
+  let imageSrc = content ? content[positionSlide]?.attributes?.url : "";
 
-  const result = content.map((current) => {
+  slideFormatted = content?.map((current) => {
     return { idSlide: idsSlides + 1, ...current };
   });
-  slideFormatted = result;
 
   return (
     <div className="flex gap-9">
       <div className="flex flex-col gap-[22px]">
-        {slideFormatted.map(({ id, idSlide, attributes }) => (
+        {slideFormatted?.map(({ id, idSlide, attributes }) => (
           <button
             key={id}
             onClick={() => {

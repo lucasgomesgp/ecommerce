@@ -22,15 +22,16 @@ export default async function Page({ params }: { params: { id: number } }) {
       <Header />
       <section className="flex flex-col">
         <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
-          {data.attributes.slides ? (
-            <SlidesImageProduct
-              title={data.attributes.title}
-              content={data.attributes.slides.data}
-            />
-          ) : (
+          {data.attributes.slides === undefined ||
+          data.attributes.slides.data === null ? (
             <ImageProduct
               src={data.attributes.image.data.attributes.url}
               title={data.attributes.title}
+            />
+          ) : (
+            <SlidesImageProduct
+              title={data.attributes.title}
+              content={data.attributes.slides?.data}
             />
           )}
           <div className="flex flex-col items-start gap-[35px] lg:mt-[30px]">

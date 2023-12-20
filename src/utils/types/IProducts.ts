@@ -14,7 +14,7 @@ export interface IProduct {
         };
       };
     };
-    slides: {
+    slides?: {
       data: [
         {
           id: number;
