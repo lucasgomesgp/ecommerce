@@ -14,6 +14,14 @@ export interface IProduct {
         };
       };
     };
+    video: {
+      data: {
+        attributes: {
+          url: string;
+          mime: string;
+        };
+      };
+    };
     slides?: {
       data: [
         {

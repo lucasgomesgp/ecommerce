@@ -1,8 +1,10 @@
+import { Card } from "@/components/Card";
 import { DeliveryDetails } from "@/components/DeliveryDetails";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import ImageProduct from "@/components/ImageProduct";
 import { SlidesImageProduct } from "@/components/SlidesImageProduct";
+import { TitleWithBar } from "@/components/TitleWithBar";
 import { getProducts } from "@/services/getProducts";
 import { ArrowMenu } from "@/svgs/arrow-menu";
 import { ArrowSizes } from "@/svgs/arrow-sizes";
@@ -14,16 +16,24 @@ import { TShirt } from "@/svgs/tshirt";
 import { sizesProduct } from "@/utils/constants/sizesProduct";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { IProduct } from "@/utils/types/IProducts";
+import Image from "next/image";
 
 interface ProductData {
   data: IProduct;
 }
+interface ProductDataArr {
+  data: IProduct[];
+}
 export default async function Page({ params }: { params: { id: number } }) {
-  const { data }: ProductData = await getProducts(`/${params.id}`);
+  const { data }: ProductData = await getProducts(`/${params.id}?populate=*`);
+  const datas: ProductDataArr = await getProducts(
+    `?filters[category][$contains]=${data.attributes.category[0]}&populate=*`
+  );
 
   const sizesFilter = data.attributes.sizes.filter((sizeItem) =>
     sizesProduct.includes(sizeItem)
   );
+
   return (
     <main className="w-full h-full">
       <Header />
@@ -41,7 +51,7 @@ export default async function Page({ params }: { params: { id: number } }) {
               content={data.attributes.slides?.data}
             />
           )}
-          <div className="flex flex-col items-start gap-[35px] lg:mt-[30px]">
+          <section className="flex flex-col items-start gap-[35px] lg:mt-[30px]">
             <div className="flex items-center justify-center text-gray-light font-causten text-lg">
               Shop
               {data.attributes.category.map((category) => (
@@ -115,6 +125,72 @@ export default async function Page({ params }: { params: { id: number } }) {
                 <Return />
               </DeliveryDetails>
             </div>
+          </section>
+        </section>
+        <section className="flex flex-col lg:px-[100px]  mt-[100px] ">
+          <TitleWithBar title="Product Description" />
+          <div className="grid grid-rows-2 lg:grid-rows-1 lg:grid-cols-2 gap-32 justify-center mt-[30px]">
+            <div className="flex flex-col">
+              <p className="text-gray-text-menu text-lg font-medium">
+                Description
+              </p>
+              <p className="text-gray-light mt-[30px]">
+                {data.attributes.description}
+              </p>
+              <table className="bg-white-light rounded-xl mt-[30px] max-w-[612px] p-[50px]">
+                <tbody>
+                  <tr className="border border-transparent border-b-gray-border-opacity px">
+                    <td className="border border-t-transparent border-l-transparent border-r-gray-border-opacity">
+                      <p>Fabric</p>
+                      <p>{data.attributes.fabric}</p>
+                    </td>
+                    <td className="border border-t-transparent border-l-transparent border-r-gray-border-opacity">
+                      <p>Pattern</p>
+                      <p>{data.attributes.pattern}</p>
+                    </td>
+                    <td className="">
+                      <p>Fit</p>
+                      <p>{data.attributes.fit}</p>
+                    </td>
+                  </tr>
+                  <tr className="">
+                    <td className="border border-b-transparent border-l-transparent border-r-gray-border-opacity">
+                      <p className="">Neck</p>
+                      <p>{data.attributes.neck}</p>
+                    </td>
+                    <td className=" border border-b-transparent border-l-transparent border-r-gray-border-opacity">
+                      <p>Sleeve</p>
+                      <p>{data.attributes.sleeve}</p>
+                    </td>
+                    <td className="">
+                      <p>Style</p>
+                      <p>{data.attributes.style}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <video controls width="532" height="328">
+              <source
+                src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${data.attributes.video.data.attributes.url}`}
+                type={data.attributes.video.data.attributes.mime}
+              />
+            </video>
+          </div>
+        </section>
+        <section className="flex flex-col pb-[100px] lg:px-[100px] mt-[100px]">
+          <TitleWithBar title="Similar Products" />
+          <div className="lg:grid lg:grid-cols-4  lg:gap-[37px] mt-[30px]">
+            {datas.data.map(({ id, attributes }) => (
+              <Card
+                key={id}
+                id={id}
+                image={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image.data.attributes.url}`}
+                price={attributes.price}
+                title={attributes.title}
+                subTitle={attributes.subTitle}
+              />
+            ))}
           </div>
         </section>
       </section>

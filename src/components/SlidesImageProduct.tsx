@@ -27,7 +27,7 @@ export function SlidesImageProduct({ title, content }: Props) {
   });
   return (
     <div className="flex gap-9 bg-white-light pl-[104px]  relative -left-20">
-      <div className="flex flex-col gap-[22px]">
+      <div className="flex flex-col gap-[22px] pt-4">
         {slideFormatted?.map(({ id, idSlide, attributes }) => {
           return (
             <button

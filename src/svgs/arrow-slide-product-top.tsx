@@ -17,8 +17,8 @@ export function ArrowSlideProductTop() {
         />
       </g>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M9.19831 10.2065C9.45655 10.0096 9.8255 10.0594 10.0224 10.3176L12.9563 14.1657C13.0294 14.2141 13.136 14.2141 13.2091 14.1657L16.143 10.3176C16.3399 10.0594 16.7088 10.0096 16.9671 10.2065C17.2253 10.4034 17.275 10.7724 17.0781 11.0306L14.1341 14.892C14.0997 14.937 14.0477 14.9994 13.9757 15.0591C13.4626 15.4842 12.7027 15.4842 12.1896 15.0591C12.1176 14.9994 12.0656 14.937 12.0313 14.892L9.08723 11.0306C8.89034 10.7724 8.94007 10.4034 9.19831 10.2065Z"
         fill="#3C4242"
       />
@@ -30,9 +30,9 @@ export function ArrowSlideProductTop() {
           width="27.2154"
           height="27.2156"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
