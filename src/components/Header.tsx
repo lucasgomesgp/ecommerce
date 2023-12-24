@@ -15,8 +15,9 @@ import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { settingsClass } from "@/utils/constants/settingsClass";
+import { LinkMenu } from "./LinkMenu";
 
 interface Props {
   isLoginPage?: boolean;
@@ -26,6 +27,7 @@ export function Header({ isLoginPage = false }: Props) {
   const { data: session } = useSession();
   const [toogleProfileInfo, setToggleProfileInfo] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-50 bg-white">
@@ -73,9 +75,9 @@ export function Header({ isLoginPage = false }: Props) {
         <ButtonAuth text="Sign Up" href="/" />
       </div>
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
-        <ButtonMenu>
-          <HeartIcon width={20} height={20} />
-        </ButtonMenu>
+        <LinkMenu href="/favorites" backgroundIsPurple={pathname === "/favorites"}>
+          <HeartIcon width={20} height={20} color={pathname === "/favorites" ? "#FFF":"#000"}/>
+        </LinkMenu>
         <ButtonMenu
           anotherClassName="relative"
           onClick={() => {
@@ -132,9 +134,9 @@ export function Header({ isLoginPage = false }: Props) {
             </div>
           )}
         </ButtonMenu>
-        <ButtonMenu>
-          <ShoppingCartIcon width={20} height={20} />
-        </ButtonMenu>
+        <LinkMenu href="/shop" backgroundIsPurple={pathname === "/shop"}>
+          <ShoppingCartIcon width={20} height={20} color={pathname === "/shop" ? "#FFF":"#000"}/>
+        </LinkMenu>
       </div>
     </header>
   );
