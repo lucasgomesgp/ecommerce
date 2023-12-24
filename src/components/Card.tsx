@@ -12,8 +12,8 @@ interface Props {
 }
 export function Card({ id, title, image, subTitle, price }: Props) {
   return (
-    <Link href={`/product/${id}`} className="w-[282px] relative hover:opacity-80 transition-opacity">
-      <Image src={image} alt={title} width={282} height={370} quality={100} className="rounded-xl mb-[30px]"/>
+    <Link href={`/product/${id}`} className="w-[282px] relative hover:opacity-80 transition-opacity ">
+      <Image src={image} alt={title} width={282} height={370} quality={100} className="rounded-xl object-contain mb-[30px] max-h-[370px]"/>
       <button className="absolute top-[26px] right-5 flex items-center justify-center rounded-full bg-white w-8 h-8">
         <HeartIcon width={20} height={20} color="#3C4242"/>
       </button>

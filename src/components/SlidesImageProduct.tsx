@@ -41,13 +41,12 @@ export function SlidesImageProduct({ title, content }: Props) {
                   : ""
               }`}
             >
-              <Image
-                className="rounded-[9px] "
+             <Image
+                className="rounded-[9px]  max-w-[50px] max-h-[70px] "
                 src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.url}`}
                 alt={title}
-                width={50}
                 height={50}
-                priority
+                width={50}
               />
             </button>
           );

@@ -170,12 +170,16 @@ export default async function Page({ params }: { params: { id: number } }) {
                 </tbody>
               </table>
             </div>
-            <video controls width="532" height="328">
-              <source
-                src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${data.attributes.video.data.attributes.url}`}
-                type={data.attributes.video.data.attributes.mime}
-              />
-            </video>
+            {data.attributes.video.data !== null ? (
+              <video controls width="532" height="328">
+                <source
+                  src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${data.attributes.video.data.attributes.url}`}
+                  type={data.attributes.video.data.attributes.mime}
+                />
+              </video>
+            ):(
+              <p>No video</p>
+            )}
           </div>
         </section>
         <section className="flex flex-col pb-[100px] lg:px-[100px] mt-[100px]">
