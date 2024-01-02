@@ -17,6 +17,7 @@ import { ProductData, ProductDataArr } from "@/app/product/[id]/page";
 import { useContext, useState } from "react";
 import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export default function MainProductSection({
   product,
@@ -37,7 +38,8 @@ export default function MainProductSection({
   const sizesFilter = product.data.attributes.sizes.filter((sizeItem) =>
     sizesProduct.includes(sizeItem)
   );
-  const { setItems } = useContext(ShoppingCartContext);
+  const { items, setItems } = useContext(ShoppingCartContext);
+  const { setItemsOnStorage } = useLocalStorage();
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
@@ -82,7 +84,11 @@ export default function MainProductSection({
             <div className="flex gap-5">
               {sizesProduct.map((size) => (
                 <button
-                  className="border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl"
+                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${
+                    size === itemToCart.size
+                      ? "bg-gray-text-menu text-white border-none"
+                      : ""
+                  }`}
                   key={size}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, size });
@@ -100,7 +106,11 @@ export default function MainProductSection({
               {product.data.attributes.colors.map((color) => (
                 <button
                   key={color}
-                  className="rounded-full w-[30px] h-[30px]"
+                  className={`rounded-full w-[30px] h-[30px] relative  ${
+                    color === itemToCart.color
+                      ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
+                      : ""
+                  }`}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, color });
                   }}
@@ -111,12 +121,12 @@ export default function MainProductSection({
           </div>
           <div className="flex gap-[25px] mt-9">
             <ButtonAddToCart
-            disabled={!itemToCart.color || !itemToCart.size}
+              disabled={!itemToCart.color || !itemToCart.size}
               onClick={() => {
                 setItems((prevState) => {
-                  
                   return [...prevState, itemToCart];
                 });
+                  setItemsOnStorage(items);
               }}
             />
             <p className="hover:opacity-80 flex items-center justify-center transition-opacity rounded-lg border border-gray-text-menu text-gray-text-menu text-lg bg-transparent w-[138px] max-w-[138px] h-[46px] max-h-[46px]">
