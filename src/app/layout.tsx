@@ -7,11 +7,11 @@ import { causten, coreSans } from "@/utils/constants/localFonts";
 import "./utils.css";
 import "./globals.css";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import ShoppingCartProvider from "@/providers/ShoppingCartProvider";
 
 export const metadata: Metadata = {
   title: "Euphoria",
@@ -27,7 +27,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${causten.variable} ${coreSans.variable} font-causten`}>
-        <AuthClientProvider session={session}>{children}</AuthClientProvider>
+        <AuthClientProvider session={session}>
+          <ShoppingCartProvider>{children}</ShoppingCartProvider>
+        </AuthClientProvider>
       </body>
     </html>
   );

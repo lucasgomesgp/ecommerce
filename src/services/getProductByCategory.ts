@@ -14,7 +14,7 @@ export async function getProductByCategory({filter, category}:ProductCategory) :
   const res = await fetch(
     `${STRAPI_API_URL}/products?filters[category][$contains]=${category}&populate=*${filter}`,
     {
-      cache: "force-cache",
+      cache: "no-cache",
       headers: {
         Authorization: `Bearer ${STRAPI_TOKEN}`,
       },

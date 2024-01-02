@@ -1,11 +1,11 @@
 import { STRAPI_API_URL, STRAPI_TOKEN } from "@/utils/constants/strapi";
+import { IProduct } from "@/utils/types/IProducts";
 
-export async function getProducts(id?: string) {
-    const res = await fetch(`${STRAPI_API_URL}/products${id}`, {
-      cache: "force-cache",
-      headers: {
-        Authorization: `Bearer ${STRAPI_TOKEN}`,
-      },
-    });
-    return res.json();
-  }
+interface ResponseDataProducts {
+  data: IProduct[];
+}
+export const getProducts = async (config?: string): Promise<ResponseDataProducts> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+  const data = await res.json();
+  return data;
+};
