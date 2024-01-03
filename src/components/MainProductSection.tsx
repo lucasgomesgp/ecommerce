@@ -39,7 +39,41 @@ export default function MainProductSection({
     sizesProduct.includes(sizeItem)
   );
   const { items, setItems } = useContext(ShoppingCartContext);
-  const { setItemsOnStorage } = useLocalStorage();
+  const { itemsStorage, setItemsOnStorage } = useLocalStorage();
+
+  function handleSetItemOnLocalStorage() {
+    const itemExists = itemsStorage.filter(({ id, color, size }) => {
+      return (
+        id === itemToCart.id &&
+        color === itemToCart.color &&
+        size === itemToCart.size
+      );
+    });
+    if (itemsStorage.length !== 0) {
+      if (itemExists.length >= 1) {
+        const sameItemsWithNewQuantity: IShoppingCartItems[] = itemsStorage.map(
+          (currentItem) => {
+            const data =
+              currentItem.id === itemToCart.id
+                ? {
+                    ...currentItem,
+                    quantity: currentItem.quantity + 1,
+                  }
+                : { ...currentItem };
+            return data;
+          }
+        );
+        setItems(sameItemsWithNewQuantity);
+        setItemsOnStorage(sameItemsWithNewQuantity);
+        return;
+      }
+      setItems([...items, itemToCart]);
+      setItemsOnStorage([...items, itemToCart]);
+      return;
+    }
+    setItems([itemToCart]);
+    setItemsOnStorage([itemToCart]);
+  }
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
@@ -122,12 +156,7 @@ export default function MainProductSection({
           <div className="flex gap-[25px] mt-9">
             <ButtonAddToCart
               disabled={!itemToCart.color || !itemToCart.size}
-              onClick={() => {
-                setItems((prevState) => {
-                  return [...prevState, itemToCart];
-                });
-                  setItemsOnStorage(items);
-              }}
+              onClick={handleSetItemOnLocalStorage}
             />
             <p className="hover:opacity-80 flex items-center justify-center transition-opacity rounded-lg border border-gray-text-menu text-gray-text-menu text-lg bg-transparent w-[138px] max-w-[138px] h-[46px] max-h-[46px]">
               {currencyFormatter(product.data.attributes.price)}

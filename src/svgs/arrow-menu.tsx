@@ -1,5 +1,5 @@
 interface Props{
-  classNames: string;
+  classNames?: string;
 }
 export function ArrowMenu({classNames}:Props) {
   return (
