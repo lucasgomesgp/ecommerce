@@ -12,12 +12,12 @@ export interface ProductDataArr {
   data: IProduct[];
 }
 export default async function Page({ params }: { params: { id: string } }) {
-  const {data}: ProductData = await getProduct(params.id);
+  const product: ProductData = await getProduct(params.id);
   const products: ProductDataArr = await getProducts();
   return (
     <main className="w-full h-full">
       <Header />
-      {params.id && <MainProductSection product={{data}} products={products} />}
+      {params.id && <MainProductSection product={{data: product.data}} products={products} />}
       <Footer />
     </main>
   );

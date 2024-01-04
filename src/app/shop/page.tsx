@@ -36,7 +36,7 @@ export default function Shop() {
           </p>
         )}
       </section>
-      <section className="flex pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
+      <section className="flex flex-wrap pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
         <section className="flex flex-col">
           <p className="mb-[10px] text-gray-text-menu font-semibold text-2xl">Discount Codes</p>
           <span className="mb-[41px] text-gray-light">Enter your coupon code if you have one</span>

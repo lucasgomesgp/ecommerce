@@ -14,18 +14,19 @@ import ImageProduct from "./ImageProduct";
 import { SlidesImageProduct } from "./SlidesImageProduct";
 import { TitleWithBar } from "./TitleWithBar";
 import { ProductData, ProductDataArr } from "@/app/product/[id]/page";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
+interface Props{
+  product: ProductData;
+  products: ProductDataArr;
+}
 export default function MainProductSection({
   product,
   products,
-}: {
-  product: ProductData;
-  products: ProductDataArr;
-}) {
+}: Props) {
   const [itemToCart, setItemToCart] = useState<IShoppingCartItems>({
     id: product.data.id,
     color: "",
@@ -74,6 +75,19 @@ export default function MainProductSection({
     setItems([itemToCart]);
     setItemsOnStorage([itemToCart]);
   }
+  useEffect(() => {
+    if (product.data.id) {
+      setItemToCart({
+        id: product.data.id,
+        color: "",
+        imageSrc: product.data.attributes.image.data.attributes.url,
+        price: product.data.attributes.price,
+        size: "",
+        title: product.data.attributes.title,
+        quantity: 1,
+      });
+    }
+  }, []);
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
@@ -83,7 +97,7 @@ export default function MainProductSection({
             src={product.data.attributes.image.data.attributes.url}
             title={product.data.attributes.title}
           />
-        ) : (
+          ) : (
           <SlidesImageProduct
             title={product.data.attributes.title}
             content={product.data.attributes.slides?.data}
@@ -236,7 +250,7 @@ export default function MainProductSection({
       </section>
       <section className="flex flex-col pb-[100px] lg:px-[100px] mt-[100px]">
         <TitleWithBar title="Similar Products" />
-        <div className="lg:grid lg:grid-cols-4  lg:gap-[37px] mt-[30px]">
+        <div className="flex flex-wrap justify-center gap-6 lg:grid lg:grid-cols-3 xl:grid-cols-4  lg:gap-[37px] mt-[30px]">
           {products.data.map(({ id, attributes }) => (
             <Card
               key={id}

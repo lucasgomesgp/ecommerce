@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import ReactImageMagnify from "react-image-magnify";
-
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 interface Props {
   src: string;
   title: string;
@@ -9,21 +9,15 @@ interface Props {
 
 export default function ImageProduct({ src, title }: Props) {
   return (
-       <ReactImageMagnify
-      {...{
-        smallImage: {
-          alt: title,
-          isFluidWidth: true,
-          src: `${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${src}`,
-        },
-        largeImage: {
-          src: `${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${src}`,
-          width: 520,
-          height: 785,
-        },
-        isHintEnabled: true,
-        shouldHideHintAfterFirstActivation: true,
-      }}
-    />
+    <Zoom>
+      <Image
+        src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${src}`}
+        height={1000}
+        width={1000}
+        alt={title}
+        style={{ width: "520px", height: "785px" }}
+        priority
+      />
+    </Zoom>
   );
 }
