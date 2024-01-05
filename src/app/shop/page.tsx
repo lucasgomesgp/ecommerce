@@ -1,16 +1,17 @@
 "use client";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ArrowMenu } from "@/svgs/arrow-menu";
+import { TrashPurple } from "@/svgs/trash-purple";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
 
 export default function Shop() {
-  const { items, setItems } = useContext(ShoppingCartContext);
+  const { itemsStorage } = useLocalStorage();
   const { data: session } = useSession();
-
   return (
     <main className="flex flex-col">
       <Header />
@@ -36,12 +37,85 @@ export default function Shop() {
           </p>
         )}
       </section>
+      <table>
+        <tbody>
+          <tr className="w-full bg-gray-text-menu h-[76px] text-uppercase font-semibold text-white text-lg uppercase">
+            <th className="content-start">Product Details</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>shipping</th>
+            <th>subtotal</th>
+            <th>action</th>
+          </tr>
+          {itemsStorage.length >= 1 &&
+            itemsStorage.map((item) => (
+              <tr key={item.id} className="items-center ">
+                <td className="flex">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${item.imageSrc}`}
+                    height={105}
+                    width={120}
+                    style={{ width: "105px", height: "120px" }}
+                    alt={item.title}
+                    className="rounded-xl"
+                  />
+                  <div className="flex-col">
+                    <p className="text-gray-text-menu text-lg font-bold">
+                      {item.title}
+                    </p>
+                    <span className="text-sm text-gray-light">
+                      Color: {item.color}
+                    </span>
+                    <span className="text-sm text-gray-light">
+                      Size: {item.size}
+                    </span>
+                  </div>
+                </td>
+                <td className="font-bold text-lg">
+                  {currencyFormatter(item.price)}
+                </td>
+                <td className="min-w-[100px]">
+                  <div className="flex justify-center items-center gap-3 h-[36px] min-w-[100px] rounded-xl bg-white-light w-full  text-gray-text-menu font-medium">
+                    <button className="  px-2">+</button>
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={item.quantity}
+                      readOnly
+                      className=" w-8 text-center outline-none bg-white-light"
+                    />
+                    <button className=" px-2">-</button>
+                  </div>
+                </td>
+                <td className="text-gray-border text-lg font-bold uppercase">
+                  FREE
+                </td>
+                <td className="font-bold text-lg">
+                  {currencyFormatter(item.price * item.quantity)}
+                </td>
+                <td>
+                  <button>
+                    <TrashPurple />
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
       <section className="flex flex-wrap pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
         <section className="flex flex-col">
-          <p className="mb-[10px] text-gray-text-menu font-semibold text-2xl">Discount Codes</p>
-          <span className="mb-[41px] text-gray-light">Enter your coupon code if you have one</span>
+          <p className="mb-[10px] text-gray-text-menu font-semibold text-2xl">
+            Discount Codes
+          </p>
+          <span className="mb-[41px] text-gray-light">
+            Enter your coupon code if you have one
+          </span>
           <div className="flex">
-            <input type="text" name="coupon" className="h-[43px] border border-gray-border rounded-tl-xl rounded-bl-xl"/>
+            <input
+              type="text"
+              name="coupon"
+              className="h-[43px] border border-gray-border rounded-tl-xl rounded-bl-xl"
+            />
             <button className="mb-[37px] bg-purple-principal rounded-tr-xl h-[43px] px-[31px] py-[12px] rounded-br-xl text-white font-semibold">
               Apply Coupon
             </button>
