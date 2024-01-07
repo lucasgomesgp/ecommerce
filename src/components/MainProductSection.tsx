@@ -18,19 +18,21 @@ import { useContext, useEffect, useState } from "react";
 import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import SkeletonCard from "./SkeletonCard";
 
-interface Props{
+interface Props {
   product: ProductData;
   products: ProductDataArr;
 }
-export default function MainProductSection({
-  product,
-  products,
-}: Props) {
+export default function MainProductSection({ product, products }: Props) {
+  const imageSrc =
+    product.data.attributes.image !== undefined
+      ? product.data.attributes.image?.data?.attributes?.url
+      : "";
   const [itemToCart, setItemToCart] = useState<IShoppingCartItems>({
     id: product.data.id,
     color: "",
-    imageSrc: product.data.attributes.image.data.attributes.url,
+    imageSrc: "",
     price: product.data.attributes.price,
     size: "",
     title: product.data.attributes.title,
@@ -39,6 +41,7 @@ export default function MainProductSection({
   const sizesFilter = product.data.attributes.sizes.filter((sizeItem) =>
     sizesProduct.includes(sizeItem)
   );
+  const [isLoading, setIsLoading] = useState(true);
   const { items, setItems } = useContext(ShoppingCartContext);
   const { itemsStorage, setItemsOnStorage } = useLocalStorage();
 
@@ -75,29 +78,35 @@ export default function MainProductSection({
     setItems([itemToCart]);
     setItemsOnStorage([itemToCart]);
   }
+  function loadSkeleton() {
+    setInterval(() => {
+      setIsLoading(false);
+    }, 500);
+  }
+
   useEffect(() => {
     if (product.data.id) {
       setItemToCart({
         id: product.data.id,
         color: "",
-        imageSrc: product.data.attributes.image.data.attributes.url,
+        imageSrc,
         price: product.data.attributes.price,
         size: "",
         title: product.data.attributes.title,
         quantity: 1,
       });
     }
+    loadSkeleton();
   }, []);
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
-        {product.data.attributes.slides === undefined ||
-        product.data.attributes.slides.data === null ? (
+        {product.data.attributes.slides === undefined ? (
           <ImageProduct
-            src={product.data.attributes.image.data.attributes.url}
+            src={product.data.attributes.image?.data.attributes.url || ""}
             title={product.data.attributes.title}
           />
-          ) : (
+        ) : (
           <SlidesImageProduct
             title={product.data.attributes.title}
             content={product.data.attributes.slides?.data}
@@ -224,7 +233,7 @@ export default function MainProductSection({
                     <p className="">Neck</p>
                     <p>{product.data.attributes.neck}</p>
                   </td>
-                  <td className=" border border-b-transparent border-l-transparent border-r-gray-border-opacity">
+                  <td className="border border-b-transparent border-l-transparent border-r-gray-border-opacity">
                     <p>Sleeve</p>
                     <p>{product.data.attributes.sleeve}</p>
                   </td>
@@ -236,11 +245,11 @@ export default function MainProductSection({
               </tbody>
             </table>
           </div>
-          {product.data.attributes.video.data !== null ? (
+          {product.data.attributes.video?.data !== null ? (
             <video controls width="532" height="328">
               <source
-                src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${product.data.attributes.video.data.attributes.url}`}
-                type={product.data.attributes.video.data.attributes.mime}
+                src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${product.data.attributes.video?.data.attributes.url}`}
+                type={product.data.attributes.video?.data.attributes.mime}
               />
             </video>
           ) : (
@@ -251,16 +260,20 @@ export default function MainProductSection({
       <section className="flex flex-col pb-[100px] lg:px-[100px] mt-[100px]">
         <TitleWithBar title="Similar Products" />
         <div className="flex flex-wrap justify-center gap-6 lg:grid lg:grid-cols-3 xl:grid-cols-4  lg:gap-[37px] mt-[30px]">
-          {products.data.map(({ id, attributes }) => (
-            <Card
-              key={id}
-              id={id}
-              image={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image.data.attributes.url}`}
-              price={attributes.price}
-              title={attributes.title}
-              subTitle={attributes.subTitle}
-            />
-          ))}
+          {products.data.length >= 1 && !isLoading ? (
+            products.data.map(({ id, attributes }) => (
+              <Card
+                key={id}
+                id={id}
+                image={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image?.data.attributes.url}`}
+                price={attributes.price}
+                title={attributes.title}
+                subTitle={attributes.subTitle}
+              />
+            ))
+          ) : (
+            <SkeletonCard quantity={8} />
+          )}
         </div>
       </section>
     </section>

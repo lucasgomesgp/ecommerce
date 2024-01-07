@@ -5,7 +5,7 @@ export interface IProduct {
     subTitle: string;
     description: string;
     category: Array<string>;
-    image: {
+    image?: {
       data: {
         attributes: {
           width: number;
@@ -14,7 +14,7 @@ export interface IProduct {
         };
       };
     };
-    video: {
+    video?: {
       data: {
         attributes: {
           url: string;

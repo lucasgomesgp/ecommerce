@@ -12,10 +12,19 @@ import Link from "next/link";
 export default function Shop() {
   const { itemsStorage } = useLocalStorage();
   const { data: session } = useSession();
+
+  function getTotalValue() {
+    let accumulator = 0;
+    itemsStorage.map((current) => {
+      accumulator += (current.price * current.quantity);
+    });
+    return accumulator;
+  }
+  let totalValue = getTotalValue();
   return (
     <main className="flex flex-col">
       <Header />
-      <section className="flex flex-col lg:pl-[100px] mt-[50px] font-medium text-lg">
+      <section className="flex flex-col lg:pl-[100px] my-[50px] font-medium text-lg">
         <div className="flex items-center gap-4">
           <p className="text-gray-text-menu ">Home</p>
           <ArrowMenu />
@@ -37,20 +46,20 @@ export default function Shop() {
           </p>
         )}
       </section>
-      <table>
-        <tbody>
-          <tr className="w-full bg-gray-text-menu h-[76px] text-uppercase font-semibold text-white text-lg uppercase">
-            <th className="content-start">Product Details</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>shipping</th>
-            <th>subtotal</th>
-            <th>action</th>
-          </tr>
-          {itemsStorage.length >= 1 &&
-            itemsStorage.map((item) => (
-              <tr key={item.id} className="items-center ">
-                <td className="flex">
+      {itemsStorage.length >= 1 && (
+        <table>
+          <tbody>
+            <tr className="w-full align-middle text-center bg-gray-text-menu h-[76px] text-uppercase font-semibold text-white text-lg uppercase">
+              <th className="lg:pl-[70px] lg:text-left">Product Details</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>shipping</th>
+              <th>subtotal</th>
+              <th>action</th>
+            </tr>
+            {itemsStorage.map((item) => (
+              <tr key={item.id} className="text-center">
+                <td className="flex px-[50px]">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${item.imageSrc}`}
                     height={105}
@@ -60,7 +69,7 @@ export default function Shop() {
                     className="rounded-xl"
                   />
                   <div className="flex-col">
-                    <p className="text-gray-text-menu text-lg font-bold">
+                    <p className="text-gray-text-menu text-lg font-bold w-[200px] text-ellipsis">
                       {item.title}
                     </p>
                     <span className="text-sm text-gray-light">
@@ -100,8 +109,9 @@ export default function Shop() {
                 </td>
               </tr>
             ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      )}
       <section className="flex flex-wrap pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
         <section className="flex flex-col">
           <p className="mb-[10px] text-gray-text-menu font-semibold text-2xl">
@@ -127,15 +137,15 @@ export default function Shop() {
         <section className="flex justify-center flex-col gap-[15px] text-gray-text-menu text-[22px]">
           <div className="flex gap-14  justify-between">
             <p>Sub Total</p>
-            <p>$513.00</p>
+            <p>{currencyFormatter(totalValue)}</p>
           </div>
           <div className="flex gap-14  justify-between">
             <p>Shipping</p>
-            <p>$513.00</p>
+            <p>{currencyFormatter(0)}</p>
           </div>
           <div className="flex mt-[30px] gap-14  justify-between font-bold">
             <p>Grand Total</p>
-            <p>$513.00</p>
+            <p>{currencyFormatter(totalValue)}</p>
           </div>
           <div className="w-full h-[1px] bg-gray-border my-[30px]" />
           <button className="px-[20px] py-3 text-white  font-semibold text-lg bg-purple-principal rounded-lg">

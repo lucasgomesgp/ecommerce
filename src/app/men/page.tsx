@@ -4,6 +4,7 @@ import { Filters } from "@/components/Filters";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
+import SkeletonCard from "@/components/SkeletonCard";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { sortArray } from "@/utils/functions/sortArray";
 
@@ -23,17 +24,21 @@ export default async function Men() {
           <div className="flex flex-col">
             <CriteriaArea title="Men’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {mensData.map(
-                ({ id, attributes: { title, subTitle, price, image } }) => (
-                  <Card
-                    key={id}
-                    id={id}
-                    title={title}
-                    subTitle={subTitle}
-                    price={price}
-                    image={`${process.env.STRAPI_IMAGE_URL}${image.data.attributes.url}`}
-                  />
+              {mensData.length >= 1 ? (
+                mensData.map(
+                  ({ id, attributes: { title, subTitle, price, image } }) => (
+                    <Card
+                      key={id}
+                      id={id}
+                      title={title}
+                      subTitle={subTitle}
+                      price={price}
+                      image={`${process.env.STRAPI_IMAGE_URL}${image?.data.attributes.url}`}
+                    />
+                  )
                 )
+              ) : (
+                <SkeletonCard quantity={3} />
               )}
             </div>
           </div>

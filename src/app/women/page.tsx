@@ -4,6 +4,7 @@ import { Filters } from "@/components/Filters";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
+import SkeletonCard from "@/components/SkeletonCard";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { sortArray } from "@/utils/functions/sortArray";
 import { IProduct } from "@/utils/types/IProducts";
@@ -13,7 +14,10 @@ interface ResponseData {
 }
 
 export default async function Women() {
-  const { data }: ResponseData = await getProductByCategory({category:"women",filter:""});
+  const { data }: ResponseData = await getProductByCategory({
+    category: "women",
+    filter: "",
+  });
   const dataByPrice = sortArray(data);
 
   return (
@@ -25,7 +29,7 @@ export default async function Women() {
           <div className="flex flex-col">
             <CriteriaArea title="Women’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {data.length &&
+              {data.length >= 1 ? (
                 data.map(
                   ({ id, attributes: { title, subTitle, image, price } }) => (
                     <Card
@@ -33,11 +37,14 @@ export default async function Women() {
                       id={id}
                       title={title}
                       subTitle={subTitle}
-                      image={`${process.env.STRAPI_IMAGE_URL}${image.data.attributes.url}`}
+                      image={`${process.env.STRAPI_IMAGE_URL}${image?.data.attributes.url}`}
                       price={price}
                     />
                   )
-                )}
+                )
+              ) : (
+                <SkeletonCard quantity={3} />
+              )}
             </div>
           </div>
         </section>
