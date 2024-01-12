@@ -16,7 +16,6 @@ interface ResponseData {
 export default async function Women() {
   const { data }: ResponseData = await getProductByCategory({
     category: "women",
-    filter: "",
   });
   const dataByPrice = sortArray(data);
 

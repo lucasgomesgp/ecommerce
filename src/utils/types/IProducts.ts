@@ -36,7 +36,7 @@ export interface IProduct {
     };
     price: number;
     sizes: Array<string>;
-    colors: Array<string>;
+    colors: Array<{name: string, value: string}>;
     fabric: string;
     pattern: string;
     fit: string;

@@ -1,4 +1,3 @@
-import { STRAPI_API_URL, STRAPI_TOKEN } from "@/utils/constants/strapi";
 import { IProduct } from "@/utils/types/IProducts";
 
 export interface ResponseDataProduct {

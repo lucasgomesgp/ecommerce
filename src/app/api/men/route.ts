@@ -6,7 +6,7 @@ export async function GET(
 ) {
   try {
     const content = await fetch(
-      `${process.env.STRAPI_API_URL}/products?populate=*`,
+      `${process.env.STRAPI_API_URL}/products?filters[category][$contains]=men&populate=*`,
       {
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,

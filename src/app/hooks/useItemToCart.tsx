@@ -7,7 +7,8 @@ export function useItemToCart() {
     id: 0,
     color: "",
     imageSrc: "",
-    price: "",
+    price: 0,
+    quantity: 1,
     size: "",
     title: "",
   });

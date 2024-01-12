@@ -19,6 +19,7 @@ import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import SkeletonCard from "./SkeletonCard";
+import "../app/effects.css";
 
 interface Props {
   product: ProductData;
@@ -162,17 +163,19 @@ export default function MainProductSection({ product, products }: Props) {
             <div className="flex gap-5">
               {product.data.attributes.colors.map((color) => (
                 <button
-                  key={color}
-                  className={`rounded-full w-[30px] h-[30px] relative  ${
-                    color === itemToCart.color
+                  key={color.value}
+                  className={`rounded-full w-[30px] h-[30px] relative legend-hover  ${
+                    color.value === itemToCart.color
                       ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
                       : ""
                   }`}
                   onClick={() => {
-                    setItemToCart({ ...itemToCart, color });
+                    setItemToCart({ ...itemToCart, color: color.name });
                   }}
-                  style={{ backgroundColor: color }}
-                />
+                  style={{ backgroundColor: color.value }}
+                >
+                  <span className="absolute -top-8 text-sm left-0 text-black border border-gray-border hidden min-w-[100px] justify-center font-bold break-keep">{color.name}</span>
+                </button>
               ))}
             </div>
           </div>

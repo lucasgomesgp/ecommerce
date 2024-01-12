@@ -9,7 +9,7 @@ import { getProductByCategory } from "@/services/getProductByCategory";
 import { sortArray } from "@/utils/functions/sortArray";
 
 export default async function Men() {
-  const { data } = await getProductByCategory({ category: "", filter: "" });
+  const { data } = await getProductByCategory({ category: "men"});
   const mensData = data.filter(({ attributes }) => {
     return attributes.category.includes("men");
   });

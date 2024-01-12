@@ -1,12 +1,12 @@
 import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextApiRequest,
 ) {
   try {
     const content = await fetch(
-      `${process.env.STRAPI_API_URL}/products?populate=*`,
+      `${process.env.STRAPI_API_URL}/products?filters[category][$contains]=women&populate=*`,
       {
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,

@@ -8,7 +8,7 @@ export function useLocalStorage() {
       itemsStorage = JSON.parse(itemsSearch);
     }
   } catch (err) {
-    console.log("Error on search localStorage item");
+    console.log("Error on search localStorage item", err);
   }
   function setItemsOnStorage(value: []| IShoppingCartItems[]) {
     localStorage.setItem("shopItems", JSON.stringify(value));

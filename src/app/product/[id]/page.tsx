@@ -13,7 +13,7 @@ export interface ProductDataArr {
 }
 export default async function Page({ params }: { params: { id: string } }) {
   const product: ProductData = await getProduct(params.id);
-  const products: ProductDataArr = await getProducts();
+   const products: ProductDataArr = await getProducts();
   return (
     <main className="w-full h-full">
       <Header />
