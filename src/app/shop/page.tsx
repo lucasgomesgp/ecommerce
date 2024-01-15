@@ -5,12 +5,14 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ArrowMenu } from "@/svgs/arrow-menu";
 import { TrashPurple } from "@/svgs/trash-purple";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
+import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Shop() {
-  const { itemsStorage } = useLocalStorage();
+  const { itemsStorage, setItemsOnStorage } = useLocalStorage();
   const { data: session } = useSession();
 
   function getTotalValue() {
@@ -21,6 +23,20 @@ export default function Shop() {
     return accumulator;
   }
   let totalValue = getTotalValue();
+  function changeQuantity(type: "minus" | "plus", id: number) {
+    setItemsOnStorage(
+      itemsStorage.map((item) => {
+        if (item.id === id) {
+          const quant = type === "minus" ? item.quantity - 1 : item.quantity + 1;
+          return { ...item, quantity: quant };
+        }
+        return { ...item };
+      })
+    );
+  }
+  useEffect(() => {
+    console.log(itemsStorage)
+  }, [itemsStorage]);
   return (
     <main className="flex flex-col">
       <Header />
@@ -68,7 +84,7 @@ export default function Shop() {
                     alt={item.title}
                     className="rounded-xl"
                   />
-                  <div className="flex-col">
+                  <div className="flex flex-col">
                     <p className="text-gray-text-menu text-lg font-bold w-[200px] text-ellipsis">
                       {item.title}
                     </p>
@@ -85,15 +101,21 @@ export default function Shop() {
                 </td>
                 <td className="min-w-[100px]">
                   <div className="flex justify-center items-center gap-3 h-[36px] min-w-[100px] rounded-xl bg-white-light w-full  text-gray-text-menu font-medium">
-                    <button className="  px-2">+</button>
+                    <button
+                      className="px-2" disabled={item.quantity <= 1} onClick={() => { changeQuantity("minus", item.id) }}>
+                      -
+                    </button>
                     <input
                       type="number"
                       name="quantity"
                       value={item.quantity}
                       readOnly
-                      className=" w-8 text-center outline-none bg-white-light"
+                      className="w-8 text-center outline-none bg-white-light"
                     />
-                    <button className=" px-2">-</button>
+                    <button className="px-2 disabled:cursor-not-allowed"
+                      onClick={() => { changeQuantity("plus", item.id) }}>
+                      +
+                    </button>
                   </div>
                 </td>
                 <td className="text-gray-border text-lg font-bold uppercase">

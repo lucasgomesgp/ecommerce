@@ -18,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "sujeitoprogramador.com",
+        hostname: "strapi-backend-ap11.onrender.com",
         pathname: "**",
       },
     ],

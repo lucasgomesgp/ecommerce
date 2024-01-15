@@ -42,7 +42,7 @@ export function Slider({ data }: ISlides) {
         disableOnInteraction: true,
       }}
     >
-      {data.map(({ id, attributes }) => {
+      {data.map(({ id, attributes }, index) => {
         return (
           <SwiperSlide className="relative" key={id}>
             <Image
@@ -56,16 +56,16 @@ export function Slider({ data }: ISlides) {
             />
             <div className="flex font-coreSans flex-col -bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
               <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
-                {info[id - 1].title}
+                {info[index].title}
               </p>
               <h1 className="text-white text-sm md:text-[39px] lg:text-[78px] font-bold word-break md:w-[470px] leading-none">
-                {info[id - 1].centralTitle}
+                {info[index].centralTitle}
               </h1>
               <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
-                {info[id - 1].downTitle}
+                {info[index].downTitle}
               </p>
               <Link
-                href={info[id - 1].link}
+                href={info[index].link}
                 className="bg-white text-center text-gray-text-menu py-2 font-semibold md:text-2xl md:w-[250px] rounded-lg md:py-4  hover:opacity-80 hover:transition-all"
               >
                 Shop Now

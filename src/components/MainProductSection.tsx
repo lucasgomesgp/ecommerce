@@ -19,6 +19,7 @@ import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import SkeletonCard from "./SkeletonCard";
+import { v4 as uuidv4 } from 'uuid';
 import "../app/effects.css";
 
 interface Props {
@@ -61,9 +62,9 @@ export default function MainProductSection({ product, products }: Props) {
             const data =
               currentItem.id === itemToCart.id
                 ? {
-                    ...currentItem,
-                    quantity: currentItem.quantity + 1,
-                  }
+                  ...currentItem,
+                  quantity: currentItem.quantity + 1,
+                }
                 : { ...currentItem };
             return data;
           }
@@ -142,11 +143,10 @@ export default function MainProductSection({ product, products }: Props) {
             <div className="flex gap-5">
               {sizesProduct.map((size) => (
                 <button
-                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${
-                    size === itemToCart.size
-                      ? "bg-gray-text-menu text-white border-none"
-                      : ""
-                  }`}
+                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${size === itemToCart.size
+                    ? "bg-gray-text-menu text-white border-none"
+                    : ""
+                    }`}
                   key={size}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, size });
@@ -163,16 +163,15 @@ export default function MainProductSection({ product, products }: Props) {
             <div className="flex gap-5">
               {product.data.attributes.colors.map((color) => (
                 <button
-                  key={color.value}
-                  className={`rounded-full w-[30px] h-[30px] relative legend-hover  ${
-                    color.value === itemToCart.color
-                      ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
-                      : ""
-                  }`}
+                  key={uuidv4()}
+                  className={`rounded-full w-[30px] h-[30px] relative legend-hover  ${color.name === itemToCart.color
+                    ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
+                    : ""
+                    }`}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, color: color.name });
                   }}
-                  style={{ backgroundColor: color.value }}
+                  style={{ backgroundColor: `${color.value}` }}
                 >
                   <span className="absolute -top-8 text-sm left-0 text-black border border-gray-border hidden min-w-[100px] justify-center font-bold break-keep">{color.name}</span>
                 </button>
