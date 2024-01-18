@@ -15,7 +15,7 @@ export function SlidesImageProduct({ title, content }: Props) {
   let idsSlides = 0;
   const [positionSlide, setPositionSlide] = useState(0);
   let slideFormatted: Array<IImagesProductFormatted> | undefined = [];
-  let imageSrc = content ? content[positionSlide]?.attributes?.url : "";
+  let imageSrc = content ? content[positionSlide]?.attributes.url : "";
 
   slideFormatted = content?.map((current) => {
     const slideCurrent = {
@@ -43,7 +43,7 @@ export function SlidesImageProduct({ title, content }: Props) {
             >
               <Image
                 className="rounded-[9px]  max-w-[50px] max-h-[70px]"
-                src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.url}`}
+                src={attributes.url}
                 alt={title}
                 height={100}
                 width={100}

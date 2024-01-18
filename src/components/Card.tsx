@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface Props {
   id: number;
-  image: string;
+  image?: string;
   title: string;
   subTitle: string;
   price: number;
@@ -16,16 +16,18 @@ export function Card({ id, title, image, subTitle, price }: Props) {
       href={`/product/${id}`}
       className="w-[282px] relative hover:opacity-80 transition-opacity max-h-[441px]"
     >
-      <Image
-        src={image}
-        alt={title}
-        quality={100}
-        height={0}
-        width={0}
-        sizes="100vw"
-        className="rounded-xl mb-[30px] h-[370px] w-[282px]"
-        priority
-      />
+     {image && (
+       <Image
+       src={image}
+       alt={title}
+       quality={100}
+       height={0}
+       width={0}
+       sizes="100vw"
+       className="rounded-xl mb-[30px] h-[370px] w-[282px]"
+       priority
+     />
+     )}
       <button className="absolute top-[26px] right-5 flex items-center justify-center rounded-full bg-white w-8 h-8">
         <HeartIcon width={20} height={20} color="#3C4242" />
       </button>

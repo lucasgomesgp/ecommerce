@@ -11,7 +11,7 @@ export default function ImageProduct({ src, title }: Props) {
   return (
     <Zoom>
       <Image
-        src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${src}`}
+        src={src}
         height={1000}
         width={1000}
         alt={title}

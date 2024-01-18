@@ -36,7 +36,7 @@ export default async function Women() {
                       id={id}
                       title={title}
                       subTitle={subTitle}
-                      image={`${process.env.STRAPI_IMAGE_URL}${image?.data.attributes.url}`}
+                      image={image?.data.attributes.url}
                       price={price}
                     />
                   )

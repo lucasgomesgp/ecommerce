@@ -27,8 +27,9 @@ interface Props {
   products: ProductDataArr;
 }
 export default function MainProductSection({ product, products }: Props) {
+  console.log(products.data[0].attributes.image?.data.attributes.url);
   const imageSrc =
-    product.data.attributes.image !== undefined
+    product.data.attributes.image?.data.attributes.url !== undefined
       ? product.data.attributes.image?.data?.attributes?.url
       : "";
   const [itemToCart, setItemToCart] = useState<IShoppingCartItems>({
@@ -111,7 +112,7 @@ export default function MainProductSection({ product, products }: Props) {
         ) : (
           <SlidesImageProduct
             title={product.data.attributes.title}
-            content={product.data.attributes.slides?.data}
+            content={product.data.attributes.slides.data}
           />
         )}
         <section className="flex flex-col items-start gap-[35px] lg:mt-[30px]">
@@ -250,7 +251,7 @@ export default function MainProductSection({ product, products }: Props) {
           {product.data.attributes.video?.data !== null ? (
             <video controls width="532" height="328">
               <source
-                src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${product.data.attributes.video?.data.attributes.url}`}
+                src={product.data.attributes.video?.data.attributes.url}
                 type={product.data.attributes.video?.data.attributes.mime}
               />
             </video>
@@ -267,7 +268,7 @@ export default function MainProductSection({ product, products }: Props) {
               <Card
                 key={id}
                 id={id}
-                image={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image?.data.attributes.url}`}
+                image={attributes.image?.data.attributes.url}
                 price={attributes.price}
                 title={attributes.title}
                 subTitle={attributes.subTitle}

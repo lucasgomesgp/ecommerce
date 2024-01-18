@@ -77,7 +77,7 @@ export default function Shop() {
               <tr key={item.id} className="text-center">
                 <td className="flex px-[50px]">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${item.imageSrc}`}
+                    src={item.imageSrc}
                     height={105}
                     width={120}
                     style={{ width: "105px", height: "120px" }}

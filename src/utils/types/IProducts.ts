@@ -1,3 +1,6 @@
+import { IFormatsImage } from "./IFormatsImage";
+import { ISlidesProduct } from "./ISlidesProduct";
+
 export interface IProduct {
   id: number;
   attributes: {
@@ -11,6 +14,7 @@ export interface IProduct {
           width: number;
           height: number;
           url: string;
+          formats: IFormatsImage;
         };
       };
     };
@@ -23,16 +27,7 @@ export interface IProduct {
       };
     };
     slides?: {
-      data: [
-        {
-          id: number;
-          attributes: {
-            width: number;
-            height: number;
-            url: string;
-          };
-        }
-      ];
+      data: Array<ISlidesProduct>;
     };
     price: number;
     sizes: Array<string>;

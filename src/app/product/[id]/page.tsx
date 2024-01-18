@@ -12,8 +12,10 @@ export interface ProductDataArr {
   data: IProduct[];
 }
 export default async function Page({ params }: { params: { id: string } }) {
+  console.log(params.id);
   const product: ProductData = await getProduct(params.id);
-   const products: ProductDataArr = await getProducts();
+  const products: ProductDataArr = await getProducts();
+  console.log(products);
   return (
     <main className="w-full h-full">
       <Header />

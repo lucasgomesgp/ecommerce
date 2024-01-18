@@ -1,3 +1,5 @@
+import { IFormatsImage } from "./IFormatsImage";
+
 export interface IImagesProductFormatted {
     id: number;
     idSlide: number;
@@ -5,6 +7,7 @@ export interface IImagesProductFormatted {
       width: number;
       height: number;
       url: string;
+      formats: IFormatsImage;
     };
   }
   

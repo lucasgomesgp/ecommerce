@@ -16,6 +16,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-medium-image-zoom": "^5.1.9",
+    "react-spinners": "^0.13.8",
     "swiper": "^11.0.5",
     "uuidv4": "^6.2.13"
   },

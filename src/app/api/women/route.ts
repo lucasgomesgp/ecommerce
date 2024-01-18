@@ -10,6 +10,7 @@ export async function GET(
       
       `${process.env.STRAPI_API_URL}/products?filters[category][$containsi]=women&populate=*`,
       {
+        cache: "no-cache",
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
         },

@@ -5,12 +5,13 @@ import { getSlides } from "@/services/getSlides";
 import { ISlides } from "@/utils/types/ISlides";
 
 export default async function Home() {
-  const {data} : ISlides = await getSlides();
-
+  const { data }: ISlides = await getSlides();
   return (
     <main>
       <Header isLoginPage={false} />
-      <Slider data={data}/>
+      {
+        data.length >= 1 && <Slider data={data} />  
+      }
       <Footer />
     </main>
   );

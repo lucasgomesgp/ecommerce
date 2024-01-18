@@ -47,11 +47,11 @@ export function Slider({ data }: ISlides) {
           <SwiperSlide className="relative" key={id}>
             <Image
               key={id}
-              src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${attributes.image.data.attributes.url}`}
-              className=" w-auto h-auto bg-left-top"
+              src={attributes.image.data.attributes.url}
+              className=" w-full h-[720px] bg-left-top"
               alt={`Slider image`}
-              width={1449}
-              height={740}
+              width={2000}
+              height={1000}
               priority
             />
             <div className="flex font-coreSans flex-col -bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">

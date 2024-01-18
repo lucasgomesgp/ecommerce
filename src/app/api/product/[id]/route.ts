@@ -9,6 +9,7 @@ export async function GET(
     const content = await fetch(
       `${process.env.STRAPI_API_URL}/products/${params.id}?populate=*`,
       {
+        cache: "no-cache",
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
         },

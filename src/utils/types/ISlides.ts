@@ -1,3 +1,5 @@
+import { IFormatsImage } from "./IFormatsImage";
+
 export interface ISlides {
   data: [
     {
@@ -8,6 +10,7 @@ export interface ISlides {
             id: number;
             attributes: {
               url: string;
+              formats: IFormatsImage;
             };
           };
         };
