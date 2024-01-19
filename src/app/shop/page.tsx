@@ -3,21 +3,20 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ArrowMenu } from "@/svgs/arrow-menu";
+import { CartEmpty } from "@/svgs/cart-empty";
 import { TrashPurple } from "@/svgs/trash-purple";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
-import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function Shop() {
-  const { itemsStorage, setItemsOnStorage } = useLocalStorage();
+  const { itemsStorage, setItemsOnStorage } = useLocalStorage("shopItems");
   const { data: session } = useSession();
 
   function getTotalValue() {
     let accumulator = 0;
-    itemsStorage.map((current) => {
+    itemsStorage?.map((current) => {
       accumulator += (current.price * current.quantity);
     });
     return accumulator;
@@ -25,7 +24,7 @@ export default function Shop() {
   let totalValue = getTotalValue();
   function changeQuantity(type: "minus" | "plus", id: number) {
     setItemsOnStorage(
-      itemsStorage.map((item) => {
+      itemsStorage?.map((item) => {
         if (item.id === id) {
           const quant = type === "minus" ? item.quantity - 1 : item.quantity + 1;
           return { ...item, quantity: quant };
@@ -34,9 +33,6 @@ export default function Shop() {
       })
     );
   }
-  useEffect(() => {
-    console.log(itemsStorage)
-  }, [itemsStorage]);
   return (
     <main className="flex flex-col">
       <Header />
@@ -62,7 +58,7 @@ export default function Shop() {
           </p>
         )}
       </section>
-      {itemsStorage.length >= 1 && (
+      {itemsStorage?.length >= 1 ? (
         <table>
           <tbody>
             <tr className="w-full align-middle text-center bg-gray-text-menu h-[76px] text-uppercase font-semibold text-white text-lg uppercase">
@@ -133,6 +129,13 @@ export default function Shop() {
             ))}
           </tbody>
         </table>
+      ) : (
+        <div className="flex flex-col gap-7 items-center justify-center mb-12">
+          <h1 className="font-bold text-2xl">You car is empty</h1>
+          <div className="w-[full] md:w-[500px] overflow-hidden">
+            <CartEmpty />
+          </div>
+        </div>
       )}
       <section className="flex flex-wrap pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
         <section className="flex flex-col">

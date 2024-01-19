@@ -18,7 +18,6 @@ import { useContext, useEffect, useState } from "react";
 import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import SkeletonCard from "./SkeletonCard";
 import { v4 as uuidv4 } from 'uuid';
 import "../app/effects.css";
 
@@ -27,15 +26,11 @@ interface Props {
   products: ProductDataArr;
 }
 export default function MainProductSection({ product, products }: Props) {
-  console.log(products.data[0].attributes.image?.data.attributes.url);
-  const imageSrc =
-    product.data.attributes.image?.data.attributes.url !== undefined
-      ? product.data.attributes.image?.data?.attributes?.url
-      : "";
+
   const [itemToCart, setItemToCart] = useState<IShoppingCartItems>({
     id: product.data.id,
     color: "",
-    imageSrc: "",
+    imageSrc: product.data.attributes.image?.data.attributes.url || "",
     price: product.data.attributes.price,
     size: "",
     title: product.data.attributes.title,
@@ -44,9 +39,8 @@ export default function MainProductSection({ product, products }: Props) {
   const sizesFilter = product.data.attributes.sizes.filter((sizeItem) =>
     sizesProduct.includes(sizeItem)
   );
-  const [isLoading, setIsLoading] = useState(true);
   const { items, setItems } = useContext(ShoppingCartContext);
-  const { itemsStorage, setItemsOnStorage } = useLocalStorage();
+  const { itemsStorage, setItemsOnStorage } = useLocalStorage("shopItems");
 
   function handleSetItemOnLocalStorage() {
     const itemExists = itemsStorage.filter(({ id, color, size }) => {
@@ -81,26 +75,6 @@ export default function MainProductSection({ product, products }: Props) {
     setItems([itemToCart]);
     setItemsOnStorage([itemToCart]);
   }
-  function loadSkeleton() {
-    setInterval(() => {
-      setIsLoading(false);
-    }, 500);
-  }
-
-  useEffect(() => {
-    if (product.data.id) {
-      setItemToCart({
-        id: product.data.id,
-        color: "",
-        imageSrc,
-        price: product.data.attributes.price,
-        size: "",
-        title: product.data.attributes.title,
-        quantity: 1,
-      });
-    }
-    loadSkeleton();
-  }, []);
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
@@ -263,7 +237,7 @@ export default function MainProductSection({ product, products }: Props) {
       <section className="flex flex-col pb-[100px] lg:px-[100px] mt-[100px]">
         <TitleWithBar title="Similar Products" />
         <div className="flex flex-wrap justify-center gap-6 lg:grid lg:grid-cols-3 xl:grid-cols-4  lg:gap-[37px] mt-[30px]">
-          {products.data.length >= 1 && !isLoading ? (
+          {products.data.length >= 1 && (
             products.data.map(({ id, attributes }) => (
               <Card
                 key={id}
@@ -274,8 +248,6 @@ export default function MainProductSection({ product, products }: Props) {
                 subTitle={attributes.subTitle}
               />
             ))
-          ) : (
-            <SkeletonCard quantity={8} />
           )}
         </div>
       </section>

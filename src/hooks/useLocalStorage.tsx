@@ -1,17 +1,20 @@
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 
-export function useLocalStorage() {
-  let itemsStorage: IShoppingCartItems[] = [];
-  try {
-    const itemsSearch = localStorage.getItem("shopItems");
-    if (itemsSearch) {
-      itemsStorage = JSON.parse(itemsSearch);
+export function useLocalStorage(name: string) {
+  function getItemsOnLocalStorage(){
+    try {
+      const itemsSearch = localStorage.getItem(name);
+      if (itemsSearch) {
+        return JSON.parse(itemsSearch);
+      }
+    } catch (err) {
+      console.log("Error on search localStorage item", err);
     }
-  } catch (err) {
-    console.log("Error on search localStorage item", err);
   }
+  let itemsStorage: IShoppingCartItems[] = getItemsOnLocalStorage();
+  
   function setItemsOnStorage(value: []| IShoppingCartItems[]) {
-    localStorage.setItem("shopItems", JSON.stringify(value));
+    localStorage.setItem(name, JSON.stringify(value));
   }
-  return { itemsStorage, setItemsOnStorage };
+  return { itemsStorage, getItemsOnLocalStorage, setItemsOnStorage };
 }

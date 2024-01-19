@@ -14,10 +14,11 @@ import {
 import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { settingsClass } from "@/utils/constants/settingsClass";
 import { LinkMenu } from "./LinkMenu";
+import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 
 interface Props {
   isLoginPage?: boolean;
@@ -28,16 +29,15 @@ export function Header({ isLoginPage = false }: Props) {
   const [toogleProfileInfo, setToggleProfileInfo] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-
+  const { items } = useContext(ShoppingCartContext);
   return (
     <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-50 bg-white">
       <Link href={"/"}>
         <Logo />
       </Link>
       <nav
-        className={`${
-          isLoginPage ? "hidden" : ""
-        } mt-8 mb-8 md:m-0 font-medium`}
+        className={`${isLoginPage ? "hidden" : ""
+          } mt-8 mb-8 md:m-0 font-medium`}
       >
         <ul className="flex flex-wrap gap-10 text-gray-light ">
           <li>
@@ -63,7 +63,7 @@ export function Header({ isLoginPage = false }: Props) {
             type="text"
             name="elementSearch"
             placeholder="Search"
-            className="w-full px-5 py-3 bg-white-light placeholder:p-7 rounded-lg outline-none"
+            className="w-full px-10 py-3 bg-white-light  rounded-lg outline-none"
           />
           <button className="absolute left-5 top-1/3">
             <MagnifyingGlassIcon width={14} height={14} color="#807D7E" />
@@ -76,7 +76,7 @@ export function Header({ isLoginPage = false }: Props) {
       </div>
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
         <LinkMenu href="/favorites" backgroundIsPurple={pathname === "/favorites"}>
-          <HeartIcon width={20} height={20} color={pathname === "/favorites" ? "#FFF":"#000"}/>
+          <HeartIcon width={20} height={20} color={pathname === "/favorites" ? "#FFF" : "#000"} />
         </LinkMenu>
         <ButtonMenu
           anotherClassName="relative"
@@ -134,8 +134,13 @@ export function Header({ isLoginPage = false }: Props) {
             </div>
           )}
         </ButtonMenu>
-        <LinkMenu href="/shop" backgroundIsPurple={pathname === "/shop"}>
-          <ShoppingCartIcon width={20} height={20} color={pathname === "/shop" ? "#FFF":"#000"}/>
+        <LinkMenu href="/shop" backgroundIsPurple={pathname === "/shop"} style={{ position: "relative" }}>
+          <ShoppingCartIcon width={20} height={20} color={pathname === "/shop" ? "#FFF" : "#000"} />
+          {items?.length >= 1 && (
+            <div className="absolute transition-all -top-2 -right-2 w-[20px] h-[20px] rounded-full font-thin p-2 font-coreSans flex items-center justify-center bg-red-700 text-white text-xs">
+              {items.length}
+            </div>
+          )}
         </LinkMenu>
       </div>
     </header>

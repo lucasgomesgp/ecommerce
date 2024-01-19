@@ -12,15 +12,15 @@ export default function ShoppingCartProvider({
   children,
 }: IShoppingCartProvider) {
   const [items, setItems] = useState<IShoppingCartItems[]>([]);
-    const {itemsStorage, setItemsOnStorage} = useLocalStorage();
+  const { itemsStorage, setItemsOnStorage, getItemsOnLocalStorage } = useLocalStorage("shopItems");
 
-    useEffect(() => {
-        if(itemsStorage?.length >= 1){
-            setItems(itemsStorage);
-        }else{
-            setItemsOnStorage([]);
-        }
-    } ,[]);
+  useEffect(() => {
+    if (itemsStorage?.length >= 1) {
+      setItems(itemsStorage);
+    } else {
+      setItemsOnStorage([]);
+    }
+  }, []);
 
   return (
     <ShoppingCartContext.Provider value={{ items, setItems }}>
