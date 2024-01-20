@@ -18,7 +18,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 export default function Shop() {
   const { itemsStorage, setItemsOnStorage } = useLocalStorage("shopItems");
-  const { setItems } = useContext(ShoppingCartContext);
+  const { items, setItems } = useContext(ShoppingCartContext);
   const { data: session } = useSession();
   const MySwal = withReactContent(Swal);
 
@@ -30,16 +30,17 @@ export default function Shop() {
     return accumulator;
   }
   let totalValue = getTotalValue();
-  function handleChangeQuantity(type: "minus" | "plus", id: number) {
-    setItemsOnStorage(
-      itemsStorage?.map((item) => {
-        if (item.id === id) {
-          const quant = type === "minus" ? item.quantity - 1 : item.quantity + 1;
-          return { ...item, quantity: quant };
-        }
-        return { ...item };
-      })
-    );
+  function handleChangeQuantity(type: "minus" | "plus", id: number, color: string, size: string) {
+    const data = items?.map((item) => {
+      if (item.id === id && item.color === color && item.size === size) {
+        const quant = type === "minus" ? item.quantity - 1 : item.quantity + 1;
+        console.log(quant);
+        return { ...item, quantity: quant };
+      }
+      return { ...item };
+    })
+    setItemsOnStorage(data);
+    setItems(data);
   }
   function handleDeleteItem(item: IShoppingCartItems) {
     MySwal.fire({
@@ -47,7 +48,7 @@ export default function Shop() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#57F287",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
@@ -131,7 +132,7 @@ export default function Shop() {
                 <td className="min-w-[100px]">
                   <div className="flex justify-center items-center gap-3 h-[36px] min-w-[100px] rounded-xl bg-white-light w-full  text-gray-text-menu font-medium">
                     <button
-                      className="px-2" disabled={item.quantity <= 1} onClick={() => { handleChangeQuantity("minus", item.id) }}>
+                      className="px-2 disabled:cursor-not-allowed disabled:opacity-70" disabled={item.quantity <= 1} onClick={() => { handleChangeQuantity("minus", item.id, item.color, item.size) }}>
                       -
                     </button>
                     <input
@@ -142,7 +143,7 @@ export default function Shop() {
                       className="w-8 text-center outline-none bg-white-light"
                     />
                     <button className="px-2 disabled:cursor-not-allowed"
-                      onClick={() => { handleChangeQuantity("plus", item.id) }}>
+                      onClick={() => { handleChangeQuantity("plus", item.id, item.color, item.size) }}>
                       +
                     </button>
                   </div>
