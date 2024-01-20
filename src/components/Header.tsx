@@ -30,6 +30,13 @@ export function Header({ isLoginPage = false }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const { items } = useContext(ShoppingCartContext);
+  
+  function getTotalItemsOnCart(){
+    let value = 0;
+    items.map((current)=> {value+= current.quantity});
+    return value;
+  }
+  let totalItemsOnCart =  getTotalItemsOnCart();
   return (
     <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-50 bg-white">
       <Link href={"/"}>
@@ -138,7 +145,7 @@ export function Header({ isLoginPage = false }: Props) {
           <ShoppingCartIcon width={20} height={20} color={pathname === "/shop" ? "#FFF" : "#000"} />
           {items?.length >= 1 && (
             <div className="absolute transition-all -top-2 -right-2 w-[20px] h-[20px] rounded-full font-thin p-2 font-coreSans flex items-center justify-center bg-red-700 text-white text-xs">
-              {items.length}
+              {totalItemsOnCart}
             </div>
           )}
         </LinkMenu>

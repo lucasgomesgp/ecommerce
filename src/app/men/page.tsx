@@ -17,7 +17,7 @@ export default async function Men() {
     <main className="flex flex-col w-full">
       <Header />
       <section className="flex flex-col">
-        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center ">
+        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
           <Filters />
           <div className="flex flex-col">
             <CriteriaArea title="Men’s Clothing" />

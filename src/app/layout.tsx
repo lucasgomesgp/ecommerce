@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import AuthClientProvider from "./context/AuthClientProvider";
 import { causten, coreSans } from "@/utils/constants/localFonts";
+import ShoppingCartProvider from "@/components/ShopProvider";
+import { Toaster } from "sonner";
 
 import "./utils.css";
 import "./globals.css";
@@ -11,7 +13,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import ShoppingCartProvider from "@/components/ShopProvider";
 
 export const metadata: Metadata = {
   title: "Euphoria",
@@ -28,6 +29,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${causten.variable} ${coreSans.variable} font-causten`}>
         <AuthClientProvider session={session}>
+          <Toaster richColors position="top-right" closeButton />
           <ShoppingCartProvider>{children}</ShoppingCartProvider>
         </AuthClientProvider>
       </body>

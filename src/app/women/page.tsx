@@ -4,7 +4,6 @@ import { Filters } from "@/components/Filters";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
-import SkeletonCard from "@/components/SkeletonCard";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { sortArray } from "@/utils/functions/sortArray";
 import { IProduct } from "@/utils/types/IProducts";
@@ -28,7 +27,7 @@ export default async function Women() {
           <div className="flex flex-col">
             <CriteriaArea title="Women’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {data.length >= 1 ? (
+              {data.length >= 1 && (
                 data.map(
                   ({ id, attributes: { title, subTitle, image, price } }) => (
                     <Card
@@ -41,9 +40,7 @@ export default async function Women() {
                     />
                   )
                 )
-              ) : (
-                <SkeletonCard quantity={3} />
-              )}
+              ) }
             </div>
           </div>
         </section>

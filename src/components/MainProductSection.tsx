@@ -14,11 +14,12 @@ import ImageProduct from "./ImageProduct";
 import { SlidesImageProduct } from "./SlidesImageProduct";
 import { TitleWithBar } from "./TitleWithBar";
 import { ProductData, ProductDataArr } from "@/app/product/[id]/page";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from "sonner";
 import "../app/effects.css";
 
 interface Props {
@@ -26,7 +27,6 @@ interface Props {
   products: ProductDataArr;
 }
 export default function MainProductSection({ product, products }: Props) {
-
   const [itemToCart, setItemToCart] = useState<IShoppingCartItems>({
     id: product.data.id,
     color: "",
@@ -66,12 +66,15 @@ export default function MainProductSection({ product, products }: Props) {
         );
         setItems(sameItemsWithNewQuantity);
         setItemsOnStorage(sameItemsWithNewQuantity);
+        toast.success("Quantity change with success");
         return;
       }
+      toast.success("Item added");
       setItems([...items, itemToCart]);
       setItemsOnStorage([...items, itemToCart]);
       return;
     }
+    toast.success("Item added");
     setItems([itemToCart]);
     setItemsOnStorage([itemToCart]);
   }

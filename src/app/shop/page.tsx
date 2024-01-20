@@ -1,18 +1,26 @@
 "use client";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ArrowMenu } from "@/svgs/arrow-menu";
 import { CartEmpty } from "@/svgs/cart-empty";
 import { TrashPurple } from "@/svgs/trash-purple";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
+import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export default function Shop() {
   const { itemsStorage, setItemsOnStorage } = useLocalStorage("shopItems");
+  const { setItems } = useContext(ShoppingCartContext);
   const { data: session } = useSession();
+  const MySwal = withReactContent(Swal);
 
   function getTotalValue() {
     let accumulator = 0;
@@ -22,7 +30,7 @@ export default function Shop() {
     return accumulator;
   }
   let totalValue = getTotalValue();
-  function changeQuantity(type: "minus" | "plus", id: number) {
+  function handleChangeQuantity(type: "minus" | "plus", id: number) {
     setItemsOnStorage(
       itemsStorage?.map((item) => {
         if (item.id === id) {
@@ -33,10 +41,35 @@ export default function Shop() {
       })
     );
   }
+  function handleDeleteItem(item: IShoppingCartItems) {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+        const itemsFiltered = itemsStorage.filter((currentItem) =>
+          currentItem.color !== item.color ||
+          currentItem.size !== item.size
+        );
+        setItemsOnStorage(itemsFiltered);
+        setItems(itemsFiltered);
+      }
+    });
+  }
   return (
     <main className="flex flex-col">
       <Header />
-      <section className="flex flex-col lg:pl-[100px] my-[50px] font-medium text-lg">
+      <section className="flex flex-col pl-[100px] my-[50px] font-medium text-lg">
         <div className="flex items-center gap-4">
           <p className="text-gray-text-menu ">Home</p>
           <ArrowMenu />
@@ -70,7 +103,7 @@ export default function Shop() {
               <th>action</th>
             </tr>
             {itemsStorage.map((item) => (
-              <tr key={item.id} className="text-center">
+              <tr key={uuidv4()} className="text-center">
                 <td className="flex px-[50px]">
                   <Image
                     src={item.imageSrc}
@@ -98,7 +131,7 @@ export default function Shop() {
                 <td className="min-w-[100px]">
                   <div className="flex justify-center items-center gap-3 h-[36px] min-w-[100px] rounded-xl bg-white-light w-full  text-gray-text-menu font-medium">
                     <button
-                      className="px-2" disabled={item.quantity <= 1} onClick={() => { changeQuantity("minus", item.id) }}>
+                      className="px-2" disabled={item.quantity <= 1} onClick={() => { handleChangeQuantity("minus", item.id) }}>
                       -
                     </button>
                     <input
@@ -109,7 +142,7 @@ export default function Shop() {
                       className="w-8 text-center outline-none bg-white-light"
                     />
                     <button className="px-2 disabled:cursor-not-allowed"
-                      onClick={() => { changeQuantity("plus", item.id) }}>
+                      onClick={() => { handleChangeQuantity("plus", item.id) }}>
                       +
                     </button>
                   </div>
@@ -121,7 +154,7 @@ export default function Shop() {
                   {currencyFormatter(item.price * item.quantity)}
                 </td>
                 <td>
-                  <button>
+                  <button onClick={() => { handleDeleteItem(item) }}>
                     <TrashPurple />
                   </button>
                 </td>
