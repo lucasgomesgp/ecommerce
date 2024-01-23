@@ -14,11 +14,11 @@ import {
 import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { settingsClass } from "@/utils/constants/settingsClass";
 import { LinkMenu } from "./LinkMenu";
-import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 
 interface Props {
   isLoginPage?: boolean;
@@ -82,8 +82,8 @@ export function Header({ isLoginPage = false }: Props) {
         <ButtonAuth text="Sign Up" href="/" />
       </div>
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
-        <LinkMenu href="/favorites" backgroundIsPurple={pathname === "/favorites"}>
-          <HeartIcon width={20} height={20} color={pathname === "/favorites" ? "#FFF" : "#000"} />
+        <LinkMenu href="/wishlist " backgroundIsPurple={pathname === "/wishlist"}>
+          <HeartIcon width={20} height={20} color={pathname === "/wishlist" ? "#FFF" : "#000"} />
         </LinkMenu>
         <ButtonMenu
           anotherClassName="relative"
@@ -120,7 +120,7 @@ export function Header({ isLoginPage = false }: Props) {
             >
               <Link
                 className={`${settingsClass} bg-white-light  rounded-t-md `}
-                href="/"
+                href="/info"
               >
                 <Cog6ToothIcon width={20} height={20} />
                 Settings

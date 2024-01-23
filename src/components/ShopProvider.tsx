@@ -1,8 +1,8 @@
 "use client"
 import { ReactNode, useEffect, useState } from "react";
-import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useItemsStorage } from "@/hooks/useItemsStorage";
 
 interface IShoppingCartProvider {
   children: ReactNode;
@@ -12,7 +12,7 @@ export default function ShoppingCartProvider({
   children,
 }: IShoppingCartProvider) {
   const [items, setItems] = useState<IShoppingCartItems[]>([]);
-  const { itemsStorage, setItemsOnStorage, getItemsOnLocalStorage } = useLocalStorage("shopItems");
+  const { itemsStorage, setItemsOnStorage } = useItemsStorage();
 
   useEffect(() => {
     if (itemsStorage?.length >= 1) {

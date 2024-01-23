@@ -9,6 +9,7 @@ const config: Config = {
     extend: {
       colors: {
         "white-light": "#F6F6F6",
+        "white-bar": "#EDEEF2",
         "black-gray": "#3F4646",
         "gray-light": "#807D7E",
         "gray-text": "#1E1E1E",

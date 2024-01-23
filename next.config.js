@@ -26,6 +26,11 @@ const nextConfig = {
         hostname: "strapi-backend-ap11.onrender.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        pathname: "**",
+      },
     ],
   },
 };

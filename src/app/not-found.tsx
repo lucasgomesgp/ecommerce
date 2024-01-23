@@ -22,7 +22,7 @@ export default function NotFound() {
           The page you are looking for might have been removed or
           temporarily unavailable.
         </p>
-        <ButtonBackToHome />
+        <ButtonBackToHome title="Back to HomePage" path="/"/>
       </section>
       <Footer />
     </main>

@@ -9,9 +9,9 @@ import { sortArray } from "@/utils/functions/sortArray";
 
 export default async function Men() {
   const { data } = await getProductByCategory({ category: "men"});
-  const mensData = data.filter(({ attributes }) => {
+  const mensData = data.length >= 1 ? data.filter(({ attributes }) => {
     return attributes.category.includes("men");
-  });
+  }) : [];
   const dataByPrice = sortArray(data);
   return (
     <main className="flex flex-col w-full">
@@ -22,16 +22,18 @@ export default async function Men() {
           <div className="flex flex-col">
             <CriteriaArea title="Men’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {mensData.length >= 1 && (
-                mensData.map(
-                  ({ id, attributes: { title, subTitle, price, image } }) => (
+              {mensData?.length >= 1 && (
+                mensData?.map(
+                  ({ id, attributes: { title, subTitle, price, image, colors, sizes } }) => (
                     <Card
                       key={id}
                       id={id}
                       title={title}
                       subTitle={subTitle}
                       price={price}
-                      image={image?.data.attributes.url}
+                      image={image?.data.attributes.url || ""}
+                      colors={colors}
+                      sizes={sizes}
                     />
                   )
                 )

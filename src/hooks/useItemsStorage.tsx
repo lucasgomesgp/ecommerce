@@ -1,9 +1,10 @@
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
+import { IWishItems } from "@/utils/types/IWishItems";
 
-export function useLocalStorage(name: string) {
+export function useItemsStorage() {
   function getItemsOnLocalStorage(){
     try {
-      const itemsSearch = localStorage.getItem(name);
+      const itemsSearch = localStorage.getItem("shopItems");
       if (itemsSearch) {
         return JSON.parse(itemsSearch);
       }
@@ -11,10 +12,10 @@ export function useLocalStorage(name: string) {
       console.log("Error on search localStorage item", err);
     }
   }
-  let itemsStorage: IShoppingCartItems[] = getItemsOnLocalStorage();
+  let itemsStorage: IShoppingCartItems[]  = getItemsOnLocalStorage();
   
-  function setItemsOnStorage(value: []| IShoppingCartItems[]) {
-    localStorage.setItem(name, JSON.stringify(value));
+  function setItemsOnStorage(value: [] | IShoppingCartItems[]) {
+    localStorage.setItem("shopItems", JSON.stringify(value));
   }
   return { itemsStorage, getItemsOnLocalStorage, setItemsOnStorage };
 }

@@ -15,9 +15,9 @@ import { SlidesImageProduct } from "./SlidesImageProduct";
 import { TitleWithBar } from "./TitleWithBar";
 import { ProductData, ProductDataArr } from "@/app/product/[id]/page";
 import { useContext, useState } from "react";
-import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useItemsStorage } from "@/hooks/useItemsStorage";
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "sonner";
 import "../app/effects.css";
@@ -40,7 +40,7 @@ export default function MainProductSection({ product, products }: Props) {
     sizesProduct.includes(sizeItem)
   );
   const { items, setItems } = useContext(ShoppingCartContext);
-  const { itemsStorage, setItemsOnStorage } = useLocalStorage("shopItems");
+  const { itemsStorage, setItemsOnStorage } = useItemsStorage();
 
   function handleSetItemOnLocalStorage() {
     const itemExists = itemsStorage.filter(({ id, color, size }) => {
@@ -245,7 +245,7 @@ export default function MainProductSection({ product, products }: Props) {
               <Card
                 key={id}
                 id={id}
-                image={attributes.image?.data.attributes.url}
+                image={attributes.image?.data.attributes.url || ""}
                 price={attributes.price}
                 title={attributes.title}
                 subTitle={attributes.subTitle}

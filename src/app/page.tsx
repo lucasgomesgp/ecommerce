@@ -10,7 +10,7 @@ export default async function Home() {
     <main>
       <Header isLoginPage={false} />
       {
-        data.length >= 1 && <Slider data={data} />  
+        data?.length >= 1 && <Slider data={data} />  
       }
       <Footer />
     </main>

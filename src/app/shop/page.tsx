@@ -1,8 +1,7 @@
 "use client";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { ShoppingCartContext } from "@/contexts/ShoppingCartContext";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { ArrowMenu } from "@/svgs/arrow-menu";
 import { CartEmpty } from "@/svgs/cart-empty";
 import { TrashPurple } from "@/svgs/trash-purple";
@@ -15,9 +14,11 @@ import { useContext } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { ButtonBackToHome } from "@/components/ButtonBackToHome";
+import { useItemsStorage } from "@/hooks/useItemsStorage";
 
 export default function Shop() {
-  const { itemsStorage, setItemsOnStorage } = useLocalStorage("shopItems");
+  const { itemsStorage, setItemsOnStorage } = useItemsStorage();
   const { items, setItems } = useContext(ShoppingCartContext);
   const { data: session } = useSession();
   const MySwal = withReactContent(Swal);
@@ -71,16 +72,20 @@ export default function Shop() {
     <main className="flex flex-col">
       <Header />
       <section className="flex flex-col pl-[100px] my-[50px] font-medium text-lg">
-        <div className="flex items-center gap-4">
-          <p className="text-gray-text-menu ">Home</p>
-          <ArrowMenu />
-          <p className="text-">Add To Cart</p>
-        </div>
-        <p className="text-gray-light text-sm">
-          Please fill in the fields below and click place order to complete your
-          purchase!
-        </p>
-        {session?.user?.name && (
+        {items.length >= 1 && (
+          <>
+            <div className="flex items-center gap-4">
+              <p className="text-gray-text-menu ">Home</p>
+              <ArrowMenu />
+              <p className="text-">Add To Cart</p>
+            </div>
+            <p className="text-gray-light text-sm">
+              Please fill in the fields below and click place order to complete your
+              purchase!
+            </p>
+          </>
+        )}
+        {!session?.user?.name && (
           <p className="text-sm font-normal text-gray-light">
             Already registered?
             <Link
@@ -165,53 +170,57 @@ export default function Shop() {
         </table>
       ) : (
         <div className="flex flex-col gap-7 items-center justify-center mb-12">
-          <h1 className="font-bold text-2xl">You car is empty</h1>
-          <div className="w-[full] md:w-[500px] overflow-hidden">
-            <CartEmpty />
+          <div className="h-[350px] w-[450px]">
+            <Image src="/assets/empty-cart.png" alt="Empty cart icon" width={450} height={330} className="w-full h-full" />
           </div>
+          <h2 className="font-semibold font-coreSans mb-3 text-4xl">Your cart is empty and sad :(</h2>
+          <p className="text-gray-light font-coreSans">Add something to make it happy!</p>
+          <ButtonBackToHome title="Continue Shopping" path="/men" />
         </div>
       )}
-      <section className="flex flex-wrap pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
-        <section className="flex flex-col">
-          <p className="mb-[10px] text-gray-text-menu font-semibold text-2xl">
-            Discount Codes
-          </p>
-          <span className="mb-[41px] text-gray-light">
-            Enter your coupon code if you have one
-          </span>
-          <div className="flex">
-            <input
-              type="text"
-              name="coupon"
-              className="h-[43px] border border-gray-border rounded-tl-xl rounded-bl-xl"
-            />
-            <button className="mb-[37px] bg-purple-principal rounded-tr-xl h-[43px] px-[31px] py-[12px] rounded-br-xl text-white font-semibold">
-              Apply Coupon
+      {items.length >= 1 && (
+        <section className="flex flex-wrap pb-[50px] pt-7 w-full bg-white-light items-center justify-around">
+          <section className="flex flex-col">
+            <p className="mb-[10px] text-gray-text-menu font-semibold text-2xl">
+              Discount Codes
+            </p>
+            <span className="mb-[41px] text-gray-light">
+              Enter your coupon code if you have one
+            </span>
+            <div className="flex">
+              <input
+                type="text"
+                name="coupon"
+                className="h-[43px] border border-gray-border rounded-tl-xl rounded-bl-xl"
+              />
+              <button className="mb-[37px] bg-purple-principal rounded-tr-xl h-[43px] px-[31px] py-[12px] rounded-br-xl text-white font-semibold">
+                Apply Coupon
+              </button>
+            </div>
+            <button className="bg-transparent text-gray-text-menu border border-gray-border rounded-lg px-[20px] py-[12px] h-[43px] font-semibold">
+              Continue Shopping
             </button>
-          </div>
-          <button className="bg-transparent text-gray-text-menu border border-gray-border rounded-lg px-[20px] py-[12px] h-[43px] font-semibold">
-            Continue Shopping
-          </button>
+          </section>
+          <section className="flex justify-center flex-col gap-[15px] text-gray-text-menu text-[22px]">
+            <div className="flex gap-14  justify-between">
+              <p>Sub Total</p>
+              <p>{currencyFormatter(totalValue)}</p>
+            </div>
+            <div className="flex gap-14  justify-between">
+              <p>Shipping</p>
+              <p>{currencyFormatter(0)}</p>
+            </div>
+            <div className="flex mt-[30px] gap-14  justify-between font-bold">
+              <p>Grand Total</p>
+              <p>{currencyFormatter(totalValue)}</p>
+            </div>
+            <div className="w-full h-[1px] bg-gray-border my-[30px]" />
+            <button className="px-[20px] py-3 text-white  font-semibold text-lg bg-purple-principal rounded-lg">
+              Proceed To Checkout
+            </button>
+          </section>
         </section>
-        <section className="flex justify-center flex-col gap-[15px] text-gray-text-menu text-[22px]">
-          <div className="flex gap-14  justify-between">
-            <p>Sub Total</p>
-            <p>{currencyFormatter(totalValue)}</p>
-          </div>
-          <div className="flex gap-14  justify-between">
-            <p>Shipping</p>
-            <p>{currencyFormatter(0)}</p>
-          </div>
-          <div className="flex mt-[30px] gap-14  justify-between font-bold">
-            <p>Grand Total</p>
-            <p>{currencyFormatter(totalValue)}</p>
-          </div>
-          <div className="w-full h-[1px] bg-gray-border my-[30px]" />
-          <button className="px-[20px] py-3 text-white  font-semibold text-lg bg-purple-principal rounded-lg">
-            Proceed To Checkout
-          </button>
-        </section>
-      </section>
+      )}
       <Footer />
     </main>
   );
