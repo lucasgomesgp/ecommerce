@@ -36,7 +36,7 @@ export default function Wishlist() {
                             {wishItems?.map(({ id, image, price, quantity, title, colors, sizes }, index) => (
                                 <>
                                     <WishItem key={uuidv4()} id={id} title={title} colors={colors || []} src={image} price={price} quantity={quantity} sizes={sizes || []} />
-                                    {wishItems.length !== index && (<div className="bg-white-bar w-full h-[1px] mt-[30px]" />)}
+                                    {wishItems.length !== index && (<div className="bg-white-bar w-full h-[1px] mt-[30px]" key={uuidv4()} />)}
                                 </>
                             ))}
                         </div>

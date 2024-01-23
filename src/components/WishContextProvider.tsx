@@ -6,13 +6,13 @@ import { ReactNode, useEffect, useState } from "react";
 
 export function WishContextProvider({ children }: { children: ReactNode }) {
     const [wishItems, setWishItems] = useState<IWishItems[]>([]);
-    const { itemsStorage, setItemsOnStorage } = useWishStorage();
+    const {wishItemsOnStorage, setWishItemsOnStorage } = useWishStorage();
 
     useEffect(() => {
-        if (itemsStorage?.length >= 1) {
-            setWishItems(itemsStorage);
+        if (wishItemsOnStorage?.length >= 1) {
+            setWishItems(wishItemsOnStorage);
         } else {
-            setItemsOnStorage([]);
+            setWishItemsOnStorage([]);
         }
     }, []);
     return (

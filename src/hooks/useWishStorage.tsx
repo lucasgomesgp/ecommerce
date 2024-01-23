@@ -1,7 +1,7 @@
 import { IWishItems } from "@/utils/types/IWishItems";
 
 export function useWishStorage() {
-  function getItemsOnLocalStorage(){
+  function getWishItemsOnStorage(){
     try {
       const itemsSearch = localStorage.getItem("wishItems");
       if (itemsSearch) {
@@ -11,10 +11,10 @@ export function useWishStorage() {
       console.log("Error on search localStorage item", err);
     }
   }
-  let itemsStorage: IWishItems[] = getItemsOnLocalStorage();
+  let wishItemsOnStorage: IWishItems[] = getWishItemsOnStorage();
   
-  function setItemsOnStorage(value: [] | IWishItems[]) {
+  function setWishItemsOnStorage(value: [] | IWishItems[]) {
     localStorage.setItem("wishItems", JSON.stringify(value));
   }
-  return { itemsStorage, getItemsOnLocalStorage, setItemsOnStorage };
+  return { wishItemsOnStorage, getWishItemsOnStorage, setWishItemsOnStorage };
 }

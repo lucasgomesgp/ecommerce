@@ -21,7 +21,7 @@ interface Props {
 }
 export function Card({ id, title, image, subTitle, price, colors, sizes }: Props) {
   const { wishItems, setWishItems } = useContext(WishlistContext);
-  const { setItemsOnStorage } = useWishStorage();
+  const { setWishItemsOnStorage } = useWishStorage();
 
   function handleSetOnWishlist() {
     const currentItem: IWishItems = {
@@ -35,7 +35,7 @@ export function Card({ id, title, image, subTitle, price, colors, sizes }: Props
       sizes
     };
     setWishItems([...wishItems, currentItem]);
-    setItemsOnStorage([...wishItems, currentItem]);
+    setWishItemsOnStorage([...wishItems, currentItem]);
     toast.success("Added on wishlist");
   }
   return (
