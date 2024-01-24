@@ -13,9 +13,8 @@ import {v4 as uuidv4} from "uuid";
 
 export default function Wishlist() {
     const { wishItems } = useContext(WishlistContext);
-    
     return (
-        <main className="flex flex-col overflow-hidden ">
+        <main className="flex flex-col overflow-hidden" id="page">
             <Header />
             <PathPage title="Wishlist" />
             <MainSideBarContent>

@@ -1,7 +1,6 @@
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import Image from "next/image";
 import ButtonAddToCart from "./ButtonAddToCart";
-import { XIcon } from "@/svgs/x-icon";
 import { useWishStorage } from "@/hooks/useWishStorage";
 import { useContext, useState } from "react";
 import { WishlistContext } from "@/app/context/WishlistContext";
@@ -10,7 +9,9 @@ import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { useItemsStorage } from "@/hooks/useItemsStorage";
 import { ModalWishlist } from "./ModalWishlist";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
+import {XIconWhite} from "@/svgs/x-icon-white";
 import { v4 as uuidv4 } from "uuid";
+import { XIcon } from "@/svgs/x-icon";
 
 interface Props {
     id: number;
@@ -51,7 +52,7 @@ export function WishItem({ id, title, src, colors, quantity, price, sizes }: Pro
         setModalOptionsIsOpen(!modalOptionsIsOpen);
     }
 
-    function handleAddToCart(){
+    function handleAddToCart() {
         setItems([...items, itemFormatted]);
         setItemsOnStorage([...items, itemFormatted]);
         setModalOptionsIsOpen(false);
@@ -77,7 +78,7 @@ export function WishItem({ id, title, src, colors, quantity, price, sizes }: Pro
             <ModalWishlist modalStatus={modalOptionsIsOpen} setModalStatus={setModalOptionsIsOpen}>
                 <div className="flex flex-col justify-center items-center py-4 w-full">
                     <button className="self-end mr-2 bg-red-700 rounded-full p-2" onClick={() => { setModalOptionsIsOpen(false) }}>
-                        <XIcon />
+                        <XIconWhite />
                     </button>
                     <p className="font-medium text-2xl">Choose your options:</p>
                     <div className="flex flex-col mt-8 justify-center items-center gap-4 w-full">
@@ -112,11 +113,11 @@ export function WishItem({ id, title, src, colors, quantity, price, sizes }: Pro
                             <input type="number"
                                 value={itemFormatted.quantity} name="quantity"
                                 onChange={(event) => { setItemFormatted({ ...itemFormatted, quantity: Number(event.target.value) }) }}
-                                className="p-2 bg-gray-border rounded-md border"
+                                className="p-2 bg-gray-border rounded-md border text-center max-w-[150px] w-24"
                             />
                         </div>
                     </div>
-                    <button onClick={handleAddToCart} className="bg-green-500 p-4 mt-4 rounded-md ">
+                    <button onClick={handleAddToCart} className="bg-green-500 p-4 text-white font-bold mt-4 rounded-md ">
                         Confirm
                     </button>
                 </div>
