@@ -1,10 +1,17 @@
+"use client"
 import { colorsFilters } from "@/utils/constants/colorsFilters";
 import { FilterType } from "./FilterType";
 import { ColorFilter } from "./ColorFilter";
 import { sizesFilters } from "@/utils/constants/sizesFilters";
 import { SizeFilter } from "./SizeFilter";
+import { useState } from "react";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 
-export function Filters() {
+interface Props{
+  maxRangeValue?: number;
+}
+export function Filters({maxRangeValue}:Props) {
+  const [priceRangeValue, setPriceRangeValue] = useState("0");
   return (
     <details
       className="flex flex-col w-[295px] self-start relative border-gray-border-opacity"
@@ -19,18 +26,22 @@ export function Filters() {
       </div>
       <FilterType title="Price">
         <div className="flex items-center justify-center flex-col border border-t-gray-border-opacity  py-10">
-          <input type="range" id="range" className="overflow-visible" />
+          <p>{currencyFormatter(Number(priceRangeValue))}</p>
+          <input type="range" id="range" className="overflow-visible" value={priceRangeValue} max={maxRangeValue} onChange={(event) => { setPriceRangeValue(event.target.value) }} />
           <div className="flex items-center justify-center mt-5">
             <input
-              className="w-24 h-8 border rounded-lg border-gray-border"
+              className="w-24 h-8 border rounded-lg border-gray-border text-center outline-none"
               type="number"
               name="minValue"
+              min={0}
             />
             <input
-              className="w-24 h-8 border rounded-lg border-gray-border"
+              className="w-24 h-8 border rounded-lg border-gray-border text-center outline-none"
               type="number"
               name="maxValue"
-            />
+              min={0}
+              max={maxRangeValue}
+/>
           </div>
         </div>
       </FilterType>

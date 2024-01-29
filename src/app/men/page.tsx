@@ -12,13 +12,13 @@ export default async function Men() {
   const mensData = data.length >= 1 ? data.filter(({ attributes }) => {
     return attributes.category.includes("men");
   }) : [];
-  const dataByPrice = sortArray(data);
+  const dataByPrice = sortArray(mensData);
   return (
     <main className="flex flex-col w-full">
       <Header />
       <section className="flex flex-col">
         <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
-          <Filters />
+          <Filters maxRangeValue={dataByPrice[0].attributes.price}/>
           <div className="flex flex-col">
             <CriteriaArea title="Men’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">

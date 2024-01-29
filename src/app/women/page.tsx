@@ -23,7 +23,7 @@ export default async function Women() {
       <Header />
       <section className="flex flex-col justify-center w-full">
         <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center items-center">
-          <Filters />
+          <Filters  maxRangeValue={dataByPrice[0].attributes.price}/>
           <div className="flex flex-col">
             <CriteriaArea title="Women’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
@@ -35,7 +35,7 @@ export default async function Women() {
                       id={id}
                       title={title}
                       subTitle={subTitle}
-                      image={image?.data.attributes.url}
+                      image={image?.data.attributes.url || ""}
                       price={price}
                     />
                   )
@@ -52,16 +52,16 @@ export default async function Women() {
           titleTableSecondCol="Best Price"
         >
           <p className="text-xl font-bold text-gray-light lg:mt-[10px]">
-            Reexplore Women's Clothing Collection Online at Euphoria
+            Reexplore Women&aposs Clothing Collection Online at Euphoria
           </p>
           <p className="text-xl text-gray-light lg:mt-[5px]">
-            Women's Clothing – Are you searching for the best website to buy
+            Women&aposs Clothing – Are you searching for the best website to buy
             Clothing for Women online in India? Well, your search for the
             coolest and most stylish womens clothing ends here. From trendy
-            Casual Womens Wear Online shopping to premium quality cotton women's
+            Casual Womens Wear Online shopping to premium quality cotton women&aposs
             apparel,
             <span className="text-xl font-bold">Euphoria</span> has closet of
-            Women Collection covered with the latest and best designs of Women's
+            Women Collection covered with the latest and best designs of Women&aposs
             Clothing Online.
           </p>
           <p className="text-xl text-gray-light lg:mt-[3px]">
@@ -77,7 +77,7 @@ export default async function Women() {
             uncomfortable fashion. Today, a lady looks prettier when she is in
             Casual Womens Wear which is a comfortable outfit. Concerning this,
             <span className="text-xl font-bold">Euphoria</span> has a big fat
-            range of Stylish Women's Clothing that would make her the winner
+            range of Stylish Women&aposs Clothing that would make her the winner
             wherever she goes.
           </p>
           <p className="text-xl text-gray-light">

@@ -9,7 +9,7 @@ export function useItemsStorage() {
         return JSON.parse(itemsSearch);
       }
     } catch (err) {
-      console.log("Error on search localStorage item", err);
+      console.log("Error on search localStorage item");
     }
   }
   let itemsStorage: IShoppingCartItems[]  = getItemsOnLocalStorage();

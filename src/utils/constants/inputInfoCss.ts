@@ -1,0 +1,1 @@
+export const inputInfoCss = "bg-white-light rounded-lg pl-[22px] outline-none min-h-[54px] min-w-[420px]";
