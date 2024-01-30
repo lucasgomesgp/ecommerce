@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { register } from "swiper/element/bundle";
@@ -6,7 +7,7 @@ import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { ISlides } from "@/utils/types/ISlides";
 import Link from "next/link";
 import { info } from "@/utils/data/InfoSlides";
-import { useEffect, useState } from "react";
+import "../app/swiper-reset.css";
 register();
 
 export function Slider({ data }: ISlides) {
@@ -32,9 +33,9 @@ export function Slider({ data }: ISlides) {
     <Swiper
       slidesPerView={1}
       spaceBetween={30}
-      pagination={{ clickable: widthOfPage >= 1024 ? true : false }}
+      pagination={widthOfPage >= 1024 ?? { clickable: true }}
       navigation={widthOfPage >= 1024 ? true : false}
-      className={`max-w-full h-[716px] max-h-[716px] pb-4 font-coreSans`}
+      className={`max-w-full h-[300px] md:h-[500px] lg:h-[716px] lg:max-h-[716px] pb-4 font-coreSans`}
       centeredSlides={true}
       modules={[Autoplay, Navigation, EffectFade]}
       autoplay={{
@@ -48,13 +49,13 @@ export function Slider({ data }: ISlides) {
             <Image
               key={id}
               src={attributes.image.data.attributes.url}
-              className=" w-full h-[720px] bg-left-top"
+              className=" w-full h-[300px] md:h-[500px]  lg:h-[720px] bg-left-top"
               alt={`Slider image`}
               width={2000}
               height={1000}
               priority
             />
-            <div className="flex font-coreSans flex-col -bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
+            <section className="flex font-coreSans flex-col top-[50px] lg:-bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
               <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
                 {info[index].title}
               </p>
@@ -70,7 +71,7 @@ export function Slider({ data }: ISlides) {
               >
                 Shop Now
               </Link>
-            </div>
+            </section>
           </SwiperSlide>
         );
       })}

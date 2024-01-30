@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { causten, coreSans } from "@/utils/constants/localFonts";
 import ShoppingCartProvider from "@/components/ShopProvider";
+import { Montserrat } from "next/font/google";
 import { Toaster } from "sonner";
 
 import "./utils.css";
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   title: "Euphoria",
   description: "Place where you can buy and choose your favorite products",
 };
-
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["400", "500", "700", "800"] });
 export default async function RootLayout({
   children,
 }: {
@@ -28,7 +29,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-      <body className={`${causten.variable} ${coreSans.variable} font-causten`}>
+      <body className={`${montserrat.variable} ${causten.variable} ${coreSans.variable}  font-causten`}>
         <AuthClientProvider session={session}>
           <Toaster richColors position="top-right" closeButton />
           <ShoppingCartProvider>
