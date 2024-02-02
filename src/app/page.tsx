@@ -1,11 +1,12 @@
+import { Card } from "@/components/Card";
 import CardArrival from "@/components/CardArrival";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Slider } from "@/components/Slider";
 import { SlidesFeedbacks } from "@/components/SlidesFeedbacks";
-import { TextSafeZone } from "@/components/TextSafeZone";
 import { TitleWithBar } from "@/components/TitleWithBar";
 import { getSlides } from "@/services/getSlides";
+import { getWomenWithLimit } from "@/services/getWomenWithLimit";
 import { ArrowDown } from "@/svgs/arrow-down";
 import { ArrowDownBlack } from "@/svgs/arrow-down-black";
 import { categoriesForMen } from "@/utils/data/CategoriesForMen";
@@ -17,6 +18,7 @@ import Link from "next/link";
 
 export default async function Home() {
   const { data }: ISlides = await getSlides();
+  const womenData = await getWomenWithLimit();
   return (
     <main>
       <Header isLoginPage={false} />
@@ -214,6 +216,22 @@ export default async function Home() {
       <section className="flex flex-col justify-center items-center mt-[77px]">
         <div className="self-start md:pl-[70px]">
           <TitleWithBar title="In The Limelight" />
+          <div className="flex flex-wrap gap-[50px] justify-center lg:justify-start">
+            {womenData?.data?.length >= 1
+              &&
+              womenData.data.map(({ id, attributes }) => (
+                <Card key={id}
+                  id={id}
+                  image={attributes.image?.data.attributes.url || ""}
+                  price={attributes.price}
+                  subTitle={attributes.subTitle}
+                  title={attributes.title}
+                  colors={attributes.colors}
+                  sizes={attributes.sizes}
+                />
+              )
+              )}
+          </div>
         </div>
       </section>
       <section className="flex flex-col justify-center items-center mt-[77px] pb-[100px] overflow-hidden">
