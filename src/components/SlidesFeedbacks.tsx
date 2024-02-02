@@ -20,13 +20,13 @@ export function SlidesFeedbacks() {
             const indexCompare = index + 1;
             if (indexCompare <= currentNumber) {
                 return (
-                    <Star />
+                    <Star key={feedback.id} />
                 );
             }
             if (index === currentNumber && numberLength === 2) {
-                return (<StarHalf />);
+                return (<StarHalf key={feedback.id} />);
             }
-            return (<StarEmpty />);
+            return (<StarEmpty key={feedback.id} />);
         });
     }
     return (
