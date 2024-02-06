@@ -19,13 +19,13 @@ export function SideMenuUser() {
                 <p className="text-gray-light text-sm">Welcome to your Account</p>
             </div>
             <section className="flex flex-col">
-                <ButtonActionSideMenu title="My Orders" destination="/orders">
+                <ButtonActionSideMenu title="My Orders" destination="/user/orders">
                     <Orders />
                 </ButtonActionSideMenu>
-                <ButtonActionSideMenu title="Wishlist" destination="/wishlist">
+                <ButtonActionSideMenu title="Wishlist" destination="/user/wishlist">
                     <Wishlist />
                 </ButtonActionSideMenu>
-                <ButtonActionSideMenu title="My info" disabled={!isLoggedIn} destination="/info">
+                <ButtonActionSideMenu title="My info" disabled={!isLoggedIn} destination="/user/info">
                     <InfoUser />
                 </ButtonActionSideMenu>
                 <ButtonActionSideMenu title="Sign out" disabled={!isLoggedIn}>

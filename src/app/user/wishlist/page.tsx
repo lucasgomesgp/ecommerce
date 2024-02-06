@@ -6,7 +6,7 @@ import { MainSideBarContent } from "@/components/MainSideBarContent";
 import PathPage from "@/components/PathPage";
 import { WishItem } from "@/components/WishItem";
 import { useContext } from "react";
-import { WishlistContext } from "../context/WishlistContext";
+import { WishlistContext } from "../../context/WishlistContext";
 import Image from "next/image";
 import {v4 as uuidv4} from "uuid";
 

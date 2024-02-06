@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { causten, coreSans } from "@/utils/constants/localFonts";
 import ShoppingCartProvider from "@/components/ShopProvider";
 import { Montserrat } from "next/font/google";
 import { Toaster } from "sonner";
 
-import "./utils.css";
+import "../styles/utils.css";
 import "./globals.css";
 
 import "swiper/css";
@@ -15,6 +14,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { WishContextProvider } from "@/components/WishContextProvider";
 import AuthClientProvider from "@/components/AuthClientProvider";
+import { authOptions } from "@/utils/constants/authOptions";
 
 export const metadata: Metadata = {
   title: "Euphoria",

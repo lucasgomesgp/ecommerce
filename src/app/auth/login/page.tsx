@@ -5,10 +5,10 @@ import { Header } from "@/components/Header";
 import Image from "next/image";
 import { BtnSocialLogin } from "@/components/BtnSocialLogin";
 import { InputForm } from "@/components/InputForm";
-import { Eye } from "../../svgs/eye";
+import { Eye } from "../../../svgs/eye";
 import { ButtonAuth } from "@/components/ButtonAuth";
-import { Google } from "../../svgs/google";
-import { Github } from "../../svgs/github";
+import { Google } from "../../../svgs/google";
+import { Github } from "../../../svgs/github";
 import { signIn } from "next-auth/react";
 
 export default function Login() {

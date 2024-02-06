@@ -17,7 +17,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   const products: ProductDataArr = await getProducts();
   return (
     <main className="w-full h-full">
-      <Header />
       {product?.data?.id ?
         <MainProductSection product={{ data: product.data }} products={products} /> : (
           <div className="flex flex-col items-center justify-center w-full">
@@ -27,7 +26,6 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
         )}
-      <Footer />
     </main>
   );
 }

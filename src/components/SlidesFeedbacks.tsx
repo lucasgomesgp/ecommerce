@@ -7,7 +7,7 @@ import { Pagination } from "swiper/modules";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import '../app/swiper-feedback.css';
+import '../styles/swiper-feedback.css';
 import { Star } from "@/svgs/star";
 import { StarHalf } from "@/svgs/star-half";
 import { StarEmpty } from "@/svgs/star-empty";

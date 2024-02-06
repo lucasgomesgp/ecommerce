@@ -1,8 +1,6 @@
 import { Card } from "@/components/Card";
 import { CriteriaArea } from "@/components/CriteriaArea";
 import { Filters } from "@/components/Filters";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { sortArray } from "@/utils/functions/sortArray";
@@ -19,9 +17,7 @@ export default async function Women() {
   const dataByPrice = sortArray(data);
 
   return (
-    <main className="flex flex-col w-full">
-      <Header />
-      <section className="flex flex-col justify-center w-full">
+      <main className="flex flex-col justify-center w-full">
         <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center items-center">
           <Filters  maxRangeValue={dataByPrice[0].attributes.price}/>
           <div className="flex flex-col">
@@ -90,8 +86,6 @@ export default async function Women() {
           </p>
           <p className="text-xl font-bold text-gray-light">See More</p>
         </InfoTableDownSection>
-      </section>
-      <Footer />
-    </main>
+      </main>
   );
 }

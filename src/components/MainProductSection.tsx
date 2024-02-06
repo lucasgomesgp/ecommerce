@@ -13,14 +13,14 @@ import { DeliveryDetails } from "./DeliveryDetails";
 import ImageProduct from "./ImageProduct";
 import { SlidesImageProduct } from "./SlidesImageProduct";
 import { TitleWithBar } from "./TitleWithBar";
-import { ProductData, ProductDataArr } from "@/app/product/[id]/page";
+import { ProductData, ProductDataArr } from "@/app/shop/product/[id]/page";
 import { useContext, useState } from "react";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import { useItemsStorage } from "@/hooks/useItemsStorage";
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "sonner";
-import "../app/effects.css";
+import "../styles/effects.css";
 
 interface Props {
   product: ProductData;

@@ -51,10 +51,10 @@ export default async function Home() {
         <div className="self-start md:pl-[70px]">
           <TitleWithBar title="New Arrival" />
           <div className="flex flex-wrap gap-[38px] mt-[70px]">
-            <CardArrival link="/joggers" imageSrc="/assets/knitted_joggers.png" name="Knitted Joggers" />
-            <CardArrival link="/men" imageSrc="/assets/full_sleeve.png" name="Full Sleeve" />
-            <CardArrival link="/men" imageSrc="/assets/active_tshirt.png" name="Active T-Shirts" />
-            <CardArrival link="/women" imageSrc="/assets/urban_shirt.png" name="Urban Shirts" />
+            <CardArrival link="/shop/joggers" imageSrc="/assets/knitted_joggers.png" name="Knitted Joggers" />
+            <CardArrival link="/shop/men" imageSrc="/assets/full_sleeve.png" name="Full Sleeve" />
+            <CardArrival link="/shop/men" imageSrc="/assets/active_tshirt.png" name="Active T-Shirts" />
+            <CardArrival link="/shop/women" imageSrc="/assets/urban_shirt.png" name="Urban Shirts" />
           </div>
         </div>
       </section>
@@ -77,7 +77,7 @@ export default async function Home() {
                 <div className="flex justify-center lg:mb-[40px] lg:w-[140px]">
                   <ArrowDown />
                 </div>
-                <Link href={"/men"} className="rounded-[4px] text-xs py-[10px] px-[25px] border border-white bg-transparent">
+                <Link href={"/shop/men"} className="rounded-[4px] text-xs py-[10px] px-[25px] border border-white bg-transparent">
                   SHOP NOW
                 </Link>
               </div>
@@ -143,7 +143,7 @@ export default async function Home() {
                 <div className="self-center lg:mb-[43px]">
                   <ArrowDownBlack />
                 </div>
-                <Link href={"/men"} className="hover:opacity-80 text-xs transition-opacity text-center rounded-[4px] w-full py-[11px]  border-2 border-gray-text-menu bg-transparent">
+                <Link href={"/shop/men"} className="hover:opacity-80 text-xs transition-opacity text-center rounded-[4px] w-full py-[11px]  border-2 border-gray-text-menu bg-transparent">
                   SHOP NOW
                 </Link>
               </div>
@@ -164,7 +164,7 @@ export default async function Home() {
                 <div className="self-center lg:mb-[44px]">
                   <ArrowDownBlack />
                 </div>
-                <Link href={"/men"} className="hover:opacity-80 text-xs transition-opacity text-center rounded-[4px] w-full py-[11px]  border-2 border-gray-text-menu bg-transparent">
+                <Link href={"/shop/men"} className="hover:opacity-80 text-xs transition-opacity text-center rounded-[4px] w-full py-[11px]  border-2 border-gray-text-menu bg-transparent">
                   SHOP NOW
                 </Link>
               </div>
@@ -196,7 +196,7 @@ export default async function Home() {
           <TitleWithBar title="Categories For Men" />
           <div className="flex justify-center items-center flex-wrap mt-[70px] lg:grid lg:grid-cols-4  gap-[50px]">
             {categoriesForMen.map(({ id, imageSrc, title, subTitle }) => (
-              <Link href="/men" key={id} className="flex flex-col gap-[14px] hover:opacity-80 transition-opacity">
+              <Link href="/shop/men" key={id} className="flex flex-col gap-[14px] hover:opacity-80 transition-opacity">
                 <Image src={imageSrc} alt={title} height={393} width={270} />
                 <div className="flex flex-col">
                   <p className="text-black-title font-causten font-bold">{title}</p>

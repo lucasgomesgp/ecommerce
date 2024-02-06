@@ -7,7 +7,7 @@ import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { ISlides } from "@/utils/types/ISlides";
 import Link from "next/link";
 import { info } from "@/utils/data/InfoSlides";
-import "../app/swiper-reset.css";
+import "../styles/swiper-reset.css";
 register();
 
 export function Slider({ data }: ISlides) {

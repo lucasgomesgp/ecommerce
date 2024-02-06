@@ -2,28 +2,12 @@
 import React, { FormEvent, useCallback } from "react";
 import { states } from "@/utils/data/StatesNames";
 import { LabelInput } from "./LabelInput";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { inputInfoCss } from "@/utils/constants/inputInfoCss";
-
-const formSchema = z.object({
-    firstName: z.string().min(2, { message: "First Name is required" }),
-    lastName: z.string().min(2,
-        { message: "Last Name is required" }),
-    country: z.string().min(2, { message: "Country Name is required" }),
-    companyName: z.string(),
-    streetAddress: z.string().min(4, { message: "Street Address is required" }),
-    apartment: z.string(),
-    phone: z.string().min(2, { message: "Phone is required" }),
-    city: z.string().min(2, { message: "City is required" }),
-    state: z.string().min(2, { message: "State is required" }),
-    postalCode: z.string().min(5, { message: "Postal Code is required" }).max(5),
-    deliveryInstruction: z.string(),
-    shippingAddress: z.boolean(),
-    billingAddress: z.boolean(),
-});
+import { formSchema } from "@/app/schemas/form-schema";
+import { z } from "zod";
 
 type AddressSchema = z.infer<typeof formSchema>;
 export function FormAddress() {

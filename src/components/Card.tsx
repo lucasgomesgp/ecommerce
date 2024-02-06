@@ -40,7 +40,7 @@ export function Card({ id, title, image, subTitle, price, colors, sizes }: Props
   }
   return (
     <Link
-      href={`/product/${id}`}
+      href={`/shop/product/${id}`}
       className="w-[282px] relative hover:opacity-80 transition-opacity max-h-[441px]"
     >
       {image && (

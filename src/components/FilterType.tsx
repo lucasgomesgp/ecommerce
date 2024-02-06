@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "../app/filterType.css";
+import "../styles/filterType.css";
 interface Props {
   title: string;
   children?: ReactNode;

@@ -48,19 +48,19 @@ export function Header({ isLoginPage = false }: Props) {
       >
         <ul className="flex flex-wrap gap-10 text-gray-light ">
           <li>
-            <Link href="/shop">Shop</Link>
+            <Link href="/user/cart">Shop</Link>
           </li>
           <li>
-            <Link href="/men">Men</Link>
+            <Link href="/shop/men">Men</Link>
           </li>
           <li>
-            <Link href="/women">Women</Link>
+            <Link href="/shop/women">Women</Link>
           </li>
           <li>
-            <Link href="/combos">Combos</Link>
+            <Link href="/shop/combos">Combos</Link>
           </li>
           <li>
-            <Link href="/joggers">Joggers</Link>
+            <Link href="/shop/joggers">Joggers</Link>
           </li>
         </ul>
       </nav>
@@ -82,8 +82,8 @@ export function Header({ isLoginPage = false }: Props) {
         <ButtonAuth text="Sign Up" href="/" />
       </div>
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
-        <LinkMenu href="/wishlist " backgroundIsPurple={pathname === "/wishlist"}>
-          <HeartIcon width={20} height={20} color={pathname === "/wishlist" ? "#FFF" : "#000"} />
+        <LinkMenu href="/user/wishlist " backgroundIsPurple={pathname === "/user/wishlist"}>
+          <HeartIcon width={20} height={20} color={pathname === "/user/wishlist" ? "#FFF" : "#000"} />
         </LinkMenu>
         <ButtonMenu
           anotherClassName="relative"
@@ -92,7 +92,7 @@ export function Header({ isLoginPage = false }: Props) {
             if (user) {
               setToggleProfileInfo(!toogleProfileInfo);
             } else {
-              router.push("/login");
+              router.push("/auth/login");
             }
           }}
           onKeyDown={(e) => {
@@ -120,7 +120,7 @@ export function Header({ isLoginPage = false }: Props) {
             >
               <Link
                 className={`${settingsClass} bg-white-light  rounded-t-md `}
-                href="/info"
+                href="/user/info"
               >
                 <Cog6ToothIcon width={20} height={20} />
                 Settings
@@ -141,8 +141,8 @@ export function Header({ isLoginPage = false }: Props) {
             </div>
           )}
         </ButtonMenu>
-        <LinkMenu href="/shop" backgroundIsPurple={pathname === "/shop"} style={{ position: "relative" }}>
-          <ShoppingCartIcon width={20} height={20} color={pathname === "/shop" ? "#FFF" : "#000"} />
+        <LinkMenu href="/user/cart" backgroundIsPurple={pathname === "/user/cart"} style={{ position: "relative" }}>
+          <ShoppingCartIcon width={20} height={20} color={pathname === "/user/cart" ? "#FFF" : "#000"} />
           {items?.length >= 1 && (
             <div className="absolute transition-all -top-2 -right-2 w-[20px] h-[20px] rounded-full font-thin p-2 font-coreSans flex items-center justify-center bg-red-700 text-white text-xs">
               {totalItemsOnCart}

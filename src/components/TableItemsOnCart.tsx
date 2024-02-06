@@ -133,7 +133,7 @@ export function TableItemsOnCart() {
                     </div>
                     <h2 className="font-semibold font-coreSans mb-3 text-4xl">Your cart is empty and sad :(</h2>
                     <p className="text-gray-light font-coreSans">Add something to make it happy!</p>
-                    <ButtonBackToHome title="Continue Shopping" path="/men" />
+                    <ButtonBackToHome title="Continue Shopping" path="/shop/men" />
                 </div>
             )
             }
