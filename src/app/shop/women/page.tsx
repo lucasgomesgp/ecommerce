@@ -15,7 +15,6 @@ export default async function Women() {
     category: "women",
   });
   const dataByPrice = sortArray(data);
-
   return (
       <main className="flex flex-col justify-center w-full">
         <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center items-center">
@@ -25,14 +24,16 @@ export default async function Women() {
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
               {data.length >= 1 && (
                 data.map(
-                  ({ id, attributes: { title, subTitle, image, price } }) => (
+                  ({ id, attributes }) => (
                     <Card
                       key={id}
                       id={id}
-                      title={title}
-                      subTitle={subTitle}
-                      image={image?.data.attributes.url || ""}
-                      price={price}
+                      title={attributes.title}
+                      subTitle={attributes.subTitle}
+                      image={attributes.image?.data.attributes.url || ""}
+                      price={attributes.price}
+                      colors={attributes.colors}
+                      sizes={attributes.sizes}
                     />
                   )
                 )

@@ -17,7 +17,6 @@ export function FormAddress() {
     });
     const onSubmit = (data: AddressSchema) => {
         alert("Chegou!");
-        console.log(data);
         toast.success("Info sended");
     }
     function handleCancelSendForm() {

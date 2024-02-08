@@ -21,16 +21,16 @@ export default async function Men() {
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
               {mensData?.length >= 1 && (
                 mensData?.map(
-                  ({ id, attributes: { title, subTitle, price, image, colors, sizes } }) => (
+                  ({ id, attributes }) => (
                     <Card
                       key={id}
                       id={id}
-                      title={title}
-                      subTitle={subTitle}
-                      price={price}
-                      image={image?.data.attributes.url || ""}
-                      colors={colors}
-                      sizes={sizes}
+                      title={attributes.title}
+                      subTitle={attributes.subTitle}
+                      price={attributes.price}
+                      image={attributes.image?.data.attributes.url || ""}
+                      colors={attributes.colors}
+                      sizes={attributes.sizes}
                     />
                   )
                 )

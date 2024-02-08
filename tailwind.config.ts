@@ -20,9 +20,10 @@ const config: Config = {
         "gray-border-one": "#66666640",
         "gray-icon": "#404040",
         "gray-border": "#BEBCBD",
-        "gray-card":"#E4E4E4",
+        "gray-card": "#E4E4E4",
         "gray-border-opacity": "#BEBCBD66",
         "purple-principal": "#8A33FD",
+        "overlay-modal": "rgba(0,0,0,0.4)",
       },
     },
     fontFamily: {

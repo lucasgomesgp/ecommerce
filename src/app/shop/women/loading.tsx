@@ -8,8 +8,7 @@ export default function Loading() {
 
   return (
     <main className="flex flex-col w-full">
-      <Header />
-        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center mb-16">
+      <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center mb-16">
         <Filters />
         <div className="flex flex-col">
           <CriteriaArea title="Women's Clothing" />
@@ -23,7 +22,6 @@ export default function Loading() {
           </div>
         </div>
       </section>
-      <Footer />
     </main>
   );
 }

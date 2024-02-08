@@ -3,7 +3,7 @@ import { WishlistContext } from "@/app/context/WishlistContext";
 import { useWishStorage } from "@/hooks/useWishStorage";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { IWishItems } from "@/utils/types/IWishItems";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { Heart } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
@@ -55,10 +55,10 @@ export function Card({ id, title, image, subTitle, price, colors, sizes }: Props
           priority
         />
       )}
-      <button className="absolute top-[26px] right-5 flex border hover:bg-red-700 transition-all items-center justify-center rounded-full bg-white w-8 h-8"
+      <button className="absolute top-[26px] right-5 flex  hover:bg-red-700 group transition-all items-center justify-center rounded-full bg-white w-8 h-8"
         onClick={handleSetOnWishlist}
       >
-        <HeartIcon width={20} height={20} color="#3C4242" />
+        <Heart width={20} height={20} className="text-black group-hover:text-white" />
       </button>
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-1">

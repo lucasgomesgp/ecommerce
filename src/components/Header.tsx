@@ -9,7 +9,6 @@ import {
   UserIcon,
   ShoppingCartIcon,
   Cog6ToothIcon,
-  ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
@@ -19,6 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { settingsClass } from "@/utils/constants/settingsClass";
 import { LinkMenu } from "./LinkMenu";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
+import { SignOut } from "@/svgs/sign-out";
 
 interface Props {
   isLoginPage?: boolean;
@@ -30,15 +30,15 @@ export function Header({ isLoginPage = false }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const { items } = useContext(ShoppingCartContext);
-  
-  function getTotalItemsOnCart(){
+
+  function getTotalItemsOnCart() {
     let value = 0;
-    items.map((current)=> {value+= current.quantity});
+    items.map((current) => { value += current.quantity });
     return value;
   }
-  let totalItemsOnCart =  getTotalItemsOnCart();
+  let totalItemsOnCart = getTotalItemsOnCart();
   return (
-    <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-50 bg-white">
+    <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-30 bg-white">
       <Link href={"/"}>
         <Logo />
       </Link>
@@ -131,11 +131,7 @@ export function Header({ isLoginPage = false }: Props) {
                   signOut();
                 }}
               >
-                <ArrowLeftOnRectangleIcon
-                  width={20}
-                  height={20}
-                  color="#FFFFFF"
-                />
+                <SignOut />
                 Logout
               </button>
             </div>
