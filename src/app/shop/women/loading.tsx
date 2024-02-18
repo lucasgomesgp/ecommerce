@@ -1,11 +1,8 @@
 import { CriteriaArea } from "@/components/CriteriaArea";
 import { Filters } from "@/components/Filters";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { SkeletonCard } from "@/components/SkeletonCard";
 
 export default function Loading() {
-
   return (
     <main className="flex flex-col w-full">
       <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center mb-16">

@@ -3,24 +3,29 @@ import { CriteriaArea } from "@/components/CriteriaArea";
 import { Filters } from "@/components/Filters";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
 import { getProductByCategory } from "@/services/getProductByCategory";
+import { searchInput } from "@/utils/functions/searchInput";
 import { sortArray } from "@/utils/functions/sortArray";
 
-export default async function Men() {
-  const { data } = await getProductByCategory({ category: "men"});
-  const mensData = data.length >= 1 ? data.filter(({ attributes }) => {
-    return attributes.category.includes("men");
-  }) : [];
-  const dataByPrice = sortArray(mensData);
+export default async function Men(
+  { searchParams }:
+    { searchParams: { query?: string; page?: string } }
+) {
+  const queryInputSearch = searchParams?.query || "";
+
+  const { data } = await getProductByCategory({ category: "men" });
+
+  let dataFiltered = searchInput(data, "men", queryInputSearch);
+  const dataByPrice = sortArray(dataFiltered);
   return (
     <main className="flex flex-col w-full">
       <section className="flex flex-col">
         <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
-          <Filters maxRangeValue={dataByPrice[0].attributes.price}/>
+          <Filters maxRangeValue={dataByPrice[0]?.attributes.price} />
           <div className="flex flex-col">
             <CriteriaArea title="Men’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {mensData?.length >= 1 && (
-                mensData?.map(
+              {dataFiltered?.length >= 1 ? (
+                dataFiltered?.map(
                   ({ id, attributes }) => (
                     <Card
                       key={id}
@@ -34,7 +39,7 @@ export default async function Men() {
                     />
                   )
                 )
-              )}
+              ) : <p>Empty data</p>}
             </div>
           </div>
         </section>

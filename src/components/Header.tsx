@@ -13,7 +13,7 @@ import {
 import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { settingsClass } from "@/utils/constants/settingsClass";
 import { LinkMenu } from "./LinkMenu";
@@ -22,9 +22,10 @@ import { SignOut } from "@/svgs/sign-out";
 
 interface Props {
   isLoginPage?: boolean;
+  children?: ReactNode;
 }
 
-export function Header({ isLoginPage = false }: Props) {
+export function Header({ children, isLoginPage = false }: Props) {
   const { data: session } = useSession();
   const [toogleProfileInfo, setToggleProfileInfo] = useState(false);
   const router = useRouter();
@@ -64,19 +65,7 @@ export function Header({ isLoginPage = false }: Props) {
           </li>
         </ul>
       </nav>
-      <form>
-        <div className="relative">
-          <input
-            type="text"
-            name="elementSearch"
-            placeholder="Search"
-            className="w-full px-10 py-3 bg-white-light  rounded-lg outline-none"
-          />
-          <button className="absolute left-5 top-1/3">
-            <MagnifyingGlassIcon width={14} height={14} color="#807D7E" />
-          </button>
-        </div>
-      </form>
+       {children}
       <div className={`${!isLoginPage ? "hidden" : "flex gap-7"} `}>
         <ButtonAuth isActive text="Login" href="/login" />
         <ButtonAuth text="Sign Up" href="/" />

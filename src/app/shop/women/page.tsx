@@ -3,6 +3,7 @@ import { CriteriaArea } from "@/components/CriteriaArea";
 import { Filters } from "@/components/Filters";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
 import { getProductByCategory } from "@/services/getProductByCategory";
+import { searchInput } from "@/utils/functions/searchInput";
 import { sortArray } from "@/utils/functions/sortArray";
 import { IProduct } from "@/utils/types/IProducts";
 
@@ -10,20 +11,23 @@ interface ResponseData {
   data: IProduct[];
 }
 
-export default async function Women() {
+export default async function Women({ searchParams }: { searchParams: { query?: string; page: string } }) {
   const { data }: ResponseData = await getProductByCategory({
     category: "women",
   });
   const dataByPrice = sortArray(data);
+  const queryWomenInput = searchParams?.query || "";
+  const dataFiltered = searchInput(data, "women", queryWomenInput);
   return (
-      <main className="flex flex-col justify-center w-full">
-        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center items-center">
-          <Filters  maxRangeValue={dataByPrice[0].attributes.price}/>
+    <main className="flex flex-col w-full">
+      <section className="flex flex-col">
+        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
+          <Filters maxRangeValue={dataByPrice[0].attributes.price} />
           <div className="flex flex-col">
             <CriteriaArea title="Women’s Clothing" />
             <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {data.length >= 1 && (
-                data.map(
+              {dataFiltered.length >= 1 && (
+                dataFiltered.map(
                   ({ id, attributes }) => (
                     <Card
                       key={id}
@@ -37,7 +41,7 @@ export default async function Women() {
                     />
                   )
                 )
-              ) }
+              )}
             </div>
           </div>
         </section>
@@ -87,6 +91,7 @@ export default async function Women() {
           </p>
           <p className="text-xl font-bold text-gray-light">See More</p>
         </InfoTableDownSection>
-      </main>
+      </section>
+    </main>
   );
 }

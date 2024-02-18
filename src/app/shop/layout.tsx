@@ -1,11 +1,11 @@
 import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { HeaderFilter } from "@/components/HeaderFilter";
 import { ReactNode } from "react";
 
 export default function ShopLayout({ children }: { children: ReactNode }) {
     return (
         <>
-            <Header />
+            <HeaderFilter />
             {children}
             <Footer />
         </>

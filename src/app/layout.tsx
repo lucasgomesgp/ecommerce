@@ -34,7 +34,7 @@ export default async function RootLayout({
           <Toaster richColors position="top-right" closeButton />
           <ShoppingCartProvider>
             <WishContextProvider>
-              {children}
+                {children}
             </WishContextProvider>
           </ShoppingCartProvider>
         </AuthClientProvider>
