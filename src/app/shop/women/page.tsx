@@ -6,6 +6,7 @@ import { getProductByCategory } from "@/services/getProductByCategory";
 import { searchInput } from "@/utils/functions/searchInput";
 import { sortArray } from "@/utils/functions/sortArray";
 import { IProduct } from "@/utils/types/IProducts";
+import Image from "next/image";
 
 interface ResponseData {
   data: IProduct[];
@@ -21,13 +22,13 @@ export default async function Women({ searchParams }: { searchParams: { query?: 
   return (
     <main className="flex flex-col w-full">
       <section className="flex flex-col">
-        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
-          <Filters maxRangeValue={dataByPrice[0].attributes.price} />
-          <div className="flex flex-col">
-            <CriteriaArea title="Women’s Clothing" />
-            <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {dataFiltered.length >= 1 && (
-                dataFiltered.map(
+        {dataFiltered.length >= 1 && (
+          <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
+            <Filters maxRangeValue={dataByPrice[0].attributes.price} />
+            <div className="flex flex-col">
+              <CriteriaArea title="Women’s Clothing" />
+              <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
+                {dataFiltered?.map(
                   ({ id, attributes }) => (
                     <Card
                       key={id}
@@ -40,11 +41,17 @@ export default async function Women({ searchParams }: { searchParams: { query?: 
                       sizes={attributes.sizes}
                     />
                   )
-                )
-              )}
+                )}
+              </div>
             </div>
+          </section>
+        )}
+        {dataFiltered.length === 0 && (
+          <div className="flex mt-4 gap-4 flex-col justify-center items-center w-full">
+            <p className="font-causten text-lg">No products were found when searching for "{queryWomenInput}"</p>
+            <Image src={"/assets/empty-data.svg"} alt="Empty icon" width={700} height={1200} className="w-full h-full max-w-[600px]" />
           </div>
-        </section>
+        )}
         <InfoTableDownSection
           data={dataByPrice}
           titleFirstArea="Clothing for Woman Online in India"

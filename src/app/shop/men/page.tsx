@@ -5,6 +5,7 @@ import { InfoTableDownSection } from "@/components/InfoTableDownSection";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { searchInput } from "@/utils/functions/searchInput";
 import { sortArray } from "@/utils/functions/sortArray";
+import Image from "next/image";
 
 export default async function Men(
   { searchParams }:
@@ -19,13 +20,13 @@ export default async function Men(
   return (
     <main className="flex flex-col w-full">
       <section className="flex flex-col">
-        <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
-          <Filters maxRangeValue={dataByPrice[0]?.attributes.price} />
-          <div className="flex flex-col">
-            <CriteriaArea title="Men’s Clothing" />
-            <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
-              {dataFiltered?.length >= 1 ? (
-                dataFiltered?.map(
+        {dataFiltered?.length >= 1 && (
+          <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
+            <Filters maxRangeValue={dataByPrice[0]?.attributes.price} />
+            <div className="flex flex-col">
+              <CriteriaArea title="Men’s Clothing" />
+              <div className="flex flex-wrap items-center justify-center xl:grid xl:grid-cols-3 gap-6">
+                {dataFiltered?.map(
                   ({ id, attributes }) => (
                     <Card
                       key={id}
@@ -39,10 +40,17 @@ export default async function Men(
                     />
                   )
                 )
-              ) : <p>Empty data</p>}
+                }
+              </div>
             </div>
+          </section>
+        )}
+        {dataFiltered.length === 0 && (
+          <div className="flex mt-4 gap-4 flex-col justify-center items-center w-full">
+            <p className="font-causten text-lg">No products were found when searching for "{queryInputSearch}"</p>
+            <Image src={"/assets/empty-data.svg"} alt="Empty icon" width={700} height={1200} className="w-full h-full max-w-[600px]" />
           </div>
-        </section>
+        )}
         <InfoTableDownSection
           data={dataByPrice}
           titleFirstArea="Clothing for Men Online in India"
