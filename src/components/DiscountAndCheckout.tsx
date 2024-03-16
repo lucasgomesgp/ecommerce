@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, useContext, useEffect, useState } from 'react'
+import { FormEvent, useContext, useState } from 'react'
 import { ShoppingCartContext } from '@/app/context/ShoppingCartContext';
 import { useItemsStorage } from '@/hooks/useItemsStorage';
 import { currencyFormatter } from '@/utils/functions/currencyFormatter'

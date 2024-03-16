@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ButtonMenu } from "./ButtonMenu";
 import {
   HeartIcon,
-  MagnifyingGlassIcon,
   UserIcon,
   ShoppingCartIcon,
   Cog6ToothIcon,
@@ -13,12 +12,13 @@ import {
 import { ButtonAuth } from "./ButtonAuth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { settingsClass } from "@/utils/constants/settingsClass";
 import { LinkMenu } from "./LinkMenu";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { SignOut } from "@/svgs/sign-out";
+import { toast } from "sonner";
 
 interface Props {
   isLoginPage?: boolean;
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function Header({ children, isLoginPage = false }: Props) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [toogleProfileInfo, setToggleProfileInfo] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -36,6 +36,13 @@ export function Header({ children, isLoginPage = false }: Props) {
     let value = 0;
     items.map((current) => { value += current.quantity });
     return value;
+  }
+  async function handleSignOut(){
+    try{
+      await signOut();
+    }catch(err){
+      toast.error("Error on Sign out user");
+    }
   }
   let totalItemsOnCart = getTotalItemsOnCart();
   return (
@@ -65,11 +72,17 @@ export function Header({ children, isLoginPage = false }: Props) {
           </li>
         </ul>
       </nav>
-       {children}
-      <div className={`${!isLoginPage ? "hidden" : "flex gap-7"} `}>
-        <ButtonAuth isActive text="Login" href="/login" />
-        <ButtonAuth text="Sign Up" href="/" />
-      </div>
+      {children}
+      {session?.user && isLoginPage ?
+        (<button onClick={handleSignOut} className="bg-red-500 text-white w-36 py-3 border rounded-lg text-center">
+          Sair
+        </button>
+        ) : (
+          <div className={`${!isLoginPage ? "hidden" : "flex gap-7"} `}>
+            <ButtonAuth isActive text="Login" href="/auth/login" />
+            <ButtonAuth text="Sign Up" href="/auth/signup" />
+          </div>
+        )}
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
         <LinkMenu href="/user/wishlist " backgroundIsPurple={pathname === "/user/wishlist"}>
           <HeartIcon width={20} height={20} color={pathname === "/user/wishlist" ? "#FFF" : "#000"} />
@@ -77,8 +90,7 @@ export function Header({ children, isLoginPage = false }: Props) {
         <ButtonMenu
           anotherClassName="relative"
           onClick={() => {
-            const user = session?.user?.name;
-            if (user) {
+            if (status === "authenticated") {
               setToggleProfileInfo(!toogleProfileInfo);
             } else {
               router.push("/auth/login");
@@ -92,7 +104,7 @@ export function Header({ children, isLoginPage = false }: Props) {
         >
           {session?.user?.image ? (
             <Image
-              src={session?.user?.image}
+              src={session?.user?.image || ""}
               width={40}
               height={40}
               alt="User profile"
@@ -102,7 +114,7 @@ export function Header({ children, isLoginPage = false }: Props) {
           ) : (
             <UserIcon width={20} height={20} />
           )}
-          {toogleProfileInfo && session?.user?.image && (
+          {toogleProfileInfo && session?.user && (
             <div
               className="border z-[99] w-40 min-h-20 absolute -bottom-[150px] right-0 flex flex-col shadow-lg rounded-md before:absolute before:w-8 before:h-8 before:bg-white-light before:right-0 before:-top-[30px] before:shadow-2xl"
               id="triangle"
@@ -116,10 +128,7 @@ export function Header({ children, isLoginPage = false }: Props) {
               </Link>
               <button
                 className={`${settingsClass} bg-red-500 text-white rounded-b-md `}
-                onClick={() => {
-                  signOut();
-                }}
-              >
+                onClick={handleSignOut}>
                 <SignOut />
                 Logout
               </button>

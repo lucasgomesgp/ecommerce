@@ -1,5 +1,5 @@
 "use client"
-import React, { FormEvent, useCallback } from "react";
+import React, { FormEvent, useCallback, useState } from "react";
 import { states } from "@/utils/data/StatesNames";
 import { LabelInput } from "./LabelInput";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,16 +8,35 @@ import { toast } from "sonner";
 import { inputInfoCss } from "@/utils/constants/inputInfoCss";
 import { formSchema } from "@/app/schemas/form-schema";
 import { z } from "zod";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { LoadingSpinner } from "./LoadingSpinner";
 
-type AddressSchema = z.infer<typeof formSchema>;
+export type AddressSchema = z.infer<typeof formSchema>;
 export function FormAddress() {
-
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<AddressSchema>({
         resolver: zodResolver(formSchema),
     });
-    const onSubmit = (data: AddressSchema) => {
-        alert("Chegou!");
-        toast.success("Info sended");
+    const { data: session } = useSession();
+    const onSubmit = async (data: AddressSchema) => {
+        if (session?.user.email) {
+            try {
+                setIsLoading(true);
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/address`, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                });
+                toast.success("Info updated");
+                router.push("/user/info");
+                router.refresh();
+            } catch (err) {
+                toast.error("Error on update info");
+            } finally {
+                setIsLoading(false);
+            }
+        }
     }
     function handleCancelSendForm() {
         reset();
@@ -152,8 +171,14 @@ export function FormAddress() {
                 </div>
             </div>
             <div className="mt-[60px] flex gap-[30px]">
-                <button type="submit" className="bg-purple-principal rounded-md px-[40px] py-3 text-white font-semibold hover:opacity-70 transition-all">Save</button>
-                <button className="font-semibold hover:opacity-70 transition-all rounded-md bg-white-light text-gray-light px-[40px] py-3" onClick={handleCancelSendForm}>Cancel</button>
+                <button disabled={isLoading} type="submit" className="bg-purple-principal rounded-md px-[40px] py-3 text-white font-semibold hover:opacity-70 transition-all">
+                    {isLoading ? (
+                        <LoadingSpinner />
+                    ) : (
+                        <span>Save</span>
+                    )}
+                </button>
+                <button disabled={isLoading} className="font-semibold hover:opacity-70 transition-all rounded-md bg-white-light text-gray-light px-[40px] py-3" onClick={handleCancelSendForm}>Cancel</button>
             </div>
         </form>
     );

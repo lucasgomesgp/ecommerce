@@ -9,7 +9,7 @@ import { Wishlist } from "@/svgs/wishlist";
 export function SideMenuUser() {
     const { data: session } = useSession();
     const isLoggedIn = session?.user?.email;
-   
+
     return (
         <section className="flex flex-col gap-10">
             <div className="flex flex-col items-start justify-center">
@@ -28,7 +28,7 @@ export function SideMenuUser() {
                 <ButtonActionSideMenu title="My info" disabled={!isLoggedIn} destination="/user/info">
                     <InfoUser />
                 </ButtonActionSideMenu>
-                <ButtonActionSideMenu title="Sign out" disabled={!isLoggedIn}>
+                <ButtonActionSideMenu title="Sign out" disabled={!isLoggedIn} onClick={() => { signOut() }}>
                     <SignOut />
                 </ButtonActionSideMenu>
             </section>

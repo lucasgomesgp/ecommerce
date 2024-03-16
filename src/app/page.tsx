@@ -9,16 +9,19 @@ import { getSlides } from "@/services/getSlides";
 import { getWomenWithLimit } from "@/services/getWomenWithLimit";
 import { ArrowDown } from "@/svgs/arrow-down";
 import { ArrowDownBlack } from "@/svgs/arrow-down-black";
+import { authOptions } from "@/utils/constants/authOptions";
 import { categoriesForMen } from "@/utils/data/CategoriesForMen";
 import { ISlides } from "@/utils/types/ISlides";
 import { ArrowLongRightIcon } from "@heroicons/react/20/solid";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-
+import { v4 as uuidv4 } from "uuid";
 
 export default async function Home() {
   const { data }: ISlides = await getSlides();
   const womenData = await getWomenWithLimit();
+  const session = await getServerSession(authOptions);
   return (
     <main>
       <Header isLoginPage={false} />
@@ -196,7 +199,7 @@ export default async function Home() {
           <TitleWithBar title="Categories For Men" />
           <div className="flex justify-center items-center flex-wrap mt-[70px] lg:grid lg:grid-cols-4  gap-[50px]">
             {categoriesForMen.map(({ id, imageSrc, title, subTitle }) => (
-              <Link href="/shop/men" key={id} className="flex flex-col gap-[14px] hover:opacity-80 transition-opacity">
+              <Link href="/shop/men" key={imageSrc + uuidv4()} className="flex flex-col gap-[14px] hover:opacity-80 transition-opacity">
                 <Image src={imageSrc} alt={title} height={393} width={270} />
                 <div className="flex flex-col">
                   <p className="text-black-title font-causten font-bold">{title}</p>
@@ -220,7 +223,7 @@ export default async function Home() {
             {womenData?.data?.length >= 1
               &&
               womenData.data.map(({ id, attributes }) => (
-                <Card key={id}
+                <Card key={uuidv4() + attributes.image?.data.attributes.url}
                   id={id}
                   image={attributes.image?.data.attributes.url || ""}
                   price={attributes.price}

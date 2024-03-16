@@ -5,7 +5,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement>{
 }
 export function BtnSocialLogin({ children, ...rest }: Props) {
   return (
-    <button className="flex items-center justify-center gap-3 border py-4 rounded-lg border-gray-text-menu text-purple-principal w-[567px] max-w-[567px] hover:bg-purple-principal hover:text-white hover:opacity-90 transition-all" {...rest}>
+    <button className="disabled:cursor-not-allowed flex items-center justify-center gap-3 border py-4 rounded-lg border-gray-text-menu text-purple-principal w-full lg:w-[567px] lg:max-w-[567px] hover:bg-purple-principal hover:text-white hover:opacity-90 transition-all" {...rest}>
       {children}
     </button>
   );

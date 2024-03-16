@@ -10,7 +10,7 @@ export function UserNotLoggedIn() {
                 <p className="text-sm font-normal text-gray-light">
                     Already registered?
                     <Link
-                        href={"/login"}
+                        href={"/auth/login"}
                         className="ml-1 text-purple-principal font-semibold"
                     >
                         Please login here

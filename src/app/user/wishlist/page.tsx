@@ -10,7 +10,6 @@ import { WishlistContext } from "../../context/WishlistContext";
 import Image from "next/image";
 import {v4 as uuidv4} from "uuid";
 
-
 export default function Wishlist() {
     const { wishItems } = useContext(WishlistContext);
     return (
