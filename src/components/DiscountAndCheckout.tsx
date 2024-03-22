@@ -60,6 +60,9 @@ export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
         toast.success("Coupon removed");
         setTotalValue(getTotalValue());
     }
+    function handleRedirectToCheckout(){
+        router.push("/user/checkout");
+    }
     return (
         <>
             {items.length >= 1 && (
@@ -114,7 +117,7 @@ export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
                             <p>{currencyFormatter(totalValue)}</p>
                         </div>
                         <div className="w-full h-[1px] bg-gray-border my-[30px]" />
-                        <button className="px-[20px] py-3 text-white  font-semibold text-lg bg-purple-principal rounded-lg">
+                        <button className="px-[20px] py-3 text-white  font-semibold text-lg bg-purple-principal rounded-lg" onClick={handleRedirectToCheckout}>
                             Proceed To Checkout
                         </button>
                     </section>

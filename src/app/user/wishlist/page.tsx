@@ -3,12 +3,12 @@ import { ButtonBackToHome } from "@/components/ButtonBackToHome";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
-import PathPage from "@/components/PathPage";
+import { PathPage } from "@/components/PathPage";
 import { WishItem } from "@/components/WishItem";
 import { useContext } from "react";
 import { WishlistContext } from "../../context/WishlistContext";
 import Image from "next/image";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Wishlist() {
     const { wishItems } = useContext(WishlistContext);

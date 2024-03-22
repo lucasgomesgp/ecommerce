@@ -2,7 +2,7 @@ import { Footer } from "@/components/Footer";
 import { FormAddress } from "@/components/FormAddress";
 import { Header } from "@/components/Header";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
-import PathPage from "@/components/PathPage";
+import { PathPage } from "@/components/PathPage";
 
 export default async function Address() {
     return (

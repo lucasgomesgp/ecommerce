@@ -4,7 +4,7 @@ import { ContactInfoTexts } from "@/components/ContactInfoTexts";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
-import PathPage from "@/components/PathPage";
+import { PathPage } from "@/components/PathPage";
 import { authOptions } from "@/utils/constants/authOptions";
 import { getAllItems } from "@/utils/functions/address/getAllAddress";
 import { removeItem } from "@/utils/functions/address/removeItem";
@@ -49,7 +49,7 @@ export default async function Info() {
                             <p className="font-medium font-coreSans text-gray-text-menu text-[22px]">Address</p>
                             <Link href="/user/address" className="font-semibold  text-gray-text-menu text-lg">Add New</Link>
                         </div>
-                        <AddressCardsArea addresses={addresses} removeItem={handleRemoveItem}/>
+                        <AddressCardsArea addresses={addresses} removeItem={handleRemoveItem} />
                     </section>
                 </section>
             </MainSideBarContent>
