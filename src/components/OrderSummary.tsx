@@ -6,12 +6,12 @@ import { useContext } from "react";
 
 export function OrderSummary() {
     const { items } = useContext(ShoppingCartContext);
-    
+
     return (
         <div className="flex flex-col border shadow-md px-[22px]">
             <p className="font-coreSans font-semibold text-2xl mt-10">Order Summary</p>
             <div className="w-full h-[1px] bg-white-bar my-[15px]" />
-            {items.map(({ id, color, quantity, imageSrc, title, price }) => (
+            {items.length >= 1 && items.map(({ id, color, quantity, imageSrc, title, price }) => (
                 <div className="flex flex-col" key={id}>
                     <div className="flex justify-between gap-[15px]  items-center">
                         <Image src={imageSrc} width={63} height={63} alt={title} className="w-[63px] h-[63px]" />

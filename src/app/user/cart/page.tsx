@@ -24,7 +24,7 @@ export default async function Shop() {
         <UserNotLoggedIn />
       </section>
       <TableItemsOnCart />
-      <DiscountAndCheckout coupons={data}/>
+      <DiscountAndCheckout coupons={data} />
       <Footer />
     </main>
   );

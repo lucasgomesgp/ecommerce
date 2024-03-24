@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { CircleNotch } from "@phosphor-icons/react";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { useSession } from "next-auth/react";
 
 export type SignUpSchema = z.infer<typeof formSignUpSchema>;
 
@@ -23,6 +24,7 @@ export function FormSignUp() {
         resolver: zodResolver(formSignUpSchema)
     });
     const router = useRouter();
+    const session = useSession();
 
     async function onSubmit(data: SignUpSchema) {
         try {
@@ -48,6 +50,13 @@ export function FormSignUp() {
         event.preventDefault();
         setTogglePasswordVisibility(!togglePasswordVisibility)
     }
+    useEffect(() => {
+        if (session.data?.user.name || session.data?.user.email) {
+            const name = session.data.user.name;
+            router.push("/");
+            toast.success(`Welcome  ${name}`);
+        }
+    }, []);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[30px] items-center lg:items-start mt-12">
             <div className="flex flex-col">

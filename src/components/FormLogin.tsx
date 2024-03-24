@@ -1,5 +1,5 @@
 "use client"
-import React, { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Eye } from '@/svgs/eye';
 import { CircleNotch } from '@phosphor-icons/react';
@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { formLoginSchema } from '@/app/schemas/form-login-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { InputFormWithRef } from './InputFormWithRef';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -21,6 +21,7 @@ export default function FormLogin() {
     });
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    const session = useSession();
 
     async function onSubmit(data: LoginSchema) {
         setIsLoading(true);
@@ -39,6 +40,13 @@ export default function FormLogin() {
         event.preventDefault();
         setTogglePasswordVisibility(!togglePasswordVisibility);
     }
+    useEffect(() => {
+        if (session.data?.user.name || session.data?.user.email) {
+            const name = session.data.user.name;
+            router.push("/");
+            toast.success(`Welcome  ${name}`);
+        }
+    }, []);
     return (
         <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col mb-8">
@@ -79,7 +87,7 @@ export default function FormLogin() {
             </div>
             <button className={`flex outline-none gap-4 items-center justify-center  bg-purple-principal text-white w-36  py-3 border rounded-lg text-center ${isLoading ? "cursor-not-allowed opacity-80" : ""}`} type="submit" >
                 {isLoading ? (
-                   <LoadingSpinner />
+                    <LoadingSpinner />
                 ) : (
                     <p>Sign In</p>
                 )}

@@ -1,1 +1,3 @@
 export const inputInfoCss = "bg-white-light rounded-lg pl-[22px] outline-none min-h-[54px] min-w-[420px]";
+export const inputDetail = "bg-white-light text-gray-light rounded-lg pl-[22px] outline-none min-h-[49px] min-w-[382px] h-[49px] w-[382px] py-4";
+export const inputDetailMin = "bg-white-light text-gray-light rounded-lg pl-[22px] outline-none min-h-[49px] min-w-[246px] h-[49px] w-[246px] py-4";
