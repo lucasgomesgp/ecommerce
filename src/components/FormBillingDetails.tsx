@@ -50,7 +50,7 @@ export function FormBillingDetails() {
     }, []);
 
     return (
-        <form className="flex flex-col mt-[50px]" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col mt-[50px] border-b border-b-white-bar py-[30px]" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex gap-[38px] flex-wrap  lg:grid lg:grid-cols-2">
                 <LabelInput label="First Name*" name="firstName">
                     <input type="text"
