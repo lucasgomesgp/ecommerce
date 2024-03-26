@@ -4,6 +4,8 @@ import { PathPage } from "@/components/PathPage";
 import { OrderSummary } from "@/components/OrderSummary";
 import { FormBillingDetails } from "@/components/FormBillingDetails";
 import { TitleWithBar } from "@/components/TitleWithBar";
+import Image from "next/image";
+import { EyeSecurity } from "@/svgs/eye-security";
 
 export default function Checkout() {
     return (
@@ -51,25 +53,44 @@ export default function Checkout() {
                                 <span className="text-gray-text-menu">All transactions are secure and encrypted.</span>
                             </div>
                             <div className="flex flex-col bg-white-light rounded-xl mt-[30px]">
-                                <details className="cursor-pointer border-b-gray-border border-b pb-[30px] flex pl-7 pr-12 flex-col gap-[25px] mt-[30px]">
-                                    <summary className="flex items-center gap-[20px]">
-                                        <input type="radio" id="credit-card" name="paymentMethod" />
+                                <section className="cursor-pointer border-b-gray-border border-b pb-[30px] flex pl-7 pr-12 flex-col gap-[25px] mt-[30px] overflow-hidden">
+                                    <div className="flex gap-[20px] items-center">
+                                        <input type="radio" id="credit-card" name="paymentMethod" value="credit-card" className="border" />
                                         <div className="flex flex-col gap-[5px]">
                                             <label htmlFor="credit-card">Credit Card</label>
                                             <span className="text-gray-text-menu">We accept all major credit cards.</span>
                                         </div>
-                                    </summary>
-                                    <p>Card</p>
-                                </details>
+                                    </div>
+                                    <div className={`flex flex-col transition-all ${false ?  "hidden": ""}`}>
+                                        <div className="flex gap-5 mt-[30px]">
+                                            <Image src="/assets/google-play.svg" alt="Google Icon" width={80} height={46} className="w-[80px] h-[46px]" />
+                                            <Image src="/assets/visa.svg" alt="Visa Icon" width={80} height={46} className="w-[80px] h-[46px]" />
+                                            <Image src="/assets/paypal.svg" alt="Paypal Icon" width={80} height={46} className="w-[80px] h-[46px]" />
+                                            <Image src="/assets/paypass.svg" alt="Paypass Icon" width={80} height={46} className="w-[80px] h-[46px]" />
+                                        </div>
+                                        <div className="flex flex-wrap lg:grid lg:grid-cols-2 lg:grid-rows-2">
+                                            <input className="border border-gray-text-menu" type="text" name="card-number" placeholder="Card number" />
+                                            <input className="border border-gray-text-menu" type="text" name="name-card" placeholder="Name of card" />
+                                            <input className="border border-gray-text-menu" type="text" name="expiration-date" placeholder="Expiration date (MM/YY)" />
+                                            <div className="relative">
+                                                <input className="border w-full border-gray-text-menu" type="text" name="security-code" placeholder="Security Code" />
+                                                <div className="absolute right-2 top-1">
+                                                    <EyeSecurity />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </section>
                                 <div className="flex pl-7 border-b-gray-border border-b pb-[30px] pr-12 gap-[25px] mt-[30px]">
-                                    <input type="radio" id="cash" name="paymentMethod" />
+                                    <input type="radio" id="cash" name="paymentMethod" value="cash" />
                                     <div className="flex flex-col gap-[5px]">
                                         <label htmlFor="cash">Cash on delivery</label>
                                         <span className="text-gray-text-menu">Pay with cash upon delivery.</span>
                                     </div>
                                 </div>
                                 <div className="flex pl-7 pr-12 gap-9 mt-[30px] pb-11">
-                                    <input type="radio" id="cash" name="paymentMethod" />
+                                    <input type="radio" id="paypal" name="paymentMethod" value="paypal" />
                                     <label htmlFor="cash">Paypal</label>
                                 </div>
                             </div>

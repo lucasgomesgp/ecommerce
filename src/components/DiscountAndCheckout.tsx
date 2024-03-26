@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, useContext, useState } from 'react'
+import { FormEvent, useContext, useEffect, useState } from 'react'
 import { ShoppingCartContext } from '@/app/context/ShoppingCartContext';
 import { useItemsStorage } from '@/hooks/useItemsStorage';
 import { currencyFormatter } from '@/utils/functions/currencyFormatter'
@@ -7,28 +7,20 @@ import { useRouter } from 'next/navigation';
 import { ICoupons } from '@/utils/types/ICoupons';
 import { toast } from 'sonner';
 import { XIcon } from '@/svgs/x-icon';
+import { getTotal } from '@/utils/functions/getTotal';
+import { useCouponsStorage } from '@/hooks/useCouponsStorage';
+import { getSubTotal } from '@/utils/functions/getSubTotal';
 
 export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
     const { itemsStorage } = useItemsStorage();
     const { items } = useContext(ShoppingCartContext);
+    const { getCoupon, changeCoupon } = useCouponsStorage();
     const router = useRouter();
-
-    function getTotalValue(discount: number = 0) {
-        let accumulator = 0;
-        itemsStorage?.map((current) => {
-            accumulator += (current.price * current.quantity);
-        });
-        const discountFormatted = discount / 100;
-        const total = discount === 0 ? accumulator : accumulator - (discountFormatted * accumulator);
-        return total;
-    }
 
     const [coupon, setCoupon] = useState({
         onInput: "",
-        applied: "",
+        applied: getCoupon()?.value || "",
     });
-
-    const [totalValue, setTotalValue] = useState(getTotalValue());
 
     function couponExists() {
         const couponIsAvailable = coupons.filter((currentCoupon) => currentCoupon.attributes.value === coupon.onInput);
@@ -37,9 +29,8 @@ export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
     function handleApplyCoupon(event: FormEvent) {
         event.preventDefault();
         const couponIsAvailable = couponExists();
-        
+
         if (couponIsAvailable.length >= 1) {
-            setTotalValue(getTotalValue(Number(couponIsAvailable[0].attributes.discountPercentage)));
             couponFormatted();
         } else {
             toast.error("Coupon not exists")
@@ -52,17 +43,26 @@ export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
                 ...coupon,
                 applied: couponUsed[0]?.attributes.value,
             });
+            changeCoupon({
+                value: couponUsed[0].attributes.value,
+                percentage: couponUsed[0].attributes.discountPercentage,
+            })
             toast.success("Coupon applied");
         }
     }
     function handleRemoveCoupon() {
         setCoupon({ ...coupon, applied: "" });
+        changeCoupon({ value: "", percentage: "" });
         toast.success("Coupon removed");
-        setTotalValue(getTotalValue());
     }
-    function handleRedirectToCheckout(){
+    function handleRedirectToCheckout() {
         router.push("/user/checkout");
     }
+    useEffect(() => {
+        if (getCoupon() === undefined) {
+            changeCoupon({ value: "", percentage: "" });
+        }
+    }, []);
     return (
         <>
             {items.length >= 1 && (
@@ -106,15 +106,15 @@ export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
                     <section className="flex justify-center flex-col gap-[15px] text-gray-text-menu text-[22px]">
                         <div className="flex gap-14  justify-between">
                             <p>Sub Total</p>
-                            <p>{currencyFormatter(totalValue)}</p>
+                            <p>{currencyFormatter(getSubTotal(items, Number(getCoupon()?.percentage || 0)))}</p> 
                         </div>
                         <div className="flex gap-14  justify-between">
                             <p>Shipping</p>
-                            <p>{currencyFormatter(0)}</p>
+                            <p>{currencyFormatter(5)}</p>
                         </div>
                         <div className="flex mt-[30px] gap-14  justify-between font-bold">
                             <p>Grand Total</p>
-                            <p>{currencyFormatter(totalValue)}</p>
+                            <p>{currencyFormatter(getTotal(items, Number(getCoupon()?.percentage || 0)))}</p>
                         </div>
                         <div className="w-full h-[1px] bg-gray-border my-[30px]" />
                         <button className="px-[20px] py-3 text-white  font-semibold text-lg bg-purple-principal rounded-lg" onClick={handleRedirectToCheckout}>
