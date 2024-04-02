@@ -11,6 +11,8 @@ import { z } from "zod";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { getPhoneMasked } from "@/utils/functions/getPhoneMasked";
+import { getPostalCodeMasked } from "@/utils/functions/getPostalCodeMasked";
 
 export type AddressSchema = z.infer<typeof formSchema>;
 export function FormAddress() {
@@ -43,18 +45,15 @@ export function FormAddress() {
         toast.error("All inputs was reseted");
     }
     const handleKeyUp = useCallback((event: FormEvent<HTMLInputElement>) => {
-        //999-9999
         event.currentTarget.maxLength = 8;
         let value = event.currentTarget.value;
-        value = value.replace(/\D/g, ""); // Remove letters
-        value = value.replace(/^(\d{3})(\d)/, "$1-$2"); // Put the mask on input
+        value = getPhoneMasked(value);
         event.currentTarget.value = value;
     }, []);
     const handleFilterPostalCode = useCallback((event: FormEvent<HTMLInputElement>) => {
-        //999-9999
         event.currentTarget.maxLength = 5;
         let value = event.currentTarget.value;
-        value = value.replace(/\D/g, ""); // Remove letters
+        value = getPostalCodeMasked(value);
         event.currentTarget.value = value;
     }, []);
     return (

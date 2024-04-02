@@ -11,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { inputDetail, inputDetailMin } from "@/utils/constants/inputInfoCss";
+import { getPhoneMasked } from "@/utils/functions/getPhoneMasked";
+import { getPostalCodeMasked } from "@/utils/functions/getPostalCodeMasked";
 
 export type AddressSchema = z.infer<typeof formSchema>;
 export function FormBillingDetails() {
@@ -25,6 +27,13 @@ export function FormBillingDetails() {
         if (session?.user.email) {
             try {
                 setIsLoading(true);
+                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/address`, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                });
+                toast.success("Billing address created!");
+                reset();
+                console.log(data);
             } catch (err) {
                 toast.error("Error on update info");
             } finally {
@@ -33,19 +42,16 @@ export function FormBillingDetails() {
         }
     }
 
-    const handleKeyUp = useCallback((event: FormEvent<HTMLInputElement>) => {
-        //999-9999
+    const handleMaskPhone = useCallback((event: FormEvent<HTMLInputElement>) => {
         event.currentTarget.maxLength = 8;
         let value = event.currentTarget.value;
-        value = value.replace(/\D/g, ""); // Remove letters
-        value = value.replace(/^(\d{3})(\d)/, "$1-$2"); // Put the mask on input
+        value = getPhoneMasked(value);
         event.currentTarget.value = value;
     }, []);
     const handleFilterPostalCode = useCallback((event: FormEvent<HTMLInputElement>) => {
-        //999-9999
         event.currentTarget.maxLength = 5;
         let value = event.currentTarget.value;
-        value = value.replace(/\D/g, ""); // Remove letters
+        value = getPostalCodeMasked(value);
         event.currentTarget.value = value;
     }, []);
 
@@ -137,7 +143,7 @@ export function FormBillingDetails() {
                         {...register("phone")}
                         className={inputDetailMin}
                         type="text"
-                        onKeyUp={handleKeyUp}
+                        onKeyUp={handleMaskPhone}
                         placeholder="Phone"
                     />
                     {errors.phone?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.phone?.message}</p>}
@@ -153,8 +159,8 @@ export function FormBillingDetails() {
                 </button>
             </div>
             <div className="flex gap-[10px] mt-5">
-                <input type="checkbox" {...register("saveInfo")} id="saveInfo" />
-                <label htmlFor="saveInfo">Set as default billing address</label>
+                <input type="checkbox" {...register("billingAddress")} id="billingAddress" />
+                <label htmlFor="billingAddress">Set as default billing address</label>
             </div>
         </form>
     );
