@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { getPhoneMasked } from "@/utils/functions/getPhoneMasked";
 import { getPostalCodeMasked } from "@/utils/functions/getPostalCodeMasked";
+import { ErrorText } from "./ErrorText";
 
 export type AddressSchema = z.infer<typeof formSchema>;
 export function FormAddress() {
@@ -64,49 +65,49 @@ export function FormAddress() {
                         className={inputInfoCss}
                         {...register("firstName", { required: true })}
                         placeholder="First Name" />
-                    {errors.firstName?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.firstName?.message}</p>}
+                        <ErrorText text={errors.firstName?.message} />
                 </LabelInput>
                 <LabelInput label="Last Name*" name="lastName">
                     <input type="text"
                         className={inputInfoCss}
                         {...register("lastName", { required: true })}
                         placeholder="Last Name" />
-                    {errors.lastName?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.lastName?.message}</p>}
+                        <ErrorText text={errors.lastName?.message} />
                 </LabelInput>
                 <LabelInput label="Country / Region*" name="country">
                     <input type="text"
                         className={inputInfoCss}
                         {...register("country")}
                         placeholder="Country / Region" />
-                    {errors.country?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.country?.message}</p>}
+                        <ErrorText text={errors.country?.message} />
                 </LabelInput>
                 <LabelInput label="Company Name" name="companyName">
                     <input type="text"
                         className={inputInfoCss}
                         {...register("companyName")}
                         placeholder="Company (optional)" />
-                    {errors.companyName?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.companyName?.message}</p>}
+                        <ErrorText text={errors.companyName?.message} />
                 </LabelInput>
                 <LabelInput label="Street Address*" name="streetAddress">
                     <input type="text"
                         className={inputInfoCss}
                         {...register("streetAddress", { required: true })}
                         placeholder="House number and street name" />
-                    {errors.streetAddress?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.firstName?.message}</p>}
+                        <ErrorText text={errors.streetAddress?.message} />
                 </LabelInput>
                 <LabelInput label="Apt, suite, unit" name="apartment">
                     <input type="text"
                         className={inputInfoCss}
                         {...register("apartment")}
                         placeholder="apartment, suite, unit, etc. (optional)" />
-                    {errors.apartment?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.apartment?.message}</p>}
+                        <ErrorText text={errors.apartment?.message} />
                 </LabelInput>
                 <LabelInput label="City*" name="city">
                     <input type="text"
                         className={inputInfoCss}
                         {...register("city", { required: true })}
                         placeholder="Town / City" />
-                    {errors.city?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.city?.message}</p>}
+                        <ErrorText text={errors.city?.message} />
 
                 </LabelInput>
 
@@ -126,7 +127,7 @@ export function FormAddress() {
                             </option>
                         ))}
                     </select>
-                    {errors.state?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.state?.message}</p>}
+                    <ErrorText text={errors.state?.message} />
 
                 </div>
                 <LabelInput label="Phone*" name="phone">
@@ -137,14 +138,14 @@ export function FormAddress() {
                         onKeyUp={handleKeyUp}
                         placeholder="Phone"
                     />
-                    {errors.phone?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.phone?.message}</p>}
+                        <ErrorText text={errors.phone?.message} />
                 </LabelInput>
                 <LabelInput label="Postal Code*" name="postalCode">
                     <input type="text"
                         className={inputInfoCss}
                         onKeyUp={handleFilterPostalCode}
                         {...register("postalCode", { required: true })} placeholder="Postal Code" />
-                    {errors.postalCode?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.postalCode?.message}</p>}
+                        <ErrorText text={errors.postalCode?.message} />
 
                 </LabelInput>
             </div>
@@ -156,7 +157,7 @@ export function FormAddress() {
                     className="w-full min-h-[149px] h-[149px] pl-[22px]  outline-none bg-white-light lg:mt-7 rounded-md resize-none pt-2"
                     {...register("deliveryInstruction")} placeholder="Delivery Instruction"
                 />
-                {errors.deliveryInstruction?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.deliveryInstruction?.message}</p>}
+                        <ErrorText text={errors.deliveryInstruction?.message} />
 
             </div>
             <div className="flex flex-col mt-[30px] gap-[14px]">

@@ -13,6 +13,7 @@ import { LoadingSpinner } from "./LoadingSpinner";
 import { inputDetail, inputDetailMin } from "@/utils/constants/inputInfoCss";
 import { getPhoneMasked } from "@/utils/functions/getPhoneMasked";
 import { getPostalCodeMasked } from "@/utils/functions/getPostalCodeMasked";
+import { ErrorText } from "./ErrorText";
 
 export type AddressSchema = z.infer<typeof formSchema>;
 export function FormBillingDetails() {
@@ -63,42 +64,42 @@ export function FormBillingDetails() {
                         className={inputDetail}
                         {...register("firstName", { required: true })}
                         placeholder="First Name" />
-                    {errors.firstName?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.firstName?.message}</p>}
+                    <ErrorText text={errors.firstName?.message} />
                 </LabelInput>
                 <LabelInput label="Last Name*" name="lastName">
                     <input type="text"
                         className={inputDetail}
                         {...register("lastName", { required: true })}
                         placeholder="Last Name" />
-                    {errors.lastName?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.lastName?.message}</p>}
+                    <ErrorText text={errors.lastName?.message} />
                 </LabelInput>
                 <LabelInput label="Country / Region*" name="country">
                     <input type="text"
                         className={inputDetail}
                         {...register("country")}
                         placeholder="Country / Region" />
-                    {errors.country?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.country?.message}</p>}
+                    <ErrorText text={errors.country?.message} />
                 </LabelInput>
                 <LabelInput label="Company Name" name="companyName">
                     <input type="text"
                         className={inputDetail}
                         {...register("companyName")}
                         placeholder="Company (optional)" />
-                    {errors.companyName?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.companyName?.message}</p>}
+                    <ErrorText text={errors.companyName?.message} />
                 </LabelInput>
                 <LabelInput label="Street Address*" name="streetAddress">
                     <input type="text"
                         className={inputDetail}
                         {...register("streetAddress", { required: true })}
                         placeholder="House number and street name" />
-                    {errors.streetAddress?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.firstName?.message}</p>}
+                    <ErrorText text={errors.streetAddress?.message} />
                 </LabelInput>
                 <LabelInput label="Apt, suite, unit" name="apartment">
                     <input type="text"
                         className={inputDetail}
                         {...register("apartment")}
                         placeholder="apartment, suite, unit, etc. (optional)" />
-                    {errors.apartment?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.apartment?.message}</p>}
+                    <ErrorText text={errors.apartment?.message} />
                 </LabelInput>
                 <div className="flex flex-auto flex-col flex-wrap lg:grid lg:grid-cols-3 gap-8 lg:col-span-2">
                     <LabelInput label="City*" name="city">
@@ -106,7 +107,7 @@ export function FormBillingDetails() {
                             className={inputDetailMin}
                             {...register("city", { required: true })}
                             placeholder="Town / City" />
-                        {errors.city?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.city?.message}</p>}
+                        <ErrorText text={errors.city?.message} />
 
                     </LabelInput>
 
@@ -126,7 +127,7 @@ export function FormBillingDetails() {
                                 </option>
                             ))}
                         </select>
-                        {errors.state?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.state?.message}</p>}
+                        <ErrorText text={errors.state?.message} />
 
                     </div>
                     <LabelInput label="Postal Code*" name="postalCode">
@@ -134,7 +135,7 @@ export function FormBillingDetails() {
                             className={inputDetailMin}
                             onKeyUp={handleFilterPostalCode}
                             {...register("postalCode", { required: true })} placeholder="Postal Code" />
-                        {errors.postalCode?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.postalCode?.message}</p>}
+                        <ErrorText text={errors.postalCode?.message} />
 
                     </LabelInput>
                 </div>
@@ -146,7 +147,7 @@ export function FormBillingDetails() {
                         onKeyUp={handleMaskPhone}
                         placeholder="Phone"
                     />
-                    {errors.phone?.message && <p role="alert" className="text-red-700 font-coreSans">{errors.phone?.message}</p>}
+                    <ErrorText text={errors.phone?.message} />
                 </LabelInput>
             </div>
             <div className="mt-[60px] flex gap-[30px]">

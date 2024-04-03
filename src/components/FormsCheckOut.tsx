@@ -5,35 +5,62 @@ import { MagicMotion } from "react-magic-motion";
 import { FormBillingDetails } from "./FormBillingDetails";
 import { OrderSummary } from "./OrderSummary";
 import { TitleWithBar } from "./TitleWithBar";
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { toast } from "sonner";
 import { GooglePlay } from "@/svgs/google-pay";
 import { Visa } from "@/svgs/visa";
 import { Paypal } from "@/svgs/paypal";
 import { PayPass } from "@/svgs/paypass";
+import { useForm } from "react-hook-form";
+import { creditCardSchema } from "@/app/schemas/credit-card-schema";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { paymentOrderProcess } from "@/services/paymentOrderProcess";
+import { ErrorText } from "./ErrorText";
+import { getCreditCardValidityMasked } from "@/utils/functions/getCreditCardValidityMasked";
+import { getCardNumberMasked } from "@/utils/functions/getCardNumberMasked";
 
+export type CreditCardSchema = z.infer<typeof creditCardSchema>;
+export enum PaymentType { CARD, CASH, PAYPAL };
 
-export function FormsCheckOut() {
+export function FormsCheckout() {
     const [toggleCreditCard, setToggleCreditCard] = useState(false);
     const [securityCodeIsVisible, setSecurityCodeIsVisible] = useState(false);
-    const [paymentMethod, setPaymentMethod] = useState<"card" | "cash" | "paypal" | "">("");
-    const [creditCard, setCreditCard] = useState({
-        number: "",
-        expirationDate: "",
-        name: "",
-        securityCode: "",
+    const [paymentMethod, setPaymentMethod] = useState<PaymentType>(PaymentType.CARD);
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<CreditCardSchema>({
+        resolver: zodResolver(creditCardSchema),
     });
-    function handleProcessPayment(event: FormEvent) {
-       
-        event.preventDefault();
+
+    function onSubmit(data: CreditCardSchema) {
         if (!paymentMethod) {
             toast.error("Select payment method");
             return;
         }
-        if (paymentMethod === "card") {
-            
+        try {
+            paymentOrderProcess(data, paymentMethod);
+        } catch (err) {
+            toast.error(`${err}`);
         }
     }
+
+    const handleMaskDate = useCallback((event: FormEvent<HTMLInputElement>) =>{
+        event.currentTarget.maxLength = 5;
+        let value = event.currentTarget.value;
+        value = getCreditCardValidityMasked(value);
+        event.currentTarget.value = value;
+    },[]);
+
+    const handleMaskCardNumber = useCallback((event: FormEvent<HTMLInputElement>) =>{
+        event.currentTarget.maxLength = 19;
+        let value = event.currentTarget.value;
+        value = getCardNumberMasked(value);
+        event.currentTarget.value = value;
+    },[]);
+    
+    const handleMaskSecurityCode = useCallback((event: FormEvent<HTMLInputElement>) =>{
+        event.currentTarget.maxLength = 3;
+    },[]);
     return (
         <section className="px-4 flex flex-col lg:flex-row lg:flex-wrap-reverse lg:gap-[38px] lg:px-[70px] mt-[52px]">
             <section className="flex-1 flex-col">
@@ -75,12 +102,13 @@ export function FormsCheckOut() {
                         <span className="text-gray-text-menu">All transactions are secure and encrypted.</span>
                     </div>
                     <MagicMotion>
-                        <form onSubmit={handleProcessPayment} className="flex flex-col mt-[30px]">
+                        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-[30px]">
                             <div className="bg-white-light rounded-xl">
                                 <section className="cursor-pointer border-b-gray-border border-b pb-[30px] flex pl-7 pr-12 flex-col gap-[25px] mt-[30px] overflow-hidden">
                                     <div className="flex gap-[20px] items-center">
                                         <input type="radio" id="credit-card" name="paymentMethod" value="credit-card" className="border accent-gray-text-menu" onClick={(event) => {
                                             setToggleCreditCard(!toggleCreditCard)
+                                            setPaymentMethod(PaymentType.CARD);
                                         }} />
                                         <div className="flex flex-col gap-[5px]">
                                             <label className="text-gray-text-menu font-bold" htmlFor="credit-card">Credit Card</label>
@@ -95,14 +123,26 @@ export function FormsCheckOut() {
                                             <PayPass />
                                         </div>
                                         <div className="flex flex-wrap lg:grid lg:grid-cols-2 lg:grid-rows-2 mt-[30px] gap-[30px]">
-                                            <input className="text-sm border border-gray-text-menu h-[49px] rounded-md pl-5 text-gray-light outline-none" type="text" name="card-number" placeholder="Card number" />
-                                            <input className="text-sm border border-gray-text-menu h-[49px] rounded-md pl-5 text-gray-light outline-none" type="text" name="name-card" placeholder="Name of card" />
-                                            <input className="text-sm border border-gray-text-menu h-[49px] rounded-md pl-5 text-gray-light outline-none" type="text" name="expiration-date" placeholder="Expiration date (MM/YY)" />
-                                            <div className="relative flex items-center h-[49px]">
-                                                <input type={securityCodeIsVisible ? "text" : "password"} className="w-full text-sm border border-gray-text-menu h-full rounded-md pl-5 text-gray-light outline-none" name="security-code" placeholder="Security Code" />
-                                                <button className="absolute right-2 top-1/3 -translate-y-1/2" onClick={() => { setSecurityCodeIsVisible(!securityCodeIsVisible) }}>
-                                                    <EyeSecurity />
-                                                </button>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <input {...register("number")} className="text-sm border border-gray-text-menu h-[49px] rounded-md pl-5 text-gray-light outline-none" type="text" name="card-number" placeholder="Card number" onKeyUp={handleMaskCardNumber}/>
+                                                <ErrorText text={errors.number?.message} />
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <input {...register("name")} className="text-sm border border-gray-text-menu h-[49px] rounded-md pl-5 text-gray-light outline-none" type="text" name="name-card" placeholder="Name of card" />
+                                                <ErrorText text={errors.name?.message} />
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <input {...register("expirationDate")} className="text-sm border border-gray-text-menu h-[49px] rounded-md pl-5 text-gray-light outline-none" type="text" name="expiration-date" placeholder="Expiration date (MM/YY)"  onKeyUp={handleMaskDate}/>
+                                                <ErrorText text={errors.expirationDate?.message} />
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <div className="relative flex items-center h-[49px]">
+                                                    <input  {...register("securityCode")} type={securityCodeIsVisible ? "text" : "password"} className="w-full text-sm border border-gray-text-menu h-full rounded-md pl-5 text-gray-light outline-none" name="security-code" placeholder="Security Code"  onKeyUp={handleMaskSecurityCode}/>
+                                                    <button className="absolute right-2 top-1/3 -translate-y-1/2" onClick={() => { setSecurityCodeIsVisible(!securityCodeIsVisible) }}>
+                                                        <EyeSecurity />
+                                                    </button>
+                                                </div>
+                                                <ErrorText text={errors.securityCode?.message} />
                                             </div>
 
                                         </div>
@@ -111,6 +151,7 @@ export function FormsCheckOut() {
                                 <div className="flex pl-7 border-b-gray-border border-b pb-[30px] pr-12 gap-[25px] mt-[30px]">
                                     <input type="radio" id="cash" className="accent-gray-text-menu" name="paymentMethod" value="cash" onClick={() => {
                                         setToggleCreditCard(false)
+                                        setPaymentMethod(PaymentType.CASH);
                                     }} />
                                     <div className="flex flex-col gap-[5px]">
                                         <label className="text-gray-text-menu font-bold" htmlFor="cash">Cash on delivery</label>
@@ -120,6 +161,7 @@ export function FormsCheckOut() {
                                 <div className="flex pl-7 pr-12 gap-9 mt-[30px] pb-11">
                                     <input type="radio" id="paypal" className="accent-gray-text-menu" name="paymentMethod" value="paypal" onClick={() => {
                                         setToggleCreditCard(false)
+                                        setPaymentMethod(PaymentType.PAYPAL);
                                     }} />
                                     <label className="text-gray-text-menu font-bold" htmlFor="paypal">Paypal</label>
                                 </div>
