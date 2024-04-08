@@ -1,5 +1,4 @@
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
-import { IWishItems } from "@/utils/types/IWishItems";
 
 export function useItemsStorage() {
   function getItemsOnLocalStorage() {
