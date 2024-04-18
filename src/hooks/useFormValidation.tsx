@@ -23,13 +23,9 @@ export function useFormValidation() {
     event.currentTarget.value = value;
   }, []);
 
-  const maskSecurityCode = useCallback((event: FormEvent<HTMLInputElement>) => {
-    event.currentTarget.maxLength = 3;
-  }, []);
-
   // Billing Details
   const maskPhone = useCallback((event: FormEvent<HTMLInputElement>) => {
-    event.currentTarget.maxLength = 8;
+    event.currentTarget.maxLength = 7;
     let value = event.currentTarget.value;
     value = getPhoneMasked(value);
     event.currentTarget.value = value;
@@ -44,7 +40,6 @@ export function useFormValidation() {
   return {
     maskDate,
     maskCardNumber,
-    maskSecurityCode,
     maskPhone,
     maskPostalCode,
   };

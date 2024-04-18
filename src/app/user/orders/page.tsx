@@ -3,8 +3,10 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
 import { PathPage } from "@/components/PathPage";
+import { getAllOrders } from "../../../utils/functions/address/getAllOrders";
 
-export default function Orders() {
+export default async function Orders() {
+  const data = await getAllOrders();
   return (
     <main className="flex flex-col overflow-hidden ">
       <Header />

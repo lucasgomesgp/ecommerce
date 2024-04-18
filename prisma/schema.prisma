@@ -45,6 +45,7 @@ model User {
     emailVerified  DateTime?    @map("email_verified")
     image          String?
     hashedPassword String?
+    orders         Orders[]
     accounts       Account[]
     sessions       Session[]
     Payments       Payments[]
@@ -59,7 +60,11 @@ model Payments {
     method String
     price  String?
     userId String  @map("user_id")
-    user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    cardId String? @unique @map("card_id")
+
+    card   CreditCard? @relation(fields: [cardId], references: [id])
+    user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Orders Orders[]
 
     @@map("payments")
 }
@@ -85,21 +90,30 @@ model Address {
 }
 
 model Orders {
-    id          Int         @id @default(autoincrement())
-    status      OrderStatus @default(ACTIVE)
-    createdAt   DateTime    @default(now())
-    orderItemId String      @map("order_item_id")
-    items       OrderItem[]
+    id            String      @id @default(cuid())
+    status        OrderStatus @default(ACTIVE)
+    paymentMethod PaymentType @default(CASH) @map("payment_method")
+    createdAt     DateTime    @default(now())
+    items         OrderItem[]
+    paymentsId    String
+
+    payment Payments @relation(fields: [paymentsId], references: [id])
+    User    User?    @relation(fields: [userId], references: [id])
+    userId  String?
 
     @@map("orders")
 }
 
 model OrderItem {
-    id       String  @id @default(cuid())
+    id       String @id @default(cuid())
     title    String
-    price    String
+    price    Float
     quantity Int
-    ordersId Int?
+    imageSrc String
+    color    String
+    size     String
+
+    ordersId String?
     Orders   Orders? @relation(fields: [ordersId], references: [id])
 
     @@map("order_item")
@@ -113,7 +127,8 @@ model CreditCard {
     secutiryCode   String @map("security_code")
     userId         String @map("user_id")
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Payments Payments?
 
     @@map("credit_card")
 }
@@ -122,4 +137,10 @@ enum OrderStatus {
     ACTIVE
     CANCELLED
     COMPLETED
+}
+
+enum PaymentType {
+    CASH
+    CARD
+    PAYPAL
 }

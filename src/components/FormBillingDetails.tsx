@@ -149,6 +149,7 @@ export function FormBillingDetails() {
               onKeyUp={maskPostalCode}
               {...register("postalCode", { required: true })}
               placeholder="Postal Code"
+              maxLength={5}
             />
             <ErrorText text={errors.postalCode?.message} />
           </LabelInput>
@@ -160,6 +161,7 @@ export function FormBillingDetails() {
             type="text"
             onKeyUp={maskPhone}
             placeholder="Phone"
+            maxLength={7}
           />
           <ErrorText text={errors.phone?.message} />
         </LabelInput>

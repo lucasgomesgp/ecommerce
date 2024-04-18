@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-
 import { ErrorText } from "./ErrorText";
 import { LabelInput } from "./LabelInput";
 import { LoadingSpinner } from "./LoadingSpinner";
@@ -13,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -145,6 +144,7 @@ export function FormAddress() {
             className={inputInfoCss}
             type="text"
             onKeyUp={maskPhone}
+            maxLength={7}
             placeholder="Phone"
           />
           <ErrorText text={errors.phone?.message} />
@@ -156,6 +156,7 @@ export function FormAddress() {
             onKeyUp={maskPostalCode}
             {...register("postalCode", { required: true })}
             placeholder="Postal Code"
+            maxLength={5}
           />
           <ErrorText text={errors.postalCode?.message} />
         </LabelInput>
