@@ -1,5 +1,5 @@
 export interface IShoppingCartItems {
-  id: string;
+  id: number;
   title: string;
   color: string;
   size: string;

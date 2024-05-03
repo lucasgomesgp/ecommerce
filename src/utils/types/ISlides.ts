@@ -5,6 +5,10 @@ export interface ISlides {
     {
       id: number;
       attributes: {
+        title: string;
+        centralTitle: string;
+        downTitle: string;
+        link: string;
         image: {
           data: {
             id: number;
