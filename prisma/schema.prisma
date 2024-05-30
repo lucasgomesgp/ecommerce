@@ -4,7 +4,8 @@ datasource db {
 }
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["relationJoins"]
 }
 
 model Account {
@@ -45,28 +46,29 @@ model User {
     emailVerified  DateTime?    @map("email_verified")
     image          String?
     hashedPassword String?
-    orders         Orders[]
+    order          Order[]
     accounts       Account[]
     sessions       Session[]
-    Payments       Payments[]
+    Payments       Payment[]
     Address        Address[]
     CreditCard     CreditCard[]
+    OrderItem      OrderItem[]
 
-    @@map("users")
+    @@map("user")
 }
 
-model Payments {
+model Payment {
     id     String  @id @default(cuid())
     method String
     price  String?
     userId String  @map("user_id")
     cardId String? @unique @map("card_id")
 
-    card   CreditCard? @relation(fields: [cardId], references: [id])
-    user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Orders Orders[]
+    card  CreditCard? @relation(fields: [cardId], references: [id])
+    user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Order Order[]
 
-    @@map("payments")
+    @@map("payment")
 }
 
 model Address {
@@ -89,32 +91,35 @@ model Address {
     @@map("address")
 }
 
-model Orders {
+model Order {
     id            String      @id @default(cuid())
     status        OrderStatus @default(ACTIVE)
     paymentMethod PaymentType @default(CASH) @map("payment_method")
     createdAt     DateTime    @default(now())
-    items         OrderItem[]
+    orderItems    OrderItem[]
     paymentsId    String
 
-    payment Payments @relation(fields: [paymentsId], references: [id])
-    User    User?    @relation(fields: [userId], references: [id])
+    payment Payment @relation(fields: [paymentsId], references: [id])
+    User    User?   @relation(fields: [userId], references: [id])
     userId  String?
 
-    @@map("orders")
+    @@map("order")
 }
 
 model OrderItem {
-    id       String @id @default(cuid())
-    title    String
-    price    Float
-    quantity Int
-    imageSrc String
-    color    String
-    size     String
+    id        String   @id @default(cuid())
+    title     String
+    price     Float
+    quantity  Int
+    imageSrc  String
+    color     String
+    size      String
+    ordersId  String?
+    userId    String
+    createdAt DateTime @default(now())
 
-    ordersId String?
-    Orders   Orders? @relation(fields: [ordersId], references: [id])
+    user  User   @relation(fields: [userId], references: [id])
+    Order Order? @relation(fields: [ordersId], references: [id])
 
     @@map("order_item")
 }
@@ -127,8 +132,8 @@ model CreditCard {
     secutiryCode   String @map("security_code")
     userId         String @map("user_id")
 
-    user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Payments Payments?
+    user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Payment Payment?
 
     @@map("credit_card")
 }

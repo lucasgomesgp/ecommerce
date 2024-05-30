@@ -8,9 +8,13 @@ export async function getAllOrders(): Promise<IOrdersResponse[] | []> {
   let result;
   try {
     if (session?.user.id) {
-      result = await prisma.orders.findMany({
+      result = await prisma.order.findMany({
+        relationLoadStrategy: "join",
         where: {
           userId: session.user.id,
+        },
+        include: {
+          orderItems: true,
         },
       });
     }

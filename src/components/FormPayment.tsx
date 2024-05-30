@@ -1,7 +1,7 @@
 "use client";
 
 import { MagicExit, MagicMotion } from "react-magic-motion";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import { ErrorText } from "./ErrorText";
 import { EyeSecurity } from "@/svgs/eye-security";
@@ -14,12 +14,17 @@ import { Paypal } from "@/svgs/paypal";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { Visa } from "@/svgs/visa";
 import { createCreditCard } from "@/services/createCreditCard";
+import { createOrder } from "@/services/createOrder";
 import { creditCardInfoObj } from "@/utils/constants/creditCardInfoObj";
 import { creditCardSchema } from "@/app/schemas/credit-card-schema";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { deleteCreditCard } from "@/services/deleteCreditCard";
+import { getTotal } from "@/utils/functions/getTotal";
 import { toast } from "sonner";
+import { useCouponsStorage } from "@/hooks/useCouponsStorage";
 import { useForm } from "react-hook-form";
 import { useFormValidation } from "@/hooks/useFormValidation";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,6 +49,7 @@ export function FormPayment() {
     },
   });
 
+  const { getCoupon } = useCouponsStorage();
   const { data: session } = useSession();
   const { maskDate, maskCardNumber } = useFormValidation();
   const {
@@ -80,10 +86,22 @@ export function FormPayment() {
       setIsLoading(false);
     }
   };
-  function handlePaymentProcess() {
+  async function handlePaymentProcess() {
+    setIsLoading(true);
     if (!paymentMethod) {
       toast.error("Choose on payment method!");
+    } else {
+      await createOrder(
+        paymentMethod,
+        items,
+        currencyFormatter(
+          getTotal(items, Number(getCoupon()?.percentage || 0))
+        ),
+        creditCardInfo.card.id
+      );
+      toast.success("Order created!");
     }
+    setIsLoading(false);
   }
 
   async function handleDeleteCard() {
@@ -268,7 +286,7 @@ export function FormPayment() {
         </div>
       </div>
       <button
-        className="mt-[30px]  text-white bg-purple-principal rounded-lg font-medium  w-[108px] h-[54px] disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-[30px]  text-white bg-purple-principal rounded-lg font-medium cursor-pointer w-[108px] h-[54px] disabled:cursor-not-allowed disabled:opacity-40"
         disabled={isLoading || !paymentMethod}
         onClick={handlePaymentProcess}
       >
