@@ -37,10 +37,10 @@ export function Header({ children, isLoginPage = false }: Props) {
     items.map((current) => { value += current.quantity });
     return value;
   }
-  async function handleSignOut(){
-    try{
+  async function handleSignOut() {
+    try {
       await signOut();
-    }catch(err){
+    } catch (err) {
       toast.error("Error on Sign out user");
     }
   }
@@ -79,8 +79,8 @@ export function Header({ children, isLoginPage = false }: Props) {
         </button>
         ) : (
           <div className={`${!isLoginPage ? "hidden" : "flex gap-7"} `}>
-            <ButtonAuth isActive text="Login" href="/auth/login" />
-            <ButtonAuth text="Sign Up" href="/auth/signup" />
+            <ButtonAuth isActive text="Login" href="/login" />
+            <ButtonAuth text="Sign Up" href="/signup" />
           </div>
         )}
       <div className={`${isLoginPage ? "hidden" : "flex gap-3"}`}>
@@ -93,7 +93,7 @@ export function Header({ children, isLoginPage = false }: Props) {
             if (status === "authenticated") {
               setToggleProfileInfo(!toogleProfileInfo);
             } else {
-              router.push("/auth/login");
+              router.push("/login");
             }
           }}
           onKeyDown={(e) => {
