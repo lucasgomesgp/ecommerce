@@ -7,6 +7,7 @@ import { getAllOrders } from "../../../utils/functions/address/getAllOrders";
 
 export default async function Orders() {
   const data = await getAllOrders();
+  console.log(data);
   return (
     <main className="flex flex-col overflow-hidden ">
       <Header />

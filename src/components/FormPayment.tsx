@@ -199,7 +199,7 @@ export function FormPayment() {
       </div>
       <button
         type="submit"
-        className="mt-[30px]  text-white bg-purple-principal rounded-lg font-medium  w-[108px] h-[54px]"
+        className="mt-[30px]  text-white bg-purple-principal rounded-lg font-medium  w-[108px] h-[54px] disabled:cursor-not-allowed disabled:opacity-70"
         disabled={isLoading}
       >
         {isLoading ? <LoadingSpinner /> : <span>Pay Now</span>}

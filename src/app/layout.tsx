@@ -1,20 +1,16 @@
-import type { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { causten, coreSans } from "@/utils/constants/localFonts";
-import ShoppingCartProvider from "@/components/ShopProvider";
-import { Montserrat } from "next/font/google";
-import { Toaster } from "sonner";
-
 import "../styles/utils.css";
 import "./globals.css";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import { WishContextProvider } from "@/components/WishContextProvider";
+import { causten, coreSans } from "@/utils/constants/localFonts";
+
 import AuthClientProvider from "@/components/AuthClientProvider";
+import type { Metadata } from "next";
+import { Montserrat } from "next/font/google";
+import ShoppingCartProvider from "@/components/ShopProvider";
+import { Toaster } from "sonner";
+import { WishContextProvider } from "@/components/WishContextProvider";
 import { authOptions } from "@/utils/constants/authOptions";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Euphoria",
@@ -34,7 +30,7 @@ export default async function RootLayout({
           <Toaster richColors position="top-right" closeButton />
           <ShoppingCartProvider>
             <WishContextProvider>
-                {children}
+              {children}
             </WishContextProvider>
           </ShoppingCartProvider>
         </AuthClientProvider>

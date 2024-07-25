@@ -7,7 +7,11 @@ export async function paymentOrderProcess(
   method: PaymentType,
   items: IShoppingCartItems[]
 ) {
-  console.log(creditCardInfo);
+  const cartItems = items.map(
+    ({ title, color, size, imageSrc, price, quantity }) => {
+      return { title, color, size, imageSrc, price, quantity };
+    }
+  );
   switch (method) {
     case PaymentType.CARD:
       const response = await fetch(
@@ -28,7 +32,7 @@ export async function paymentOrderProcess(
         body: JSON.stringify({
           paymentMethod: "CARD",
           credit_card_id: card?.id,
-          items,
+          items: cartItems,
         }),
       });
       break;

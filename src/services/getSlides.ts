@@ -1,6 +1,7 @@
 import { STRAPI_API_URL, STRAPI_TOKEN } from "@/utils/constants/strapi";
 
 export async function getSlides() {
+  try {
     const res = await fetch(`${STRAPI_API_URL}/slides?filters[area][$eq]=women&populate=*`, {
       cache: "no-cache",
       headers: {
@@ -8,4 +9,7 @@ export async function getSlides() {
       },
     });
     return res.json();
+  } catch (err) {
+    throw new Error("Error on search slides");
   }
+}

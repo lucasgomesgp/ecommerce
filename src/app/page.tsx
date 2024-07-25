@@ -24,67 +24,67 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    <main>
+    <div>
       <Header isLoginPage={false} />
       {data?.length >= 1 && <Slider data={data} />}
-      <section className="mt-[130px] flex flex-wrap items-center justify-center lg:gap-[30px]">
-        <div className="relative">
-          <Image
-            src="/assets/low_price.png"
-            width={600}
-            height={355}
-            className="w-[600px] h-[338px]"
-            alt="Low Price"
-          />
-          <div className="flex flex-col items-start justify-center absolute left-[32px] top-0 h-full">
-            <p className="font-montserrat font-extrabold text-white mb-6">
-              Low Price
-            </p>
-            <p className="font-coreSans font-extrabold text-[34px] text-white mb-[9px]">
-              High Coziness
-            </p>
-            <p className="font-coreSans font-medium text-white mb-[41px]">
-              UPTO 50% OFF
-            </p>
-            <Link
-              href="/women"
-              className="font-coreSans font-bold text-[20px] text-white underline decoration-1 hover:opacity-70 transition-all"
-            >
-              Explore Items
-            </Link>
+      <main className="flex flex-col items-center overflow-x-hidden">
+        <section className="mt-[130px] flex flex-wrap items-center justify-center lg:gap-[30px]">
+          <div className="relative">
+            <Image
+              src="/assets/low_price.png"
+              width={600}
+              height={355}
+              className="w-[600px] h-[338px]"
+              alt="Low Price"
+            />
+            <div className="flex flex-col items-start justify-center absolute left-[32px] top-0 h-full">
+              <p className="font-montserrat font-extrabold text-white mb-6">
+                Low Price
+              </p>
+              <p className="font-coreSans font-extrabold text-[34px] text-white mb-[9px]">
+                High Coziness
+              </p>
+              <p className="font-coreSans font-medium text-white mb-[41px]">
+                UPTO 50% OFF
+              </p>
+              <Link
+                href="/women"
+                className="font-coreSans font-bold text-[20px] text-white underline decoration-1 hover:opacity-70 transition-all"
+              >
+                Explore Items
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="relative">
-          <Image
-            src="/assets/summer_style.png"
-            width={600}
-            height={355}
-            className="w-[600px] h-[355px]"
-            alt="Summer Style"
-          />
-          <div className="flex flex-col items-start justify-center absolute left-[32px] top-0 h-full">
-            <p className="font-montserrat font-extrabold text-white mb-6">
-              Beyoung Presents
-            </p>
-            <p className="font-coreSans font-extrabold text-[34px] text-white mb-[9px] word-break lg:w-[280px]">
-              Breezy Summer Style
-            </p>
-            <p className="font-coreSans font-medium text-white mb-[41px]">
-              UPTO 50% OFF
-            </p>
-            <Link
-              href="/women"
-              className="font-coreSans font-bold text-[20px] text-white underline decoration-1 hover:opacity-70 transition-all"
-            >
-              Explore Items
-            </Link>
+          <div className="relative">
+            <Image
+              src="/assets/summer_style.png"
+              width={600}
+              height={355}
+              className="w-[600px] h-[355px]"
+              alt="Summer Style"
+            />
+            <div className="flex flex-col items-start justify-center absolute left-[32px] top-0 h-full">
+              <p className="font-montserrat font-extrabold text-white mb-6">
+                Beyoung Presents
+              </p>
+              <p className="font-coreSans font-extrabold text-[34px] text-white mb-[9px] word-break lg:w-[280px]">
+                Breezy Summer Style
+              </p>
+              <p className="font-coreSans font-medium text-white mb-[41px]">
+                UPTO 50% OFF
+              </p>
+              <Link
+                href="/women"
+                className="font-coreSans font-bold text-[20px] text-white underline decoration-1 hover:opacity-70 transition-all"
+              >
+                Explore Items
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="flex flex-col justify-center items-center mt-[100px]">
-        <div className="self-start md:pl-[70px]">
+        </section>
+        <section className="mt-[100px] flex flex-col items-center justify-center md:flex md:justify-start md:items-start lg:self-start md:pl-[70px]">
           <TitleWithBar title="New Arrival" />
-          <div className="flex flex-wrap gap-[38px] mt-[70px]">
+          <div className="flex gap-[38px] mt-[70px] px-4 lg:px-0 md:flex-wrap">
             <CardArrival
               link="/shop/joggers"
               imageSrc="/assets/knitted_joggers.png"
@@ -106,12 +106,10 @@ export default async function Home() {
               name="Urban Shirts"
             />
           </div>
-        </div>
-      </section>
-      <section className="flex flex-col justify-center items-center mt-[100px]">
-        <div className="self-start md:pl-[70px]">
+        </section>
+        <section className="flex flex-col justify-center items-center md:items-start md:pl-[70px] mt-[100px]">
           <TitleWithBar title="Big Saving Zone" />
-          <div className="flex flex-wrap gap-[20px] mt-[70px]">
+          <div className="flex flex-wrap gap-[20px] mt-[70px] items-center justify-center">
             <div className="relative text-white">
               <Image
                 src="/assets/hawaiian_style.png"
@@ -258,80 +256,78 @@ export default async function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      <section className="flex flex-wrap items-center justify-center lg:justify-normal lg:pl-[70px] mt-[100px] ">
-        <div className="relative">
+        </section>
+        <section className="flex flex-wrap items-center justify-center lg:justify-normal lg:pl-[70px] mt-[100px] ">
+          <div className="relative">
+            <Image
+              src="/assets/models1.png"
+              height={639}
+              width={613}
+              className="h-[639px] w-[613px]"
+              alt="Background Shop"
+            />
+            <div className="absolute top-0 left-[74px] flex flex-col items-start justify-center h-full">
+              <p className="font-coreSans text-white font-extrabold text-[34px] mb-[30px]">
+                WE MADE YOUR EVERYDAY FASHION BETTER!
+              </p>
+              <p className="text-white font-light text-xl mb-[50px] lg:w-[451px]">
+                In our journey to improve everyday fashion, euphoria presents
+                EVERYDAY wear range - Comfortable & Affordable fashion 24/7
+              </p>
+              <Link
+                href="/women"
+                className="bg-white text-center text-gray-text-menu py-3 px-11 font-semibold md:text-2xl rounded-lg hover:opacity-80 hover:transition-all"
+              >
+                Shop Now
+              </Link>
+            </div>
+          </div>
           <Image
-            src="/assets/models1.png"
+            src="/assets/models2.png"
             height={639}
-            width={613}
-            className="h-[639px] w-[613px]"
+            width={626}
+            className="h-[639px] w-[626px]"
             alt="Background Shop"
           />
-          <div className="absolute top-0 left-[74px] flex flex-col items-start justify-center h-full">
-            <p className="font-coreSans text-white font-extrabold text-[34px] mb-[30px]">
-              WE MADE YOUR EVERYDAY FASHION BETTER!
-            </p>
-            <p className="text-white font-light text-xl mb-[50px] lg:w-[451px]">
-              In our journey to improve everyday fashion, euphoria presents
-              EVERYDAY wear range - Comfortable & Affordable fashion 24/7
-            </p>
-            <Link
-              href="/women"
-              className="bg-white text-center text-gray-text-menu py-3 px-11 font-semibold md:text-2xl rounded-lg hover:opacity-80 hover:transition-all"
-            >
-              Shop Now
-            </Link>
-          </div>
-        </div>
-        <Image
-          src="/assets/models2.png"
-          height={639}
-          width={626}
-          className="h-[639px] w-[626px]"
-          alt="Background Shop"
-        />
-      </section>
-      <section className="flex flex-col justify-center items-center mt-[100px]">
-        <div className="self-start md:pl-[70px]">
-          <TitleWithBar title="Categories For Men" />
-          <div className="flex justify-center items-center flex-wrap mt-[70px] lg:grid lg:grid-cols-4  gap-[50px]">
-            {categoriesForMen.map(({ id, imageSrc, title, subTitle }) => (
-              <Link
-                href="/shop/men"
-                key={getRandomId(id)}
-                className="flex flex-col gap-[14px] hover:opacity-80 transition-opacity"
-              >
-                <Image src={imageSrc} alt={title} height={393} width={270} />
-                <div className="flex flex-col">
-                  <p className="text-black-title font-causten font-bold">
-                    {title}
-                  </p>
-                  <div className="flex justify-between">
-                    <p className="text-gray-text-light font-causten font-medium">
-                      {subTitle}
+        </section>
+        <section className="flex flex-col justify-center items-center mt-[100px]">
+          <div className="self-start md:pl-[70px]">
+            <TitleWithBar title="Categories For Men" />
+            <div className="flex justify-center items-center flex-wrap mt-[70px] lg:grid lg:grid-cols-4  gap-[50px]">
+              {categoriesForMen.map(({ id, imageSrc, title, subTitle }) => (
+                <Link
+                  href="/shop/men"
+                  key={getRandomId(id)}
+                  className="flex flex-col gap-[14px] hover:opacity-80 transition-opacity"
+                >
+                  <Image src={imageSrc} alt={title} height={393} width={270} />
+                  <div className="flex flex-col">
+                    <p className="text-black-title font-causten font-bold">
+                      {title}
                     </p>
-                    <ArrowLongRightIcon color="#797979" width={17} />
+                    <div className="flex justify-between">
+                      <p className="text-gray-text-light font-causten font-medium">
+                        {subTitle}
+                      </p>
+                      <ArrowLongRightIcon color="#797979" width={17} />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="mt-[100px] flex justify-center">
-        <Image
-          src="/assets/top_brands.png"
-          height={357}
-          width={1233}
-          alt="Top Brands"
-        />
-      </section>
-      <section className="flex flex-col justify-center items-center mt-[77px]">
-        <div className="self-start md:pl-[70px]">
+        </section>
+        <section className="mt-[100px] flex justify-center">
+          <Image
+            src="/assets/top_brands.png"
+            height={357}
+            width={1233}
+            alt="Top Brands"
+          />
+        </section>
+        <section className="md:pl-[70px] min-w-full mt-[77px] flex flex-col justify-center items-center md:items-start">
           <TitleWithBar title="In The Limelight" />
-          <div className="flex flex-wrap gap-[50px] justify-center lg:justify-start">
+          <div className="flex flex-wrap gap-[50px] lg:justify-start">
             {womenData?.data?.length >= 1 &&
               womenData.data.map(({ id, attributes }) => (
                 <Card
@@ -346,15 +342,15 @@ export default async function Home() {
                 />
               ))}
           </div>
-        </div>
-      </section>
-      <section className="flex flex-col justify-center items-center mt-[77px] pb-[100px] overflow-hidden">
-        <div className="self-start md:pl-[70px] pb-2">
-          <TitleWithBar title="Feedback" />
-        </div>
-        <SlidesFeedbacks />
-      </section>
+        </section>
+        <section className="flex flex-col justify-center items-center mt-[77px] pb-[100px] overflow-hidden">
+          <div className="self-start md:pl-[70px] pb-2">
+            <TitleWithBar title="Feedback" />
+          </div>
+          <SlidesFeedbacks />
+        </section>
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }
