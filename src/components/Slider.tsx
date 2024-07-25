@@ -1,13 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { register } from "swiper/element/bundle";
-import { Autoplay, Navigation, EffectFade } from "swiper/modules";
-import { ISlides } from "@/utils/types/ISlides";
-import Link from "next/link";
-import { info } from "@/utils/data/InfoSlides";
+
 import "../styles/swiper-reset.css";
+
+import { Autoplay, EffectFade, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useEffect, useState } from "react";
+
+import { ISlides } from "@/utils/types/ISlides";
+import Image from "next/image";
+import Link from "next/link";
+import { register } from "swiper/element/bundle";
+
 register();
 
 export function Slider({ data }: ISlides) {
@@ -16,7 +19,6 @@ export function Slider({ data }: ISlides) {
     widthPage = window.innerWidth;
   }
   const [widthOfPage, setWidthOfPage] = useState(widthPage);
-
   useEffect(() => {
     function getWidhtOfPage() {
       setWidthOfPage(() => {
@@ -57,16 +59,16 @@ export function Slider({ data }: ISlides) {
             />
             <section className="flex font-coreSans flex-col top-[50px] lg:-bottom-9 gap-4 md:gap-10 absolute left-8 md:left-20 lg:left-48 md:bottom-48">
               <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
-                {info[index].title}
+                {attributes.title}
               </p>
               <h1 className="text-white text-sm md:text-[39px] lg:text-[78px] font-bold word-break md:w-[470px] leading-none">
-                {info[index].centralTitle}
+                {attributes.centralTitle}
               </h1>
               <p className="text-white text-sm md:text-base lg:text-[32px] font-medium">
-                {info[index].downTitle}
+                {attributes.downTitle}
               </p>
               <Link
-                href={info[index].link}
+                href={attributes.link}
                 className="bg-white text-center text-gray-text-menu py-2 font-semibold md:text-2xl md:w-[250px] rounded-lg md:py-4  hover:opacity-80 hover:transition-all"
               >
                 Shop Now

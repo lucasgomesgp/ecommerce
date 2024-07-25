@@ -33,3 +33,21 @@ export async function POST(request: NextRequest) {
   }
   return NextResponse.json({ card });
 }
+
+export async function DELETE(request: NextRequest) {
+  const session = await getServerSession(authOptions);
+  const { id } = (await request.json()) as { id: string };
+  try {
+    if (session?.user.id) {
+      await prisma.creditCard.delete({
+        where: {
+          id,
+          userId: session.user.id,
+        },
+      });
+    }
+  } catch (err) {
+    throw new Error("Error on create credit card");
+  }
+  return NextResponse.json({ message: "Credit card deleted!" });
+}

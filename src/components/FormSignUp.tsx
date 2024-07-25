@@ -40,7 +40,7 @@ export function FormSignUp() {
             reset();
             setIsLoading(false);
             toast.success("User created!");
-            router.push("/auth/login");
+            router.push("/login");
         }
         catch (err) {
             toast.error("Ooops.... Error on sign up user. Try again with diferents info!");
@@ -103,7 +103,7 @@ export function FormSignUp() {
                 </button>
                 <p>
                     Already have an  account?
-                    <Link href="/auth/login" className="underline">Log in</Link>
+                    <Link href="/login" className="underline">Log in</Link>
                 </p>
             </div>
         </form >

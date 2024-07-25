@@ -1,10 +1,8 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { IProduct } from "@/utils/types/IProducts";
 import MainProductSection from "@/components/MainProductSection";
+import { NotFoundData } from "@/svgs/not-found-data";
 import { getProduct } from "@/services/getProduct";
 import { getProducts } from "@/services/getProducts";
-import { NotFoundData } from "@/svgs/not-found-data";
-import { IProduct } from "@/utils/types/IProducts";
 
 export interface ProductData {
   data: IProduct;

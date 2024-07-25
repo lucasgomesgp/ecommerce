@@ -1,26 +1,29 @@
 "use client";
-import { ArrowMenu } from "@/svgs/arrow-menu";
-import { ArrowSizes } from "@/svgs/arrow-sizes";
-import { CreditCard } from "@/svgs/credit-card";
-import { Return } from "@/svgs/return";
-import { Truck } from "@/svgs/truck";
-import { TShirt } from "@/svgs/tshirt";
-import { sizesProduct } from "@/utils/constants/sizesProduct";
-import { currencyFormatter } from "@/utils/functions/currencyFormatter";
-import ButtonAddToCart from "./ButtonAddToCart";
-import { Card } from "./Card";
-import { DeliveryDetails } from "./DeliveryDetails";
-import ImageProduct from "./ImageProduct";
-import { SlidesImageProduct } from "./SlidesImageProduct";
-import { TitleWithBar } from "./TitleWithBar";
+
+import "../styles/effects.css";
+
 import { ProductData, ProductDataArr } from "@/app/shop/product/[id]/page";
 import { useContext, useState } from "react";
-import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
+
+import { ArrowMenu } from "@/svgs/arrow-menu";
+import { ArrowSizes } from "@/svgs/arrow-sizes";
+import ButtonAddToCart from "./ButtonAddToCart";
+import { Card } from "./Card";
+import { CreditCard } from "@/svgs/credit-card";
+import { DeliveryDetails } from "./DeliveryDetails";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
-import { useItemsStorage } from "@/hooks/useItemsStorage";
-import { v4 as uuidv4 } from 'uuid';
+import ImageProduct from "./ImageProduct";
+import { Return } from "@/svgs/return";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
+import { SlidesImageProduct } from "./SlidesImageProduct";
+import { TShirt } from "@/svgs/tshirt";
+import { TitleWithBar } from "./TitleWithBar";
+import { Truck } from "@/svgs/truck";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
+import { sizesProduct } from "@/utils/constants/sizesProduct";
 import { toast } from "sonner";
-import "../styles/effects.css";
+import { useItemsStorage } from "@/hooks/useItemsStorage";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   product: ProductData;
@@ -57,9 +60,9 @@ export default function MainProductSection({ product, products }: Props) {
             const data =
               currentItem.id === itemToCart.id
                 ? {
-                  ...currentItem,
-                  quantity: currentItem.quantity + 1,
-                }
+                    ...currentItem,
+                    quantity: currentItem.quantity + 1,
+                  }
                 : { ...currentItem };
             return data;
           }
@@ -121,10 +124,11 @@ export default function MainProductSection({ product, products }: Props) {
             <div className="flex gap-5">
               {sizesProduct.map((size) => (
                 <button
-                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${size === itemToCart.size
-                    ? "bg-gray-text-menu text-white border-none"
-                    : ""
-                    }`}
+                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${
+                    size === itemToCart.size
+                      ? "bg-gray-text-menu text-white border-none"
+                      : ""
+                  }`}
                   key={size}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, size });
@@ -142,16 +146,19 @@ export default function MainProductSection({ product, products }: Props) {
               {product.data.attributes.colors.map((color) => (
                 <button
                   key={uuidv4()}
-                  className={`rounded-full w-[30px] h-[30px] relative legend-hover  ${color.name === itemToCart.color
-                    ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
-                    : ""
-                    }`}
+                  className={`rounded-full w-[30px] h-[30px] relative legend-hover  ${
+                    color.name === itemToCart.color
+                      ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
+                      : ""
+                  }`}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, color: color.name });
                   }}
                   style={{ backgroundColor: `${color.value}` }}
                 >
-                  <span className="absolute -top-8 text-sm left-0 text-black border border-gray-border hidden min-w-[100px] justify-center font-bold break-keep">{color.name}</span>
+                  <span className="absolute -top-8 text-sm left-0 text-black border border-gray-border hidden min-w-[100px] justify-center font-bold break-keep">
+                    {color.name}
+                  </span>
                 </button>
               ))}
             </div>
@@ -240,7 +247,7 @@ export default function MainProductSection({ product, products }: Props) {
       <section className="flex flex-col pb-[100px] lg:px-[100px] mt-[100px]">
         <TitleWithBar title="Similar Products" />
         <div className="flex flex-wrap justify-center gap-6 lg:grid lg:grid-cols-3 xl:grid-cols-4  lg:gap-[37px] mt-[30px]">
-          {products.data.length >= 1 && (
+          {products.data.length >= 1 &&
             products.data.map(({ id, attributes }) => (
               <Card
                 key={id}
@@ -250,8 +257,7 @@ export default function MainProductSection({ product, products }: Props) {
                 title={attributes.title}
                 subTitle={attributes.subTitle}
               />
-            ))
-          )}
+            ))}
         </div>
       </section>
     </section>

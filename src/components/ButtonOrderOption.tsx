@@ -9,7 +9,7 @@ export function ButtonOrderOption({ title, isActive, ...rest }: Props) {
   return (
     <button
       className={twMerge(
-        "text-[22px] font-coreSans py-3 px-[53px] hover:bg-white-light hover:border-b-[3px] hover:border-gray-text-menu rounded-t-md",
+        "text-[22px] font-coreSans py-3 px-[53px] hover:bg-white-light rounded-t-md",
         isActive && "bg-white-light border-b-[3px] border-gray-text-menu"
       )}
       {...rest}
