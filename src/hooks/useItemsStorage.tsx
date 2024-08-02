@@ -18,5 +18,9 @@ export function useItemsStorage() {
   function setItemsOnStorage(value: [] | IShoppingCartItems[]) {
     localStorage.setItem("shopItems", JSON.stringify(value));
   }
-  return { itemsStorage, getItemsOnLocalStorage, setItemsOnStorage };
+
+  function removeItems() {
+    localStorage.setItem("shopItems", JSON.stringify([]));
+  }
+  return { itemsStorage, getItemsOnLocalStorage, setItemsOnStorage, removeItems };
 }

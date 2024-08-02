@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { useCouponsStorage } from "@/hooks/useCouponsStorage";
 import { useForm } from "react-hook-form";
 import { useFormValidation } from "@/hooks/useFormValidation";
+import { useItemsStorage } from "@/hooks/useItemsStorage";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
@@ -38,6 +39,8 @@ export function FormPayment() {
   const [securityCodeIsVisible, setSecurityCodeIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentType>();
+  const { removeItems, itemsStorage } = useItemsStorage();
+  const router = useRouter();
   const [creditCardInfo, setCreditCardInfo] = useState<ICreditCardInfo>({
     card: {
       id: "",
@@ -88,18 +91,45 @@ export function FormPayment() {
   };
   async function handlePaymentProcess() {
     setIsLoading(true);
+    if (itemsStorage.length === 0) {
+      toast.error("Your cart is empty!");
+      setIsLoading(false);
+      return;
+    }
     if (!paymentMethod) {
       toast.error("Choose on payment method!");
     } else {
-      await createOrder(
-        paymentMethod,
-        items,
-        currencyFormatter(
-          getTotal(items, Number(getCoupon()?.percentage || 0))
-        ),
-        creditCardInfo.card.id
-      );
-      toast.success("Order created!");
+      if (paymentMethod === "CARD" && !creditCardInfo.card.id) {
+        toast.error("Create your card first!");
+        setIsLoading(false);
+        return;
+      }
+      if (creditCardInfo.card.id && paymentMethod !== "CARD") {
+        console.log("CHEGOU!")
+        toast.error("Your card has added, select CREDIT CARD or delete it for choose another payment method!");
+        setIsLoading(false);
+        return;
+      }
+      try {
+        toast.loading("Loading...");
+        await createOrder(
+          paymentMethod,
+          items,
+          currencyFormatter(
+            getTotal(items, Number(getCoupon()?.percentage || 0))
+          ),
+          creditCardInfo.card.id
+        ).then(() => {
+          toast.success("Order created!");
+        }).catch(() => {
+          toast.error("Error on create order!");
+        });
+        removeItems();
+        router.push("/user/orders");
+      } catch (err) {
+        toast.error("Error on create order!");
+        console.log(err);
+      }
     }
     setIsLoading(false);
   }

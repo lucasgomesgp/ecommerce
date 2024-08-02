@@ -60,9 +60,9 @@ export default function MainProductSection({ product, products }: Props) {
             const data =
               currentItem.id === itemToCart.id
                 ? {
-                    ...currentItem,
-                    quantity: currentItem.quantity + 1,
-                  }
+                  ...currentItem,
+                  quantity: currentItem.quantity + 1,
+                }
                 : { ...currentItem };
             return data;
           }
@@ -81,6 +81,7 @@ export default function MainProductSection({ product, products }: Props) {
     setItems([itemToCart]);
     setItemsOnStorage([itemToCart]);
   }
+  console.log(product.data.attributes.colors);
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">
@@ -124,11 +125,10 @@ export default function MainProductSection({ product, products }: Props) {
             <div className="flex gap-5">
               {sizesProduct.map((size) => (
                 <button
-                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${
-                    size === itemToCart.size
-                      ? "bg-gray-text-menu text-white border-none"
-                      : ""
-                  }`}
+                  className={`border border-gray-border w-[38px] h-[38px] text-gray-text-menu disabled:cursor-not-allowed disabled:opacity-50 rounded-xl ${size === itemToCart.size
+                    ? "bg-gray-text-menu text-white border-none"
+                    : ""
+                    }`}
                   key={size}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, size });
@@ -146,11 +146,10 @@ export default function MainProductSection({ product, products }: Props) {
               {product.data.attributes.colors.map((color) => (
                 <button
                   key={uuidv4()}
-                  className={`rounded-full w-[30px] h-[30px] relative legend-hover  ${
-                    color.name === itemToCart.color
-                      ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
-                      : ""
-                  }`}
+                  className={`rounded-full w-[30px] h-[30px] relative legend-hover shadow-md border  ${color.name === itemToCart.color
+                    ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
+                    : ""
+                    }`}
                   onClick={() => {
                     setItemToCart({ ...itemToCart, color: color.name });
                   }}

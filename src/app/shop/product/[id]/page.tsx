@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       {product?.data?.id ?
         <MainProductSection product={{ data: product.data }} products={products} /> : (
           <div className="flex flex-col items-center justify-center w-full">
-            <p className="font-coreSans">Erro searching for product information</p>
+            <p className="font-coreSans">Error searching for product information</p>
             <div className="w-[full] md:w-[500px] overflow-hidden">
               <NotFoundData />
             </div>

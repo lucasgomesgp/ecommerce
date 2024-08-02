@@ -27,10 +27,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${montserrat.variable} ${causten.variable} ${coreSans.variable}  font-causten`}>
         <AuthClientProvider session={session}>
-          <Toaster richColors position="top-right" closeButton />
           <ShoppingCartProvider>
             <WishContextProvider>
               {children}
+              <Toaster richColors position="top-right" closeButton />
             </WishContextProvider>
           </ShoppingCartProvider>
         </AuthClientProvider>

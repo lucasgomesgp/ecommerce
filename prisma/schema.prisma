@@ -64,9 +64,9 @@ model Payment {
     userId String  @map("user_id")
     cardId String? @unique @map("card_id")
 
-    card   CreditCard? @relation(fields: [cardId], references: [id])
-    user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Orders Order[]
+    card  CreditCard? @relation(fields: [cardId], references: [id])
+    user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Order Order[]
 
     @@map("payment")
 }
@@ -96,10 +96,10 @@ model Order {
     status        OrderStatus @default(ACTIVE)
     paymentMethod PaymentType @default(CASH) @map("payment_method")
     createdAt     DateTime    @default(now())
+    paymentId     String
     orderItems    OrderItem[]
-    paymentsId    String
 
-    payment Payment @relation(fields: [paymentsId], references: [id])
+    payment Payment @relation(fields: [paymentId], references: [id])
     User    User?   @relation(fields: [userId], references: [id])
     userId  String?
 
@@ -114,12 +114,12 @@ model OrderItem {
     imageSrc  String
     color     String
     size      String
-    ordersId  String?
     userId    String
     createdAt DateTime @default(now())
 
-    Orders Order? @relation(fields: [ordersId], references: [id])
-    user   User   @relation(fields: [userId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
+    Order   Order?  @relation(fields: [orderId], references: [id])
+    orderId String?
 
     @@map("order_item")
 }

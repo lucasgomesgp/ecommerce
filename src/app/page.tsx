@@ -22,7 +22,6 @@ export default async function Home() {
   const { data }: ISlides = await getSlides();
   const womenData = await getWomenWithLimit();
   const session = await getServerSession(authOptions);
-
   return (
     <div>
       <Header isLoginPage={false} />
