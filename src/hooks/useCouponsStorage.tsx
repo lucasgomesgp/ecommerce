@@ -6,7 +6,7 @@ export function useCouponsStorage() {
             if (window !== undefined) {
                 const coupon = localStorage.getItem("coupon");
                 if (coupon) {
-                    const parsedResult : Coupon = JSON.parse(coupon);
+                    const parsedResult: Coupon = JSON.parse(coupon);
                     return parsedResult;
                 }
             }
@@ -17,5 +17,8 @@ export function useCouponsStorage() {
     function changeCoupon(coupon: Coupon) {
         localStorage.setItem("coupon", JSON.stringify(coupon));
     }
-    return { getCoupon, changeCoupon };
+    function removeCoupon() {
+        localStorage.setItem("coupon", JSON.stringify([]));
+    }
+    return { getCoupon, changeCoupon, removeCoupon };
 }

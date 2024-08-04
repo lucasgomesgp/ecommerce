@@ -12,6 +12,7 @@ export async function POST(request: NextRequest) {
   const { items, paymentMethod, credit_card_id, total } =
     (await request.json()) as ICheckoutData;
   let order: Order = {
+    price: 0,
     id: "",
     status: OrderStatus.ACTIVE,
     paymentMethod: PaymentType.CARD,
@@ -43,6 +44,7 @@ export async function POST(request: NextRequest) {
             paymentMethod: paymentMethod ? paymentMethod : "CASH",
             paymentId: payment.id,
             userId: session.user.id,
+            price: Number(total),
           },
           include: {
             orderItems: true,

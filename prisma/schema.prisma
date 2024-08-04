@@ -96,6 +96,7 @@ model Order {
     status        OrderStatus @default(ACTIVE)
     paymentMethod PaymentType @default(CASH) @map("payment_method")
     createdAt     DateTime    @default(now())
+    price         Float
     paymentId     String
     orderItems    OrderItem[]
 

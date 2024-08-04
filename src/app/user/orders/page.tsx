@@ -3,10 +3,10 @@ import { Header } from "@/components/Header";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
 import { OrdersItems } from "@/components/OrdersItems";
 import { PathPage } from "@/components/PathPage";
-import { getAllOrders } from "../../../utils/functions/address/getAllOrders";
+import { getOrders } from "@/services/getOrders";
 
 export default async function Orders() {
-  const data = await getAllOrders();
+  const data = await getOrders();
   return (
     <main className="flex flex-col overflow-hidden">
       <Header />
@@ -14,7 +14,7 @@ export default async function Orders() {
       <MainSideBarContent>
         <div className="flex flex-[0.75] flex-col">
           <h1 className="font-coreSans text-[28px] font-semibold">My Orders</h1>
-          <OrdersItems />
+          <OrdersItems userOrders={data} />
         </div>
       </MainSideBarContent>
       <Footer />

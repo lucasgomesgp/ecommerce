@@ -52,7 +52,7 @@ export function FormPayment() {
     },
   });
 
-  const { getCoupon } = useCouponsStorage();
+  const { getCoupon, removeCoupon } = useCouponsStorage();
   const { data: session } = useSession();
   const { maskDate, maskCardNumber } = useFormValidation();
   const {
@@ -105,7 +105,6 @@ export function FormPayment() {
         return;
       }
       if (creditCardInfo.card.id && paymentMethod !== "CARD") {
-        console.log("CHEGOU!")
         toast.error("Your card has added, select CREDIT CARD or delete it for choose another payment method!");
         setIsLoading(false);
         return;
@@ -125,6 +124,7 @@ export function FormPayment() {
           toast.error("Error on create order!");
         });
         removeItems();
+        removeCoupon();
         router.push("/user/orders");
       } catch (err) {
         toast.error("Error on create order!");

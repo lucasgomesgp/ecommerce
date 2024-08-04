@@ -52,7 +52,6 @@ CREATE TABLE "payment" (
     "price" TEXT,
     "user_id" TEXT NOT NULL,
     "card_id" TEXT,
-    "orderId" TEXT NOT NULL,
 
     CONSTRAINT "payment_pkey" PRIMARY KEY ("id")
 );
@@ -83,7 +82,8 @@ CREATE TABLE "order" (
     "status" "OrderStatus" NOT NULL DEFAULT 'ACTIVE',
     "payment_method" "PaymentType" NOT NULL DEFAULT 'CASH',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "paymentsId" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "paymentId" TEXT NOT NULL,
     "userId" TEXT,
 
     CONSTRAINT "order_pkey" PRIMARY KEY ("id")
@@ -136,9 +136,6 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "payment" ADD CONSTRAINT "payment_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "payment" ADD CONSTRAINT "payment_card_id_fkey" FOREIGN KEY ("card_id") REFERENCES "credit_card"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -146,6 +143,9 @@ ALTER TABLE "payment" ADD CONSTRAINT "payment_user_id_fkey" FOREIGN KEY ("user_i
 
 -- AddForeignKey
 ALTER TABLE "address" ADD CONSTRAINT "address_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "order" ADD CONSTRAINT "order_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "payment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "order" ADD CONSTRAINT "order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;

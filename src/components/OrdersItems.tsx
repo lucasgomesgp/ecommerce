@@ -1,23 +1,25 @@
 "use client"
 
 import { ButtonOrderOption } from "@/components/ButtonOrderOption";
+import { IOrdersResponse } from "@/utils/types/IOrdersResponse";
 import Image from "next/image";
 import Link from "next/link";
-import data from "@/utils/mock-orders.json";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface Props {
+    userOrders: Array<IOrdersResponse>;
+}
 enum OrderOption {
     active = "ACTIVE",
     cancelled = "CANCELLED",
     completed = "COMPLETED"
 }
 
-export function OrdersItems() {
+export function OrdersItems({ userOrders }: Props) {
     const [toggleOrderOption, setToggleOrderOption] = useState<OrderOption>(OrderOption.active);
-    const filteredData = data.data.filter((order) => order.status === toggleOrderOption);
+    const filteredData = userOrders.filter((order) => order.status === toggleOrderOption);
     const router = useRouter();
-
     return (
         <>
             <div className="flex border-b-[3px] border-b-white-light mt-[38px] justify-between mb-[50px]">
@@ -43,7 +45,7 @@ export function OrdersItems() {
                                 <div className="flex items-center justify-between">
                                     <p className="flex items-center text-sm font-semibold text-gray-light gap-2">
                                         Order Date:
-                                        <span className="text-gray-border font-thin">{order.createdAt}</span>
+                                        <span className="text-gray-border font-thin">{order.createdAt.toString()}</span>
                                     </p>
                                     <p className="flex items-center text-sm font-semibold text-gray-light gap-2">
                                         Order Status:
@@ -53,7 +55,7 @@ export function OrdersItems() {
                                 <div className="flex items-center justify-between">
                                     <p className="flex items-center text-sm font-semibold text-gray-light gap-2">
                                         Estimated Delivery Date:
-                                        <span className="text-gray-border font-thin">{order.createdAt}</span>
+                                        <span className="text-gray-border font-thin">{order.createdAt.toString()}</span>
                                     </p>
                                     <p className="flex items-center text-sm font-semibold text-gray-light gap-2">
                                         Payment Method:

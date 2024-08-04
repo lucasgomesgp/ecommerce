@@ -9,33 +9,13 @@ import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { data } from "@/utils/mock-orders.json";
 import { enUS } from "date-fns/locale";
 import { format } from "date-fns";
+import { getOrder } from "@/services/getOrder";
 
-type IOrderItems =
-    [
-        {
-            id: string,
-            paymentMethod: string,
-            status: string,
-            createdAt: string,
-            orderItems: [
-                {
-                    id: string,
-                    title: string,
-                    quantity: string,
-                    createdAt: string,
-                    color: string,
-                    size: string,
-                    imageSrc: string,
-                    price: number,
-                }
-            ]
-        }
-    ]
-
-export default function Page({ params }: { params: number }) {
+export default async function Page({ params }: { params: { id: string } }) {
+    const orderInfo = await getOrder(params.id);
     return (
         <main className="flex flex-col overflow-hidden">
-            < Header />
+            <Header />
             <PathPage title="Orders" />
             <MainSideBarContent>
                 <div className="flex flex-col flex-[0.75]">
@@ -45,7 +25,7 @@ export default function Page({ params }: { params: number }) {
                     </section>
                     <section className="flex flex-wrap justify-between items-center bg-white-light mt-14 px-12 py-7 rounded-lg">
                         <div className="flex flex-col justify-center gap-[10px]">
-                            <p className="text-gray-text-menu font-semibold text-xl">Order no: #</p>
+                            <p className="text-gray-text-menu font-semibold text-xl">Order no: #{orderInfo?.id}</p>
                             <p className="text-gray-light font-medium text-lg">Placed On </p>
                         </div>
                         <p className="text-gray-light font-semibold">Total : <span className="text-gray-text-menu">{currencyFormatter(0)}</span></p>
@@ -89,11 +69,9 @@ export default function Page({ params }: { params: number }) {
                         </div>
                     </section>
                     <section className="mt-20">
-                        {data.map((item, index) => {
-                            return item.orderItems.map(({ id, title, color, quantity, price, imageSrc }) => (
-                                <OrderItemsDetailsList borderBottomIsActive={data.length !== index + 1} id={id} color={color} title={title} quantity={quantity} price={price} imageSrc={imageSrc} key={id} />
-                            ))
-                        })}
+                        {orderInfo?.orderItems.map(({ id, color, title, quantity, price, imageSrc }, index) => (
+                            <OrderItemsDetailsList borderBottomIsActive={data.length !== index + 1} id={id} color={color} title={title} quantity={quantity} price={price} imageSrc={imageSrc} key={id} />
+                        ))}
                     </section>
                 </div>
             </MainSideBarContent>

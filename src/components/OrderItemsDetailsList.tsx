@@ -7,7 +7,7 @@ type Props = {
     imageSrc: string,
     title: string,
     color: string,
-    quantity: string,
+    quantity: number,
     price: number,
     borderBottomIsActive: boolean,
 }
