@@ -28,6 +28,7 @@
 **Strapi CMS**
 </div>
 
+<span style="font-size:10px"> Ps: For mor details go to package.json</span>
 ---
 ## 🌟 Features
 
@@ -68,6 +69,8 @@ GOOGLE_CLIENT_SECRET=
 SECRET=
 ```
 8. **For run your Backend with Strapi, clone the backend project on [Github](github.com)**
+9. **Open [Render](https://render.com/] and create a Blueprint/Database for your Strapi**
+10. **Deploy your copy of Backend on [Render](https://render.com/)**
 9. **Create your Token on http://YOUR_STRAPI_URL/admin and go to Settings > API Tokens e click on Create new API Token**
 
 ```markdown
