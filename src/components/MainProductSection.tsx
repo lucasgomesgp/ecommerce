@@ -147,7 +147,7 @@ export default function MainProductSection({ product, products }: Props) {
                 <button
                   key={uuidv4()}
                   className={`rounded-full w-[30px] h-[30px] relative legend-hover shadow-md border  ${color.name === itemToCart.color
-                    ? "after:absolute after:h-[42px] after:w-[42px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[6px] after:-right-[6px]"
+                    ? "after:absolute after:h-[38px] after:w-[38px] after:border-2 after:border-gray-light after:rounded-full  after:flex after:justify-center after:items-center after:-top-[5px] after:-right-[5px]"
                     : ""
                     }`}
                   onClick={() => {

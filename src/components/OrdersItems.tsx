@@ -4,7 +4,6 @@ import { ButtonOrderOption } from "@/components/ButtonOrderOption";
 import { IOrdersResponse } from "@/utils/types/IOrdersResponse";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
@@ -19,10 +18,9 @@ enum OrderOption {
 export function OrdersItems({ userOrders }: Props) {
     const [toggleOrderOption, setToggleOrderOption] = useState<OrderOption>(OrderOption.active);
     const filteredData = userOrders.filter((order) => order.status === toggleOrderOption);
-    const router = useRouter();
     return (
         <>
-            <div className="flex border-b-[3px] border-b-white-light mt-[38px] justify-between mb-[50px]">
+            <div className="flex flex-wrap lg:flex-nowrap justify-center border-b-[3px] border-b-white-light mt-[38px] md:justify-between mb-[50px]">
                 <ButtonOrderOption title="Active"
                     isActive={toggleOrderOption === "ACTIVE"}
                     onClick={() => setToggleOrderOption(OrderOption.active)}
@@ -40,7 +38,7 @@ export function OrdersItems({ userOrders }: Props) {
                 filteredData.map((order, index) => (
                     <>
                         <div className="flex flex-col gap-[30px]" key={order.id}>
-                            <div className="bg-white-light py-7 px-12 rounded-lg">
+                            <div className="bg-white-light py-1 px-1 lg:py-7 lg:px-12 rounded-lg">
                                 <p className="text-xl text-gray-text-menu font-semibold mb-[14px]">Order no: #{order.id}</p>
                                 <div className="flex items-center justify-between">
                                     <p className="flex items-center text-sm font-semibold text-gray-light gap-2">
@@ -63,8 +61,8 @@ export function OrdersItems({ userOrders }: Props) {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex justify-between items-center">
-                                <div className="flex gap-[25px]">
+                            <div className="flex flex-wrap justify-center items-center lg:flex-nowrap lg:justify-between">
+                                <div className="flex justify-center gap-[25px] flex-wrap lg:flex-nowrap lg:justify-normal">
                                     <Image
                                         src={order.orderItems[0].imageSrc}
                                         alt={order.orderItems[0].title}
@@ -94,7 +92,7 @@ export function OrdersItems({ userOrders }: Props) {
                                 </div>
                                 <Link
                                     href={`/user/orders/${order.id}`}
-                                    className="min-h-[22px] px-7 py-[14px] text-white bg-purple-principal font-semibold text-lg rounded-lg hover:opacity-80 transition-opacity"
+                                    className="text-center p-2 lg:w-36 lg:py-[14px] text-white bg-purple-principal font-semibold text-lg rounded-lg hover:opacity-80 transition-opacity"
                                 >
                                     View Detail
                                 </Link>

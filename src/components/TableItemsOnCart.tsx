@@ -1,10 +1,12 @@
 "use client";
 
+import "@sweetalert2/themes/bulma/bulma.css";
+
 import { ButtonBackToHome } from "./ButtonBackToHome";
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
 import Image from "next/image";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/src/sweetalert2.js";
 import { TrashPurple } from "@/svgs/trash-purple";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { useContext } from "react";
@@ -40,15 +42,19 @@ export function TableItemsOnCart() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#57F287",
-      cancelButtonColor: "#d33",
+      showCloseButton: true,
+      confirmButtonColor: "#069433",
+      cancelButtonColor: "#ee4b4b",
       confirmButtonText: "Yes, delete it!",
+
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
           icon: "success",
+          showCloseButton: true,
+          confirmButtonColor: "#0033ff",
         });
         const itemsFiltered = itemsStorage.filter(
           (currentItem) =>

@@ -7,6 +7,7 @@ import { getOrders } from "@/services/getOrders";
 
 export default async function Orders() {
   const data = await getOrders();
+
   return (
     <main className="flex flex-col overflow-hidden">
       <Header />
@@ -14,7 +15,11 @@ export default async function Orders() {
       <MainSideBarContent>
         <div className="flex flex-[0.75] flex-col">
           <h1 className="font-coreSans text-[28px] font-semibold">My Orders</h1>
-          <OrdersItems userOrders={data} />
+          {data !== undefined ? (
+            <OrdersItems userOrders={data} />
+          ) : (
+            <p>Sorry, you don&#39;t have orders yet.</p>
+          )}
         </div>
       </MainSideBarContent>
       <Footer />

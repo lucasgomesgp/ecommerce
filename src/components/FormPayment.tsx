@@ -40,6 +40,7 @@ export function FormPayment() {
   const [isLoading, setIsLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentType>();
   const { removeItems, itemsStorage } = useItemsStorage();
+  const { setItems } = useContext(ShoppingCartContext);
   const router = useRouter();
   const [creditCardInfo, setCreditCardInfo] = useState<ICreditCardInfo>({
     card: {
@@ -111,19 +112,16 @@ export function FormPayment() {
       }
       try {
         toast.loading("Loading...");
+        let total = getTotal(items, Number(getCoupon()?.percentage || 0));
         await createOrder(
           paymentMethod,
           items,
-          currencyFormatter(
-            getTotal(items, Number(getCoupon()?.percentage || 0))
-          ),
+          total,
           creditCardInfo.card.id
-        ).then(() => {
-          toast.success("Order created!");
-        }).catch(() => {
-          toast.error("Error on create order!");
-        });
+        );
+        toast.success("Order created!");
         removeItems();
+        setItems([]);
         removeCoupon();
         router.push("/user/orders");
       } catch (err) {

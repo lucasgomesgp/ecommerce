@@ -41,7 +41,6 @@ export function FormBillingDetails() {
         });
         toast.success("Billing address created!");
         reset();
-        console.log(data);
       } catch (err) {
         toast.error("Error on update info");
       } finally {

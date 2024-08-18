@@ -4,15 +4,14 @@ import { Header } from "@/components/Header";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
 import { OrderItemsDetailsList } from "@/components/OrderItemsDetailsList";
 import { PathPage } from "@/components/PathPage";
-import { XIcon } from "@/svgs/x-icon";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
-import { data } from "@/utils/mock-orders.json";
-import { enUS } from "date-fns/locale";
 import { format } from "date-fns";
 import { getOrder } from "@/services/getOrder";
+import { data as mockData } from "@/utils/mock-orders.json";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const orderInfo = await getOrder(params.id);
+    console.log(mockData);
     return (
         <main className="flex flex-col overflow-hidden">
             <Header />
@@ -26,9 +25,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                     <section className="flex flex-wrap justify-between items-center bg-white-light mt-14 px-12 py-7 rounded-lg">
                         <div className="flex flex-col justify-center gap-[10px]">
                             <p className="text-gray-text-menu font-semibold text-xl">Order no: #{orderInfo?.id}</p>
-                            <p className="text-gray-light font-medium text-lg">Placed On </p>
+                            <p className="text-gray-light font-medium text-lg">Placed On {format(mockData[0].createdAt, "d  MMM yyyy kk:mm a")} </p>
                         </div>
-                        <p className="text-gray-light font-semibold">Total : <span className="text-gray-text-menu">{currencyFormatter(0)}</span></p>
+                        <p className="text-gray-light font-semibold">Total : <span className="text-gray-text-menu">{currencyFormatter(mockData.price)}</span></p>
                     </section>
                     <section className="mt-[50px] flex-wrap mb-[80px] bg-gray-border h-2 rounded-[4px] relative w-full flex items-center justify-between">
                         <div className="relative h-8 min-w-[32px] top-[-100%] max-w-[70px] rounded-full bg-gray-border flex items-center justify-center">
@@ -50,7 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="w-full flex flex-wrap gap-9 bg-white-light rounded-lg py-6 pl-7 relative mt-[50px]" style={{
                             border: "0.5px solid rgba(128, 125, 126, 0.20)"
                         }}>
-                            <p className="font-semibold text-gray-light">{format(data[0].createdAt, "d  MMM yyyy kk:mm a")}</p>
+                            <p className="font-semibold text-gray-light">{format(mockData[0].createdAt, "d  MMM yyyy kk:mm a")}</p>
                             <p className="font-semibold text-gray-text-menu">Your order has been successfully verified.</p>
                             <div className="bg-white-light h-6 w-10 top-[-35%] left-32 absolute" style={{
                                 clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
@@ -60,7 +59,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <div className="w-full flex flex-wrap gap-9 bg-white-light rounded-lg py-6 pl-7 relative mt-[50px]" style={{
                             border: "0.5px solid rgba(128, 125, 126, 0.20)"
                         }}>
-                            <p className="font-semibold text-gray-light">{format(data[0].createdAt, "d  MMM yyyy kk:mm a")}</p>
+                            <p className="font-semibold text-gray-light">{format(mockData[0].createdAt, "d  MMM yyyy kk:mm a")}</p>
                             <p className="font-semibold text-gray-text-menu">Your order has in progress.</p>
                             <div className="bg-white-light h-6 w-10 top-[-35%] left-32 absolute" style={{
                                 clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
@@ -70,7 +69,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     </section>
                     <section className="mt-20">
                         {orderInfo?.orderItems.map(({ id, color, title, quantity, price, imageSrc }, index) => (
-                            <OrderItemsDetailsList borderBottomIsActive={data.length !== index + 1} id={id} color={color} title={title} quantity={quantity} price={price} imageSrc={imageSrc} key={id} />
+                            <OrderItemsDetailsList borderBottomIsActive={mockData.length !== index + 1} id={id} color={color} title={title} quantity={quantity} price={price} imageSrc={imageSrc} key={id} />
                         ))}
                     </section>
                 </div>

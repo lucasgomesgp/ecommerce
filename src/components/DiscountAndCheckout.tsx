@@ -10,11 +10,9 @@ import { getSubTotal } from "@/utils/functions/getSubTotal";
 import { getTotal } from "@/utils/functions/getTotal";
 import { toast } from "sonner";
 import { useCouponsStorage } from "@/hooks/useCouponsStorage";
-import { useItemsStorage } from "@/hooks/useItemsStorage";
 import { useRouter } from "next/navigation";
 
 export function DiscountAndCheckout({ coupons }: { coupons: ICoupons[] }) {
-  const { itemsStorage } = useItemsStorage();
   const { items } = useContext(ShoppingCartContext);
   const { getCoupon, changeCoupon } = useCouponsStorage();
   const router = useRouter();

@@ -1,4 +1,3 @@
-import { IOrdersResponse } from "@/utils/types/IOrdersResponse";
 import { authOptions } from "@/utils/constants/authOptions";
 import { getServerSession } from "next-auth";
 import { db as prisma } from "@/utils/constants/db";

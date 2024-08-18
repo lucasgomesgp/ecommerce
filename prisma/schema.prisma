@@ -92,7 +92,7 @@ model Address {
 }
 
 model Order {
-    id            String      @id @default(cuid())
+    id            Int         @id @default(autoincrement())
     status        OrderStatus @default(ACTIVE)
     paymentMethod PaymentType @default(CASH) @map("payment_method")
     createdAt     DateTime    @default(now())
@@ -118,9 +118,9 @@ model OrderItem {
     userId    String
     createdAt DateTime @default(now())
 
-    user    User    @relation(fields: [userId], references: [id])
-    Order   Order?  @relation(fields: [orderId], references: [id])
-    orderId String?
+    user    User   @relation(fields: [userId], references: [id])
+    Order   Order? @relation(fields: [orderId], references: [id])
+    orderId Int?
 
     @@map("order_item")
 }

@@ -1,23 +1,24 @@
 "use client";
 
-import { Logo } from "../svgs/logo";
-import Link from "next/link";
-import { ButtonMenu } from "./ButtonMenu";
 import {
-  HeartIcon,
-  UserIcon,
-  ShoppingCartIcon,
   Cog6ToothIcon,
+  HeartIcon,
+  ShoppingCartIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
-import { ButtonAuth } from "./ButtonAuth";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import { ReactNode, useContext, useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { settingsClass } from "@/utils/constants/settingsClass";
+
+import { ButtonAuth } from "./ButtonAuth";
+import { ButtonMenu } from "./ButtonMenu";
+import Image from "next/image";
+import Link from "next/link";
 import { LinkMenu } from "./LinkMenu";
+import { Logo } from "../svgs/logo";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { SignOut } from "@/svgs/sign-out";
+import { settingsClass } from "@/utils/constants/settingsClass";
 import { toast } from "sonner";
 
 interface Props {
@@ -45,6 +46,10 @@ export function Header({ children, isLoginPage = false }: Props) {
     }
   }
   let totalItemsOnCart = getTotalItemsOnCart();
+
+  useEffect(() => {
+    totalItemsOnCart = getTotalItemsOnCart();
+  }, [items.length]);
   return (
     <header className="flex flex-wrap items-center justify-around border-b-gray-border border py-8 sticky top-0 z-30 bg-white">
       <Link href={"/"}>

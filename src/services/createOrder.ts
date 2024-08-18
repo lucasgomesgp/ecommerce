@@ -5,10 +5,10 @@ export async function createOrder
   (
     method: PaymentType,
     items: IShoppingCartItems[],
-    total: string,
+    total: number,
     creditCardId?: string
   ) {
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/checkout`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/checkout`, {
     method: "POST",
     body: JSON.stringify({
       items,
@@ -16,5 +16,7 @@ export async function createOrder
       total,
       credit_card_id: creditCardId,
     }),
+  }).catch((err) => {
+    throw new Error("Error on creation of payment");
   });
 }
