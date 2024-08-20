@@ -8,7 +8,6 @@ export default function Checkout() {
     <main className="flex flex-col">
       <Header />
       <section className="flex flex-col">
-        <PathPage title="Check Out" />
         <FormsCheckout />
       </section>
       <Footer />

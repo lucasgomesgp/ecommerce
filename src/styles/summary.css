@@ -1,0 +1,29 @@
+[data-id="details"]>summary{
+    list-style: none;
+    position: relative;
+    cursor: pointer;
+}
+
+[data-id="details"] summary p {
+    display: flex;
+    justify-content: space-between;    
+}
+
+[data-id="details"]::-webkit-details-marker{
+    display: none;
+}
+
+[data-id="details"] summary:after{
+    content: "⮟";
+    position: absolute;
+    right:0;
+    top: 0;
+}
+
+[data-id="details"][open] summary:after{
+    content:"⮝";
+    position: absolute;
+    right:0;
+    top: 0;
+
+}

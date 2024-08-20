@@ -1,11 +1,12 @@
 import "../styles/utils.css";
 import "./globals.css";
 
+import { Inter, Montserrat } from "next/font/google";
 import { causten, coreSans } from "@/utils/constants/localFonts";
 
 import AuthClientProvider from "@/components/AuthClientProvider";
+import { FormCheckoutProvider } from "@/components/FormCheckoutProvider";
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
 import ShoppingCartProvider from "@/components/ShopProvider";
 import { Toaster } from "sonner";
 import { WishContextProvider } from "@/components/WishContextProvider";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   description: "Place where you can buy and choose your favorite products",
 };
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["400", "500", "700", "800"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", weight: ["400", "500", "700", "800"] });
 export default async function RootLayout({
   children,
 }: {
@@ -25,12 +27,14 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${causten.variable} ${coreSans.variable}  font-causten`}>
+      <body className={`${montserrat.variable} ${inter.variable} ${causten.variable} ${coreSans.variable}  font-causten`}>
         <AuthClientProvider session={session}>
           <ShoppingCartProvider>
             <WishContextProvider>
-              {children}
-              <Toaster richColors position="top-right" closeButton />
+              <FormCheckoutProvider>
+                {children}
+                <Toaster richColors position="top-right" closeButton />
+              </FormCheckoutProvider>
             </WishContextProvider>
           </ShoppingCartProvider>
         </AuthClientProvider>

@@ -1,91 +1,61 @@
-import { FormBillingDetails } from "./FormBillingDetails";
-import { FormPayment } from "./FormPayment";
-import { OrderSummary } from "./OrderSummary";
-import { TitleWithBar } from "./TitleWithBar";
+"use client"
 
-export enum PaymentType {
-  CARD = "CARD",
-  CASH = "CASH",
-  PAYPAL = "PAYPAL",
-}
+import { useContext, useState } from "react";
+
+import { FirstStep } from "./steps-checkout/FirstStep";
+import { FormCheckoutContext } from "@/app/context/FormCheckoutContext";
+import { FourthStep } from "./steps-checkout/FourthStep";
+import { LastStep } from "./steps-checkout/LastStep";
+import { OrderCompleted } from "./steps-checkout/OrderCompleted";
+import { SecondStep } from "./steps-checkout/SecondStep";
+import { ThirdStep } from "./steps-checkout/ThirdStep";
+import { TitleStep } from "./TitleStep";
 
 export function FormsCheckout() {
+  const { info } = useContext(FormCheckoutContext);
+  const [stepNumber, setStepNumber] = useState(1);
+  const [questions, setQuestions] = useState([
+    "Where should we sent the order?",
+    "What address can we charge for your order?",
+    "How should we sent the order?",
+    "How would you like to pay?",
+    "Confirm and enjoy your order 🎉",
+    "Yes, you’ve successfully ordered!"
+  ]);
+
+  function showSteps(step: number) {
+    switch (step) {
+      case 1:
+        return <FirstStep changeStepNumber={setStepNumber} />;
+      case 2:
+        return <SecondStep changeStepNumber={setStepNumber} />;
+      case 3:
+        return <ThirdStep changeStepNumber={setStepNumber} />;
+      case 4:
+        return <FourthStep changeStepNumber={setStepNumber} />;
+      case 5:
+        return <LastStep changeStepNumber={setStepNumber} />
+      case 6:
+        return <OrderCompleted orderId={info.orderId} />
+    }
+  }
+
   return (
-    <section className="px-4 flex flex-col lg:flex-row lg:flex-wrap-reverse lg:gap-[38px] lg:px-[70px] mt-[52px]">
-      <section className="flex-1 flex-col">
-        <TitleWithBar title="Check Out" />
-        <p className="font-semibold font-coreSans text-[22px] mt-5">
-          Billing Details
+    <section className=" flex flex-col items-center justify-center lg:gap-[38px] mt-[52px] transition-all font-inter">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-center font-bold  text-3xl text-purple-principal">{questions[stepNumber - 1]}</h1>
+        <p className="text-center text-xs text-overlay-modal">
+          {stepNumber == 6 ? "Good Job!" : "Complete the step-by-step guide to finalize your order"}
         </p>
-        <FormBillingDetails />
-        <div className="flex flex-col mt-[30px] border-b border-b-white-bar py-[30px]">
-          <p className="font-coreSans font-semibold text-[22px] text-gray-text-menu mb-2">
-            Shipping Address
-          </p>
-          <span className="text-gray-text-menu">
-            Select the address that matches your card or payment method.
-          </span>
-          <div className="flex py-[38px] pl-7 pr-12 flex-col rounded-xl bg-white-light gap-[25px] mt-[30px]">
-            <div className="flex gap-5 text-xl font-bold border-b border-b-gray-border pb-6">
-              <input
-                type="radio"
-                className="accent-gray-text-menu"
-                name="shippingAddress"
-                id="sameBillingAddress"
-                value="sameBillingAddress"
-              />
-              <label htmlFor="sameBillingAddress">
-                Same as Billing address
-              </label>
-            </div>
-            <div className="flex gap-5 text-xl font-bold">
-              <input
-                type="radio"
-                className="accent-gray-text-menu"
-                name="shippingAddress"
-                id="differentShippingAddress"
-                value="differentShippingAddress"
-              />
-              <label htmlFor="differentShippingAddress">
-                Use a different shipping address
-              </label>
-            </div>
-          </div>
+        <div className="flex flex-wrap gap-8 px-4 lg:px-0 lg:gap-28 mt-5">
+          <TitleStep title="Welcome" haveBorder isCompleted={stepNumber > 1} />
+          <TitleStep title="Shipping" haveBorder isCompleted={stepNumber > 2} />
+          <TitleStep title="Address" haveBorder isCompleted={stepNumber > 3} />
+          <TitleStep title="Payment" haveBorder isCompleted={stepNumber > 4} />
+          <TitleStep title="Resume" isCompleted={stepNumber > 5} />
         </div>
-        <div className="flex flex-col mt-[30px] border-b border-b-white-bar py-[30px]">
-          <p className="font-coreSans font-semibold text-[22px] text-gray-text-menu mb-2">
-            Shipping Method
-          </p>
-          <div className="flex py-[38px] pl-7 pr-12 flex-col rounded-xl bg-white-light gap-[25px] mt-[30px]">
-            <div className="flex gap-5 text-xl font-bold border-b border-b-gray-border pb-6">
-              <p className="font-bold text-xl">Arrives by </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex flex-col gap-2">
-                <p className="font-bold text-xl">Delivery Charges</p>
-                <span className="font-medium text-gray-light">
-                  Additional fess may apply
-                </span>
-              </div>
-              <p className="font-bold text-xl">$5.00</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col mt-[30px] py-[30px]">
-          <div className="flex flex-col gap-2">
-            <p className="font-coreSans font-semibold text-[22px] text-gray-text-menu mb-2">
-              Payment Method
-            </p>
-            <span className="text-gray-text-menu">
-              All transactions are secure and encrypted.
-            </span>
-          </div>
-          <FormPayment />
-        </div>
-      </section>
-      <section className="flex-2">
-        <OrderSummary />
-      </section>
+      </div>
+      {showSteps(stepNumber)}
     </section>
   );
 }

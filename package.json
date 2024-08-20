@@ -21,6 +21,7 @@
     "next": "14.0.3",
     "next-auth": "^4.24.6",
     "react": "^18",
+    "react-canvas-confetti": "^2.0.7",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
     "react-magic-motion": "^1.1.2",
