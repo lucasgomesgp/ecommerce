@@ -18,6 +18,8 @@
     "@sweetalert2/themes": "^5.0.18",
     "bcrypt": "^5.1.1",
     "date-fns": "^3.6.0",
+    "lottie-react": "^2.4.0",
+    "lottie-web": "^5.12.2",
     "next": "14.0.3",
     "next-auth": "^4.24.6",
     "react": "^18",

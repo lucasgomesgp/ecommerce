@@ -1,8 +1,10 @@
 "use client"
+
 import { signOut, useSession } from "next-auth/react"
+
 import { ButtonActionSideMenu } from "./ButtonActionSideMenu";
-import { Orders } from "@/svgs/orders";
 import { InfoUser } from "@/svgs/info-user";
+import { Orders } from "@/svgs/orders";
 import { SignOut } from "@/svgs/sign-out";
 import { Wishlist } from "@/svgs/wishlist";
 
@@ -19,7 +21,7 @@ export function SideMenuUser() {
                 <p className="text-gray-light text-sm">Welcome to your Account</p>
             </div>
             <section className="flex flex-col">
-                <ButtonActionSideMenu title="My Orders" destination="/user/orders">
+                <ButtonActionSideMenu title="My Orders" destination="/user/order">
                     <Orders />
                 </ButtonActionSideMenu>
                 <ButtonActionSideMenu title="Wishlist" destination="/user/wishlist">

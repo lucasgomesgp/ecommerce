@@ -91,7 +91,7 @@ export function OrdersItems({ userOrders }: Props) {
                                     </div>
                                 </div>
                                 <Link
-                                    href={`/user/orders/${order.id}`}
+                                    href={`/user/order/${order.id}`}
                                     className="text-center p-2 lg:w-36 lg:py-[14px] text-white bg-purple-principal font-semibold text-lg rounded-lg hover:opacity-80 transition-opacity"
                                 >
                                     View Detail
