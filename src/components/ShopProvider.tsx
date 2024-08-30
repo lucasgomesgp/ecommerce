@@ -1,7 +1,9 @@
 "use client"
+
 import { ReactNode, useEffect, useState } from "react";
-import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
+
 import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import { useItemsStorage } from "@/hooks/useItemsStorage";
 
 interface IShoppingCartProvider {

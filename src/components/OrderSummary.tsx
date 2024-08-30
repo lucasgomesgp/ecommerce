@@ -1,12 +1,13 @@
 "use client"
+
+import Image from "next/image";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
-import { useCouponsStorage } from "@/hooks/useCouponsStorage";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { getDiscountValue } from "@/utils/functions/getDiscountValue";
 import { getSubTotal } from "@/utils/functions/getSubTotal";
 import { getTotal } from "@/utils/functions/getTotal";
-import Image from "next/image";
 import { useContext } from "react";
+import { useCouponsStorage } from "@/hooks/useCouponsStorage";
 
 export function OrderSummary() {
     const { items } = useContext(ShoppingCartContext);

@@ -1,17 +1,19 @@
 "use client"
+
 import React, { MouseEvent, useEffect, useState } from 'react'
-import Link from 'next/link';
-import { Eye } from '@/svgs/eye';
-import { CircleNotch } from '@phosphor-icons/react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { formLoginSchema } from '@/app/schemas/form-login-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
+
+import { CircleNotch } from '@phosphor-icons/react';
+import { Eye } from '@/svgs/eye';
 import { InputFormWithRef } from './InputFormWithRef';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { LoadingSpinner } from './LoadingSpinner';
+import { formLoginSchema } from '@/app/schemas/form-login-schema';
+import { toast } from 'sonner';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type LoginSchema = z.infer<typeof formLoginSchema>;
 export default function FormLogin() {

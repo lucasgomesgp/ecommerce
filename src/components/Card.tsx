@@ -1,13 +1,14 @@
 "use client"
-import { WishlistContext } from "@/app/context/WishlistContext";
-import { useWishStorage } from "@/hooks/useWishStorage";
-import { currencyFormatter } from "@/utils/functions/currencyFormatter";
-import { IWishItems } from "@/utils/types/IWishItems";
+
 import { Heart } from "@phosphor-icons/react";
+import { IWishItems } from "@/utils/types/IWishItems";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { WishlistContext } from "@/app/context/WishlistContext";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { toast } from "sonner";
+import { useContext } from "react";
+import { useWishStorage } from "@/hooks/useWishStorage";
 
 interface Props {
   id: number;

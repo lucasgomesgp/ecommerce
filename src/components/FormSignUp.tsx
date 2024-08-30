@@ -1,17 +1,19 @@
 "use client"
+
 import { MouseEvent, useEffect, useState } from "react";
-import Link from "next/link";
-import { Eye } from "@/svgs/eye";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formSignUpSchema } from "@/app/schemas/form-sign-up-schema";
-import { InputFormWithRef } from "./InputFormWithRef";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+
 import { CircleNotch } from "@phosphor-icons/react";
+import { Eye } from "@/svgs/eye";
+import { InputFormWithRef } from "./InputFormWithRef";
+import Link from "next/link";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { formSignUpSchema } from "@/app/schemas/form-sign-up-schema";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export type SignUpSchema = z.infer<typeof formSignUpSchema>;
 

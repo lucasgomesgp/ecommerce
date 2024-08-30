@@ -1,18 +1,20 @@
-import { currencyFormatter } from "@/utils/functions/currencyFormatter";
-import Image from "next/image";
-import ButtonAddToCart from "./ButtonAddToCart";
-import { useWishStorage } from "@/hooks/useWishStorage";
-import { useContext, useState } from "react";
-import { WishlistContext } from "@/app/context/WishlistContext";
-import { toast } from "sonner";
-import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
-import { useItemsStorage } from "@/hooks/useItemsStorage";
-import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
-import { v4 as uuidv4 } from "uuid";
-import { XIcon } from "@/svgs/x-icon";
 import * as Dialog from '@radix-ui/react-dialog';
-import { X } from "@phosphor-icons/react";
+
+import { useContext, useState } from "react";
+
+import ButtonAddToCart from "./ButtonAddToCart";
+import { IShoppingCartItems } from "@/utils/types/IShoppingCartItems";
+import Image from "next/image";
+import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
 import Swal from "sweetalert2";
+import { WishlistContext } from "@/app/context/WishlistContext";
+import { X } from "@phosphor-icons/react";
+import { XIcon } from "@/svgs/x-icon";
+import { currencyFormatter } from "@/utils/functions/currencyFormatter";
+import { toast } from "sonner";
+import { useItemsStorage } from "@/hooks/useItemsStorage";
+import { useWishStorage } from "@/hooks/useWishStorage";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
     id: number;
@@ -57,13 +59,13 @@ export function WishItem({ id, title, src, colors, quantity, price, sizes }: Pro
             icon: "info",
             cancelButtonColor: "#D33",
             confirmButtonColor: "#008000",
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              toast.success("Added to cart");
-              setItems([...items, itemFormatted]);
-              setItemsOnStorage([...items, itemFormatted]);
+                toast.success("Added to cart");
+                setItems([...items, itemFormatted]);
+                setItemsOnStorage([...items, itemFormatted]);
             }
-          });
+        });
     }
     return (
         <>
