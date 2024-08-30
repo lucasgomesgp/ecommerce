@@ -1,4 +1,4 @@
-import { CreditCardSchema } from "@/components/FormPayment";
+import { CreditCardSchema } from "@/components/steps-checkout/FourthStep";
 
 export async function createCreditCard(creditCardInfo: CreditCardSchema) {
   const response = await fetch(
