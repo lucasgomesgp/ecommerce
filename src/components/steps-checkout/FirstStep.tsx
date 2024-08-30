@@ -178,7 +178,6 @@ export function FirstStep({ changeStepNumber, addressChossedOnModal }: Props) {
                             </label>
                             <select
                                 className={inputDetail}
-                                placeholder="State"
                                 {...register("state")}
                             >
                                 <option value="">Choose your state</option>

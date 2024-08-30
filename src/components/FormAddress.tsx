@@ -124,7 +124,6 @@ export function FormAddress() {
           </label>
           <select
             className="rounded-lg text-gray-light pl-[22px] outline-none min-h-[54px] min-w-[420px] bg-white-light"
-            placeholder="State"
             {...register("state")}
           >
             <option value="">Choose your state</option>
