@@ -81,7 +81,6 @@ export default function MainProductSection({ product, products }: Props) {
     setItems([itemToCart]);
     setItemsOnStorage([itemToCart]);
   }
-  console.log(product.data.attributes.colors);
   return (
     <section className="flex flex-col pb-4">
       <section className="flex flex-wrap-reverse justify-center lg:gap-[74px]">

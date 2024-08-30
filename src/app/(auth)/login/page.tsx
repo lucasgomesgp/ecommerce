@@ -1,8 +1,8 @@
-import Link from "next/link";
+import FormLogin from "@/components/FormLogin";
 import { Header } from "@/components/Header";
 import Image from "next/image";
+import Link from "next/link";
 import { SocialLoginOptions } from "@/components/SocialLoginOptions";
-import FormLogin from "@/components/FormLogin";
 
 export default function Login() {
   return (
@@ -27,7 +27,7 @@ export default function Login() {
           <FormLogin />
           <span className="text-gray-text-menu mt-[10px]">
             Don’t have an account?{" "}
-            <Link href={"/auth/signup"} className="underline">
+            <Link href={"/signup"} className="underline">
               Sign up
             </Link>
           </span>

@@ -11,17 +11,14 @@ import Link from "next/link";
 import { Slider } from "@/components/Slider";
 import { SlidesFeedbacks } from "@/components/SlidesFeedbacks";
 import { TitleWithBar } from "@/components/TitleWithBar";
-import { authOptions } from "@/utils/constants/authOptions";
 import { categoriesForMen } from "@/utils/data/CategoriesForMen";
 import { getRandomId } from "@/utils/functions/getRandomId";
-import { getServerSession } from "next-auth";
 import { getSlides } from "@/services/getSlides";
 import { getWomenWithLimit } from "@/services/getWomenWithLimit";
 
 export default async function Home() {
   const { data }: ISlides = await getSlides();
   const womenData = await getWomenWithLimit();
-  const session = await getServerSession(authOptions);
   return (
     <div>
       <Header isLoginPage={false} />

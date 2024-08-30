@@ -57,7 +57,6 @@ export function FirstStep({ changeStepNumber, addressChossedOnModal }: Props) {
     const onSubmit = async (data: AddressSchema) => {
         if (session?.user.email) {
             setIsLoading(true);
-            console.log(addressChossedOnModal?.id);
             setInfo({
                 ...info,
                 address: {
@@ -77,7 +76,6 @@ export function FirstStep({ changeStepNumber, addressChossedOnModal }: Props) {
                 },
                 total: 0,
             });
-            console.log(info);
             changeStepNumber(2);
             setIsLoading(false);
         }
