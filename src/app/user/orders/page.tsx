@@ -7,7 +7,6 @@ import { getOrders } from "@/services/getOrders";
 
 export default async function Orders() {
   const data = await getOrders();
-
   return (
     <main className="flex flex-col overflow-hidden">
       <Header />

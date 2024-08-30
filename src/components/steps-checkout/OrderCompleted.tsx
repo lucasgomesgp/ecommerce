@@ -10,7 +10,7 @@ export function OrderCompleted({ orderId }: { orderId: number }) {
             <CheckCompleted />
             <p className="text-center text-sm text-overlay-modal">
                 Your order has been successfully completed and is now being processed. You can view the details of your order anytime by
-                <Link className="text-blue-text" href={`/user/order/${orderId}`}> clicking here</Link>.
+                <Link className="text-blue-text" href={`/user/orders/${orderId}`}> clicking here</Link>.
                 An email confirmation with your order details and estimated delivery time will be sent to you shortly. If you have any questions or need assistance, please contact our customer support team. We appreciate your business and hope you enjoy your purchase!
             </p>
             <Link href="/user/cart" className="bg-blue-text px-4 py-2 text-white rounded-md hover:opacity-90 transition-opacity">

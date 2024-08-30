@@ -4,6 +4,7 @@ import { ButtonOrderOption } from "@/components/ButtonOrderOption";
 import { IOrdersResponse } from "@/utils/types/IOrdersResponse";
 import Image from "next/image";
 import Link from "next/link";
+import { Order } from "@prisma/client";
 import { useState } from "react";
 
 interface Props {
@@ -91,7 +92,7 @@ export function OrdersItems({ userOrders }: Props) {
                                     </div>
                                 </div>
                                 <Link
-                                    href={`/user/order/${order.id}`}
+                                    href={`/user/orders/${order.id}`}
                                     className="text-center p-2 lg:w-36 lg:py-[14px] text-white bg-purple-principal font-semibold text-lg rounded-lg hover:opacity-80 transition-opacity"
                                 >
                                     View Detail

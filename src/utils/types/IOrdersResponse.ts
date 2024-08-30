@@ -1,27 +1,18 @@
-import { OrderStatus, PaymentType } from "@prisma/client";
+import { $Enums, Order, Prisma } from "@prisma/client";
 
-import { IShoppingCartItems } from "./IShoppingCartItems";
-
-export interface IOrdersResponse {
-  id: number,
-  status: string,
-  paymentMethod: string,
-  createdAt: Date,
-  price: number,
-  paymentId: string,
-  userId: string | null,
-  orderItems: [
-    {
-      id: string;
-      title: string;
-      price: number;
-      quantity: number;
-      imageSrc: string;
-      color: string;
-      size: string;
-      userId: string;
-      createdAt: Date;
-      orderId: number | null;
+// Type for catch data from server side to client side
+export type IOrdersResponse =
+  Prisma.OrderGetPayload<{
+    select: {
+      id: true,
+      status: true,
+      createdAt: true,
+      price: true,
+      paymentId: true,
+      paymentMethod: true,
+      userId: true,
+    },
+    include: {
+      orderItems: true,
     }
-  ]
-}
+  }>;
