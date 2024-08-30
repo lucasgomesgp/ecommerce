@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, createContext } from "react";
 
 export const infoMock: IInfoData = {
     address: {
+        id: "",
         firstName: "",
         lastName: "",
         country: "",
@@ -16,6 +17,7 @@ export const infoMock: IInfoData = {
         state: "",
         postalCode: "",
         billingAddress: false,
+        deliveryInstruction: "",
     },
     total: 0,
     addressPayment: AddressOption.SAMEBILLINGADDRESS,

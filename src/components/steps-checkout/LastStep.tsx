@@ -9,6 +9,7 @@ import { FormCheckoutContext } from "@/app/context/FormCheckoutContext";
 import { ItemsResumeCheckout } from "../ItemsResumeCheckout";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { ShoppingCartContext } from "@/app/context/ShoppingCartContext";
+import { createAddress } from "@/services/createAddress";
 import { createOrder } from "@/services/createOrder";
 import { currencyFormatter } from "@/utils/functions/currencyFormatter";
 import { getSubTotal } from "@/utils/functions/getSubTotal";
@@ -31,6 +32,21 @@ export function LastStep({ changeStepNumber }: Props) {
 
     async function handleMakeOrder() {
         try {
+            const {
+                id,
+                apartment
+                , billingAddress
+                , city
+                , companyName
+                , country
+                , firstName
+                , lastName
+                , phone
+                , postalCode
+                , state
+                , streetAddress
+
+            } = info.address;
             setIsLoading(true);
             toast.loading("Loading...");
             const data = await createOrder(
@@ -39,6 +55,23 @@ export function LastStep({ changeStepNumber }: Props) {
                 info.total,
                 info.card_id,
             );
+            if (!id) {
+                await createAddress({
+                    country,
+                    city,
+                    state,
+                    phone,
+                    postalCode,
+                    companyName,
+                    streetAddress,
+                    apartment,
+                    firstName,
+                    lastName,
+                    billingAddress,
+                    deliveryInstruction: "",
+                    shippingAddress: false,
+                });
+            }
             removeItems();
             setItems([]);
             removeCoupon();

@@ -3,6 +3,7 @@
 import { ErrorText } from "./ErrorText";
 import { LabelInput } from "./LabelInput";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { createAddress } from "@/services/createAddress";
 import { formSchema } from "@/app/schemas/form-schema";
 import { inputInfoCss } from "@/utils/constants/inputInfoCss";
 import { states } from "@/utils/data/StatesNames";
@@ -34,10 +35,7 @@ export function FormAddress() {
     if (session?.user.email) {
       try {
         setIsLoading(true);
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/address`, {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
+        await createAddress(data);
         toast.success("Info updated");
         router.push("/user/info");
         router.refresh();

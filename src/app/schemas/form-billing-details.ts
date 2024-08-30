@@ -12,5 +12,6 @@ export const formSchema = z.object({
     city: z.string().min(2, { message: "City is required" }),
     state: z.string().min(2, { message: "State is required" }),
     postalCode: z.string().min(5, { message: "Postal Code is required" }).max(5),
+    deliveryInstruction: z.string(),
     billingAddress: z.boolean(),
 });

@@ -13,6 +13,7 @@ export enum PaymentType {
 
 export interface IInfoData {
     address: {
+        id?: string,
         firstName: string,
         lastName: string,
         country: string,
@@ -23,7 +24,8 @@ export interface IInfoData {
         city: string,
         state: string,
         postalCode: string,
-        billingAddress: boolean
+        billingAddress: boolean,
+        deliveryInstruction: string,
     },
     addressPayment: AddressOption,
     paymentMethod: PaymentType,

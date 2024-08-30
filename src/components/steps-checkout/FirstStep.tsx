@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { inputDetail, inputDetailMin } from "@/utils/constants/inputInfoCss";
 
+import { Address } from "../FormsCheckout";
 import { ErrorText } from "../ErrorText";
 import { FormCheckoutContext } from "@/app/context/FormCheckoutContext";
 import { LabelInput } from "../LabelInput";
@@ -11,7 +12,6 @@ import { formSchema } from "@/app/schemas/form-billing-details";
 import { states } from "@/utils/data/StatesNames";
 import { useForm } from "react-hook-form";
 import { useFormValidation } from "@/hooks/useFormValidation";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,8 +20,9 @@ export type AddressSchema = z.infer<typeof formSchema>;
 
 interface Props {
     changeStepNumber: (stepNumber: number) => void;
+    addressChossedOnModal?: Address;
 }
-export function FirstStep({ changeStepNumber }: Props) {
+export function FirstStep({ changeStepNumber, addressChossedOnModal }: Props) {
     const { data: session } = useSession();
     const [isLoading, setIsLoading] = useState(false);
     const { maskPostalCode, maskPhone } = useFormValidation();
@@ -30,16 +31,37 @@ export function FirstStep({ changeStepNumber }: Props) {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
+
     } = useForm<AddressSchema>({
+        defaultValues: useMemo(() => {
+            return {
+                id: addressChossedOnModal?.id || "",
+                apartment: addressChossedOnModal?.apartment || "",
+                billingAddress: addressChossedOnModal?.billingAddress,
+                city: addressChossedOnModal?.city,
+                companyName: addressChossedOnModal?.companyName || "",
+                country: addressChossedOnModal?.country,
+                deliveryInstruction: addressChossedOnModal?.deliveryInstruction || "",
+                firstName: addressChossedOnModal?.firstName,
+                lastName: addressChossedOnModal?.lastName,
+                phone: addressChossedOnModal?.phone,
+                postalCode: addressChossedOnModal?.postalCode,
+                state: addressChossedOnModal?.state,
+                streetAddress: addressChossedOnModal?.streetAddress || "",
+            }
+        }, [addressChossedOnModal]),
         resolver: zodResolver(formSchema),
     });
 
     const onSubmit = async (data: AddressSchema) => {
         if (session?.user.email) {
             setIsLoading(true);
+            console.log(addressChossedOnModal?.id);
             setInfo({
                 ...info,
                 address: {
+                    id: addressChossedOnModal?.id,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     country: data.country,
@@ -50,15 +72,34 @@ export function FirstStep({ changeStepNumber }: Props) {
                     city: data.city,
                     state: data.state,
                     postalCode: data.postalCode,
-                    billingAddress: data.billingAddress
+                    billingAddress: data.billingAddress,
+                    deliveryInstruction: data.deliveryInstruction,
                 },
                 total: 0,
             });
+            console.log(info);
             changeStepNumber(2);
             setIsLoading(false);
         }
     }
-
+    useEffect(() => {
+        if (addressChossedOnModal !== undefined) {
+            reset({
+                apartment: addressChossedOnModal?.apartment || "",
+                billingAddress: addressChossedOnModal?.billingAddress,
+                city: addressChossedOnModal?.city,
+                companyName: addressChossedOnModal?.companyName || "",
+                country: addressChossedOnModal?.country,
+                deliveryInstruction: addressChossedOnModal?.deliveryInstruction || "",
+                firstName: addressChossedOnModal?.firstName,
+                lastName: addressChossedOnModal?.lastName,
+                phone: addressChossedOnModal?.phone,
+                postalCode: addressChossedOnModal?.postalCode,
+                state: addressChossedOnModal?.state,
+                streetAddress: addressChossedOnModal?.streetAddress || "",
+            });
+        }
+    }, [addressChossedOnModal]);
     return (
         <section className="max-w-[70%] items-center justify-center px-4 rounded-lg mb-4 shadow-steps">
             <form
@@ -175,8 +216,26 @@ export function FirstStep({ changeStepNumber }: Props) {
                         />
                         <ErrorText text={errors.phone?.message} />
                     </LabelInput>
+                    <LabelInput label="Delivery Instruction" name="deliveryInstruction">
+                        <input
+                            {...register("deliveryInstruction")}
+                            className={inputDetailMin}
+                            type="text"
+                            placeholder="Write your instructions here..."
+                            maxLength={70}
+                        />
+                        <ErrorText text={errors.deliveryInstruction?.message} />
+                    </LabelInput>
                 </div>
-                <div className="mt-[60px] flex gap-[30px] self-center">
+                <div className="flex gap-[10px] mt-8 self-center">
+                    <input
+                        type="checkbox"
+                        {...register("billingAddress")}
+                        id="billingAddress"
+                    />
+                    <label htmlFor="billingAddress">Set as default billing address</label>
+                </div>
+                <div className="mt-[40px] flex gap-[30px] self-center">
                     <button
                         disabled={isLoading}
                         type="submit"
@@ -184,14 +243,6 @@ export function FirstStep({ changeStepNumber }: Props) {
                     >
                         {isLoading ? <LoadingSpinner /> : <span>Continue to delivery</span>}
                     </button>
-                </div>
-                <div className="flex gap-[10px] mt-5 self-center">
-                    <input
-                        type="checkbox"
-                        {...register("billingAddress")}
-                        id="billingAddress"
-                    />
-                    <label htmlFor="billingAddress">Set as default billing address</label>
                 </div>
             </form>
         </section>
