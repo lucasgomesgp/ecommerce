@@ -21,7 +21,7 @@ export function SideMenuUser() {
                 <p className="text-gray-light text-sm">Welcome to your Account</p>
             </div>
             <section className="flex flex-col">
-                <ButtonActionSideMenu title="My Orders" destination="/user/order">
+                <ButtonActionSideMenu title="My Orders" destination="/user/orders">
                     <Orders />
                 </ButtonActionSideMenu>
                 <ButtonActionSideMenu title="Wishlist" destination="/user/wishlist">

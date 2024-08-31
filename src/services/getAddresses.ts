@@ -4,12 +4,17 @@ import { db as prisma } from "@/utils/constants/db";
 
 export async function getAddresses() {
   const session = await getServerSession(authOptions);
-  if (session?.user.id) {
-    const addresses = await prisma.address.findMany({
-      where: {
-        userId: session?.user.id,
-      },
-    });
-    return addresses;
+  try {
+    if (session?.user.id) {
+      const addresses = await prisma.address.findMany({
+        where: {
+          userId: session?.user.id,
+        },
+      });
+      return addresses;
+    }
+    return [];
+  } catch (err) {
+    throw new Error("Error on search addresses");
   }
 };

@@ -5,12 +5,15 @@ import { getAddresses } from "@/services/getAddresses";
 
 export default async function Checkout() {
   const data = await getAddresses();
-
   return (
     <main className="flex flex-col">
       <Header />
       <section className="flex flex-col">
-        <FormsCheckout registeredAddresses={data} />
+        {data ? (
+          <FormsCheckout registeredAddresses={data} />
+        ) : (
+          <FormsCheckout />
+        )}
       </section>
       <Footer />
     </main>

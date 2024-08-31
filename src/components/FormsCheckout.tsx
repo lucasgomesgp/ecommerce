@@ -15,7 +15,7 @@ import { TitleStep } from "./TitleStep";
 import { X } from '@phosphor-icons/react';
 
 interface Props {
-  registeredAddresses: {
+  registeredAddresses?: {
     id: string;
     country: string;
     name: string;
@@ -30,7 +30,7 @@ interface Props {
     isDefaultShippingAddress?: boolean;
     isDefaultBillingAddress?: boolean;
     userId: string;
-  }[] | undefined
+  }[] | []
 }
 
 export interface Address {
