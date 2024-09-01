@@ -48,7 +48,9 @@ export function LastStep({ changeStepNumber }: Props) {
 
             } = info.address;
             setIsLoading(true);
-            toast.loading("Loading...");
+            toast("Loading...", {
+                duration: 2000,
+            });
             const data = await createOrder(
                 info.paymentMethod,
                 items,
@@ -72,10 +74,10 @@ export function LastStep({ changeStepNumber }: Props) {
                     shippingAddress: false,
                 });
             }
+            setIsLoading(false);
             removeItems();
             setItems([]);
             removeCoupon();
-            setIsLoading(false);
             setInfo({
                 ...info,
                 orderId: data.order.id,

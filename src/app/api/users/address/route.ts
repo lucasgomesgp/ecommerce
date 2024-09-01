@@ -1,8 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db as prisma } from "@/utils/constants/db";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/constants/authOptions";
+
 import { AddressSchema } from "@/components/FormAddress";
+import { authOptions } from "@/utils/constants/authOptions";
+import { getServerSession } from "next-auth";
+import { db as prisma } from "@/utils/constants/db";
+
+export async function GET(request: NextRequest) {
+    const session = await getServerSession(authOptions);
+    try {
+        if (session?.user.id) {
+            const addresses = await prisma.address.findMany({
+                where: {
+                    userId: session?.user.id,
+                },
+            });
+            return NextResponse.json(addresses);
+        }
+        return NextResponse.json([]);
+    } catch (err) {
+        throw new Error("Error on search addresses");
+    }
+}
 
 export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions);
@@ -38,3 +56,4 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ address });
     }
 }
+

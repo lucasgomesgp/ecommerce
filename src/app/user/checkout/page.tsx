@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 export default async function Checkout() {
   const data = await getAddresses();
   const session = await getServerSession(authOptions);
+
   return (
     <main className="flex flex-col">
       <Header />
