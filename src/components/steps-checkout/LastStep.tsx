@@ -48,7 +48,7 @@ export function LastStep({ changeStepNumber }: Props) {
 
             } = info.address;
             setIsLoading(true);
-            toast("Loading...", {
+            toast.loading("Loading...", {
                 duration: 2000,
             });
             const data = await createOrder(
