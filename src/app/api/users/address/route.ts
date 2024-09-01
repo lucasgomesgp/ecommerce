@@ -57,3 +57,22 @@ export async function POST(request: NextRequest) {
     }
 }
 
+export async function DELETE(request: NextRequest) {
+    const session = await getServerSession(authOptions);
+    const { id } = (await request.json()) as { id: string };
+
+    try {
+        if (session?.user.id) {
+            await prisma.address.delete({
+                where: {
+                    id,
+                    userId: session.user.id
+                }
+            });
+        }
+    } catch (err) {
+        throw new Error("Error on delete address");
+    }
+    return NextResponse.json({ message: "Address deleted!" });
+
+}

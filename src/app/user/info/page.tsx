@@ -1,26 +1,25 @@
 import { AddressCardsArea } from "@/components/AddressCardsArea";
-import { CardAddress } from "@/components/CardAddress";
 import { ContactInfoTexts } from "@/components/ContactInfoTexts";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import Link from "next/link";
 import { MainSideBarContent } from "@/components/MainSideBarContent";
 import { PathPage } from "@/components/PathPage";
 import { authOptions } from "@/utils/constants/authOptions";
-import { getAllItems } from "@/utils/functions/address/getAllAddress";
-import { removeItem } from "@/utils/functions/address/removeItem";
+import { deleteAddress } from "@/services/deleteAddress";
+import { getAddresses } from "@/services/getAddresses";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 
 export default async function Info() {
-    const addresses = await getAllItems();
+    const addresses = await getAddresses();
     const session = await getServerSession(authOptions);
 
-    async function handleRemoveItem(id: string, userId: string) {
+    async function handleRemoveItem(id: string) {
         "use server"
         try {
-            await removeItem(id, userId);
+            await deleteAddress(id);
         } catch (err) {
-            console.log(err);
+            throw new Error("Error on delete address");
         }
     }
 
