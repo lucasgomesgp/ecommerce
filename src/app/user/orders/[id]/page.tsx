@@ -11,9 +11,33 @@ import { format } from "date-fns";
 import { getOrder } from "@/services/getOrder";
 import { getServerSession } from "next-auth";
 
-export default async function Page({ params }: { params: { id: string } }) {
-    const orderInfo = await getOrder(params.id);
+interface Order {
+    id: number,
+    status: string,
+    paymentMethod: string,
+    createdAt: string,
+    price: number,
+    paymentId: string,
+    userId: string,
+    orderItems: [
+        {
+            id: string,
+            title: string,
+            price: number,
+            quantity: number,
+            imageSrc: string,
+            color: string,
+            size: string,
+            userId: string,
+            createdAt: string,
+            orderId: number
+        }
+    ]
+}
+
+export default async function Page({ params }: { params: { id: number } }) {
     const session = await getServerSession(authOptions);
+    const orderInfo: Order = await getOrder(params.id);
     return (
         <main className="flex flex-col overflow-hidden">
             <Header />
