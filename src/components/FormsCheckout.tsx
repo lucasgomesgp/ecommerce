@@ -30,7 +30,7 @@ interface Props {
     isDefaultShippingAddress?: boolean;
     isDefaultBillingAddress?: boolean;
     userId: string;
-  }[] | []
+  }[] | [],
 }
 
 export interface Address {
@@ -84,7 +84,6 @@ export function FormsCheckout({ registeredAddresses }: Props) {
     "Confirm and enjoy your order 🎉",
     "Yes, you’ve successfully ordered!"
   ]);
-
 
   function showSteps(step: number) {
     switch (step) {

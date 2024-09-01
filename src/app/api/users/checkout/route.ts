@@ -1,11 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Order, OrderStatus, PaymentType } from "@prisma/client";
-
-import { ICheckoutData } from "@/utils/types/ICheckoutData";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { authOptions } from "@/utils/constants/authOptions";
-import { getServerSession } from "next-auth";
-import { db as prisma } from "@/utils/constants/db";
 
 export async function POST(request: NextRequest) {
   return NextResponse.json({ message: "OK" });
