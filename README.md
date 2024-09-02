@@ -15,17 +15,17 @@
 ## 💻 Techs
 <div style='text-align: center;'>
 
-**NextJS**
-**ReactJS**
-**Tailwind**
-**Prisma**
-**Next Auth**
-**React Magic Motion**
-**SwiperJS**
-**Zod**
-**React Hook Form**
-**Radix UI**
-**Strapi CMS**
+### NextJS
+### ReactJS
+### Tailwind
+### Prisma
+### Next Auth
+### React Magic Motion
+### SwiperJS
+### Zod
+### React Hook Form
+### Radix UI
+### Strapi CMS
 </div>
 
 <span style="font-size:10px"> Ps: For mor details go to package.json</span>
