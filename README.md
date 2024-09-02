@@ -28,7 +28,7 @@
 ### Strapi CMS
 </div>
 
-<span style="font-size:10px"> Ps: For mor details go to package.json</span>
+##### Ps: For mor details go to package.json
 ---
 ## 🌟 Features
 
