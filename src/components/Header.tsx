@@ -69,18 +69,12 @@ export function Header({ children, isLoginPage = false }: Props) {
           <li>
             <Link href="/shop/women">Women</Link>
           </li>
-          <li>
-            <Link href="/shop/combos">Combos</Link>
-          </li>
-          <li>
-            <Link href="/shop/joggers">Joggers</Link>
-          </li>
         </ul>
       </nav>
       {children}
       {session?.user && isLoginPage ?
         (<button onClick={handleSignOut} className="bg-red-500 text-white w-36 py-3 border rounded-lg text-center">
-          Sair
+          Logout
         </button>
         ) : (
           <div className={`${!isLoginPage ? "hidden" : "flex gap-7"} `}>

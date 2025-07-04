@@ -20,13 +20,15 @@ export default async function Women({
   const { data }: ResponseData = await getProductByCategory({
     category: "women",
   });
-  const dataByPrice = sortArray(data);
+  const dataIsAvailable = data !== null;
+
+  const dataByPrice = dataIsAvailable ? sortArray(data) : [];
   const queryWomenInput = searchParams?.query || "";
-  const dataFiltered = searchInput(data, "women", queryWomenInput);
+  const dataFiltered = dataIsAvailable ? searchInput(data, "women", queryWomenInput) : [];
   return (
     <main className="flex flex-col w-full">
       <section className="flex flex-col">
-        {dataFiltered.length >= 1 ? (
+        {dataFiltered.length >= 1 && (
           <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
             <Filters maxRangeValue={dataByPrice[0].attributes.price} />
             <div className="flex flex-col">
@@ -47,14 +49,11 @@ export default async function Women({
               </div>
             </div>
           </section>
-        ) : (
-          <p>No data for Mens clothing</p>
         )}
         {dataFiltered.length === 0 && (
           <div className="flex mt-4 gap-4 flex-col justify-center items-center w-full">
             <p className="font-causten text-lg">
-              No products were found when searching for &quot;
-              {queryWomenInput}&quot;
+              No products were found
             </p>
             <Image
               src={"/assets/empty-data.svg"}

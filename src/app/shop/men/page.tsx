@@ -1,11 +1,11 @@
 import { Card } from "@/components/Card";
 import { CriteriaArea } from "@/components/CriteriaArea";
 import { Filters } from "@/components/Filters";
-import Image from "next/image";
 import { InfoTableDownSection } from "@/components/InfoTableDownSection";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { searchInput } from "@/utils/functions/searchInput";
 import { sortArray } from "@/utils/functions/sortArray";
+import { ProductsNotFound } from "@/components/ProductsNotFound";
 
 export default async function Men({
   searchParams,
@@ -15,13 +15,14 @@ export default async function Men({
   const queryInputSearch = searchParams?.query || "";
 
   const { data } = await getProductByCategory({ category: "men" });
+  const dataIsAvailable = data !== null;
 
-  let dataFiltered = searchInput(data, "men", queryInputSearch);
-  const dataByPrice = sortArray(dataFiltered);
+  let dataFiltered = dataIsAvailable ? searchInput(data, "men", queryInputSearch) : [];
+  const dataByPrice = dataIsAvailable ? sortArray(dataFiltered) : [];
   return (
     <main className="flex flex-col w-full">
       <section className="flex flex-col">
-        {dataFiltered?.length >= 1 ? (
+        {dataFiltered.length >= 1 && (
           <section className="flex flex-wrap lg:flex-nowrap gap-[50px] justify-center">
             <Filters maxRangeValue={dataByPrice[0]?.attributes.price} />
             <div className="flex flex-col">
@@ -42,23 +43,9 @@ export default async function Men({
               </div>
             </div>
           </section>
-        ) : (
-          <p>No data for Mens clothing</p>
         )}
         {dataFiltered.length === 0 && (
-          <div className="flex mt-4 gap-4 flex-col justify-center items-center w-full">
-            <p className="font-causten text-lg">
-              No products were found when searching for &quot;
-              {queryInputSearch}&quot;
-            </p>
-            <Image
-              src={"/assets/empty-data.svg"}
-              alt="Empty icon"
-              width={700}
-              height={1200}
-              className="w-full h-full max-w-[600px]"
-            />
-          </div>
+          <ProductsNotFound />
         )}
         <InfoTableDownSection
           data={dataByPrice}

@@ -1,153 +1,148 @@
-datasource db {
-    provider  = "postgresql"
-    url       = env("DATABASE_URL")
-    directUrl = env("DIRECT_URL")
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
-generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["relationJoins"]
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String  @map("user_id")
-    type              String
-    provider          String
-    providerAccountId String  @map("provider_account_id")
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-    @@map("accounts")
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique @map("session_token")
-    userId       String   @map("user_id")
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@map("sessions")
+  @@map("sessions")
 }
 
 model User {
-    id             String       @id @default(cuid())
-    name           String?
-    phone          String?
-    email          String?      @unique
-    emailVerified  DateTime?    @map("email_verified")
-    image          String?
-    hashedPassword String?
-    orders         Order[]
-    accounts       Account[]
-    sessions       Session[]
-    Payments       Payment[]
-    Address        Address[]
-    CreditCard     CreditCard[]
-    OrderItem      OrderItem[]
+  id             String       @id @default(cuid())
+  name           String?
+  phone          String?
+  email          String?      @unique
+  emailVerified  DateTime?    @map("email_verified")
+  image          String?
+  hashedPassword String?
+  accounts       Account[]
+  Address        Address[]
+  CreditCard     CreditCard[]
+  orders         Order[]
+  OrderItem      OrderItem[]
+  Payments       Payment[]
+  sessions       Session[]
 
-    @@map("user")
+  @@map("user")
 }
 
 model Payment {
-    id     String  @id @default(cuid())
-    method String
-    price  String?
-    userId String  @map("user_id")
-    cardId String? @unique @map("card_id")
+  id     String      @id @default(cuid())
+  method String
+  price  String?
+  userId String      @map("user_id")
+  cardId String?     @unique @map("card_id")
+  Order  Order[]
+  card   CreditCard? @relation(fields: [cardId], references: [id])
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    card  CreditCard? @relation(fields: [cardId], references: [id])
-    user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Order Order[]
-
-    @@map("payment")
+  @@map("payment")
 }
 
 model Address {
-    id                       String  @id @default(cuid())
-    country                  String
-    name                     String
-    city                     String
-    state                    String
-    phone                    String
-    postalCode               String  @map("postal_code")
-    companyName              String? @map("company_name")
-    streetAddress            String? @map("street_address")
-    apartment                String?
-    deliveryInstruction      String? @map("delivery_instruction")
-    isDefaultShippingAddress Boolean @map("is_default_shipping_address")
-    isDefaultBillingAddress  Boolean @map("is_default_billing_address")
-    userId                   String  @map("user_id")
-    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                       String  @id @default(cuid())
+  country                  String
+  name                     String
+  city                     String
+  state                    String
+  phone                    String
+  postalCode               String  @map("postal_code")
+  companyName              String? @map("company_name")
+  streetAddress            String? @map("street_address")
+  apartment                String?
+  deliveryInstruction      String? @map("delivery_instruction")
+  isDefaultShippingAddress Boolean @map("is_default_shipping_address")
+  isDefaultBillingAddress  Boolean @map("is_default_billing_address")
+  userId                   String  @map("user_id")
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@map("address")
+  @@map("address")
 }
 
 model Order {
-    id            Int         @id @default(autoincrement())
-    status        OrderStatus @default(ACTIVE)
-    paymentMethod PaymentType @default(CASH) @map("payment_method")
-    createdAt     DateTime    @default(now())
-    price         Float
-    paymentId     String
-    orderItems    OrderItem[]
+  id            Int         @id @default(autoincrement())
+  status        OrderStatus @default(ACTIVE)
+  paymentMethod PaymentType @default(CASH) @map("payment_method")
+  createdAt     DateTime    @default(now())
+  price         Float
+  paymentId     String
+  userId        String?
+  payment       Payment     @relation(fields: [paymentId], references: [id])
+  User          User?       @relation(fields: [userId], references: [id])
+  orderItems    OrderItem[]
 
-    payment Payment @relation(fields: [paymentId], references: [id])
-    User    User?   @relation(fields: [userId], references: [id])
-    userId  String?
-
-    @@map("order")
+  @@map("order")
 }
 
 model OrderItem {
-    id        String   @id @default(cuid())
-    title     String
-    price     Float
-    quantity  Int
-    imageSrc  String
-    color     String
-    size      String
-    userId    String
-    createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  title     String
+  price     Float
+  quantity  Int
+  imageSrc  String
+  color     String
+  size      String
+  userId    String
+  createdAt DateTime @default(now())
+  orderId   Int?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
-    user    User   @relation(fields: [userId], references: [id])
-    Order   Order? @relation(fields: [orderId], references: [id])
-    orderId Int?
-
-    @@map("order_item")
+  @@map("order_item")
 }
 
 model CreditCard {
-    id             String @id @default(cuid())
-    number         String
-    nameOnCard     String @map("name_on_card")
-    expirationDate String @map("expiration_date")
-    secutiryCode   String @map("security_code")
-    userId         String @map("user_id")
+  id             String   @id @default(cuid())
+  number         String
+  nameOnCard     String   @map("name_on_card")
+  expirationDate String   @map("expiration_date")
+  secutiryCode   String   @map("security_code")
+  userId         String   @map("user_id")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Payment        Payment?
 
-    user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Payment Payment?
-
-    @@map("credit_card")
+  @@map("credit_card")
 }
 
 enum OrderStatus {
-    ACTIVE
-    CANCELLED
-    COMPLETED
+  ACTIVE
+  CANCELLED
+  COMPLETED
 }
 
 enum PaymentType {
-    CASH
-    CARD
-    PAYPAL
+  CASH
+  CARD
+  PAYPAL
 }
