@@ -7,6 +7,7 @@ import { InfoTableDownSection } from "@/components/InfoTableDownSection";
 import { getProductByCategory } from "@/services/getProductByCategory";
 import { searchInput } from "@/utils/functions/searchInput";
 import { sortArray } from "@/utils/functions/sortArray";
+import { ProductsNotFound } from "@/components/ProductsNotFound";
 
 interface ResponseData {
   data: IProduct[];
@@ -51,18 +52,7 @@ export default async function Women({
           </section>
         )}
         {dataFiltered.length === 0 && (
-          <div className="flex mt-4 gap-4 flex-col justify-center items-center w-full">
-            <p className="font-causten text-lg">
-              No products were found
-            </p>
-            <Image
-              src={"/assets/empty-data.svg"}
-              alt="Empty icon"
-              width={700}
-              height={1200}
-              className="w-full h-full max-w-[600px]"
-            />
-          </div>
+          <ProductsNotFound category="Women's" />
         )}
         <InfoTableDownSection
           data={dataByPrice}

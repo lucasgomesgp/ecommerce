@@ -11,7 +11,7 @@ import { formSignUpSchema } from "@/app/schemas/form-sign-up-schema";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -42,7 +42,12 @@ export function FormSignUp() {
             reset();
             setIsLoading(false);
             toast.success("User created!");
-            router.push("/login");
+            toast.loading("Redirecting you to home...")
+            await signIn("credentials", {
+                ...data,
+                redirect: true,
+                callbackUrl: "/"
+            });
         }
         catch (err) {
             toast.error("Ooops.... Error on sign up user. Try again with diferents info!");

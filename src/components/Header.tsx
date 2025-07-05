@@ -40,7 +40,8 @@ export function Header({ children, isLoginPage = false }: Props) {
   }
   async function handleSignOut() {
     try {
-      await signOut();
+      await signOut({ redirect: false });
+      toast.success("Sign out complete!");
     } catch (err) {
       toast.error("Error on Sign out user");
     }

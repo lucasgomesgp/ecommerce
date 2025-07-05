@@ -35,7 +35,7 @@ export function Slider({ data }: ISlides) {
     <Swiper
       slidesPerView={1}
       spaceBetween={30}
-      pagination={widthOfPage >= 1024 ?? { clickable: true }}
+      pagination={widthOfPage >= 1024 ? { clickable: true } : { clickable: false }}
       navigation={widthOfPage >= 1024 ? true : false}
       className={`max-w-full h-[300px] md:h-[500px] lg:h-[716px] lg:max-h-[716px] pb-4 font-coreSans`}
       centeredSlides={true}

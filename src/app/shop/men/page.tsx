@@ -45,7 +45,7 @@ export default async function Men({
           </section>
         )}
         {dataFiltered.length === 0 && (
-          <ProductsNotFound />
+          <ProductsNotFound category="Men's" />
         )}
         <InfoTableDownSection
           data={dataByPrice}
