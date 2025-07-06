@@ -38,7 +38,6 @@ export default async function Info() {
                         <>
                             <section className="flex flex-col w-full gap-[30px]">
                                 <div className="flex flex-col gap-[20px]">
-                                    <h4 className="font-medium font-coreSans text-gray-text-menu text-[28px]">My Info</h4>
                                     <p className="font-medium font-coreSans text-gray-text-menu text-[22px]">Contact Details</p>
                                 </div>
                                 {session?.user !== undefined && (

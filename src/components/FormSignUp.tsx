@@ -2,7 +2,6 @@
 
 import { MouseEvent, useEffect, useState } from "react";
 
-import { CircleNotch } from "@phosphor-icons/react";
 import { Eye } from "@/svgs/eye";
 import { InputFormWithRef } from "./InputFormWithRef";
 import Link from "next/link";
@@ -42,7 +41,7 @@ export function FormSignUp() {
             reset();
             setIsLoading(false);
             toast.success("User created!");
-            toast.loading("Redirecting you to home...")
+            toast.loading("Redirecting you to home...", {})
             await signIn("credentials", {
                 ...data,
                 redirect: true,

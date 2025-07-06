@@ -33,7 +33,7 @@ export default async function RootLayout({
             <WishContextProvider>
               <FormCheckoutProvider>
                 {children}
-                <Toaster richColors position="top-right" closeButton />
+                <Toaster richColors position="top-right" closeButton duration={2000} />
               </FormCheckoutProvider>
             </WishContextProvider>
           </ShoppingCartProvider>
