@@ -15,7 +15,7 @@ export async function getProductByCategory({
 }: ProductCategory): Promise<PromiseResponseData> {
   const urlProduct =
     category === "men"
-      ? `${process.env.STRAPI_API_URL}/products?filters[category][$eq]=men&populate=*`
+      ? `${process.env.STRAPI_API_URL}/products?filters[category][slug][$eq]=men&populate=*`
       : `${process.env.STRAPI_API_URL}/products?filters[category][$containsi]=women&populate=*`;
   try {
     const res = await fetch(urlProduct, {

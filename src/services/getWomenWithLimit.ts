@@ -5,14 +5,11 @@ export interface PromiseResponseData {
   data: IProduct[];
 }
 export async function getWomenWithLimit(): Promise<PromiseResponseData> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/womenwithlimit`,
-    {
-      cache: "no-cache",
-      headers: {
-        Authorization: `Bearer ${STRAPI_TOKEN}`,
-      },
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/womenwithlimit`, {
+    cache: "no-cache",
+    headers: {
+      Authorization: `Bearer ${STRAPI_TOKEN}`,
+    },
+  });
   return res.json();
 }
-
