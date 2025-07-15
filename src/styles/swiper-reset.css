@@ -1,18 +1,21 @@
-.swiper {
+.swiper-slides {
   width: 100%;
   height: 100%;
-  padding-left:0 !important;
+  padding-left: 0 !important;
+  position: relative;
 }
 
-.swiper-pagination {
- bottom: 100px;
+.swiper-slides .swiper-pagination {
+  bottom: 100px;
 }
-.swiper-pagination-bullet {
-  width: 62px;
-  height: 10px;
-
+.swiper-slides .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
 }
 
-.swiper-pagination-bullet-active {
-
+.swiper-slides .swiper-pagination-bullet-active {
+  background-color: #ffffff !important;
+  height: 12px !important;
+  width: 12px !important;
+  box-shadow: none;
 }

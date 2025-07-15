@@ -78,7 +78,7 @@ export default async function Home() {
             </div>
           </div>
         </section>
-        <section className="mt-[100px] flex flex-col items-center justify-center md:flex md:justify-start md:items-start lg:self-start md:pl-[70px]">
+        <section className="mt-[100px] flex flex-col items-center justify-center md:flex md:justify-start md:items-start lg:self-start xl:self-center md:pl-[70px]">
           <TitleWithBar title="New Arrival" />
           <div className="flex gap-[38px] mt-[70px] px-4 lg:px-0 md:flex-wrap">
             <CardArrival
@@ -287,9 +287,9 @@ export default async function Home() {
           />
         </section>
         <section className="flex flex-col justify-center items-center mt-[100px]">
-          <div className="self-start md:pl-[70px]">
+          <div className="self-start md:pl-[70px] lg:pl-[40px]">
             <TitleWithBar title="Categories For Men" />
-            <div className="flex justify-center items-center flex-wrap mt-[70px] lg:grid lg:grid-cols-4  gap-[50px]">
+            <div className="flex justify-center items-center flex-wrap mt-[70px] lg:grid lg:grid-cols-4 gap-[20px] xl:pr-[20px]">
               {categoriesForMen.map(({ id, imageSrc, title, subTitle }) => (
                 <Link
                   href="/shop/men"
@@ -321,9 +321,9 @@ export default async function Home() {
             alt="Top Brands"
           />
         </section>
-        <section className="md:pl-[70px] min-w-full mt-[77px] flex flex-col justify-center items-center md:items-start">
+        <section className="md:pl-[70px] min-w-full mt-[77px] flex flex-col justify-center items-center md:items-start 2xl:items-center">
           <TitleWithBar title="In The Limelight" />
-          <div className="flex flex-wrap gap-[50px] lg:justify-start">
+          <div className="flex justify-center items-center flex-wrap gap-[50px] lg:justify-start">
             {womenData?.data?.length >= 1 &&
               womenData.data.map(({ id, attributes }) => (
                 <Card
@@ -340,7 +340,7 @@ export default async function Home() {
           </div>
         </section>
         <section className="flex flex-col justify-center items-center mt-[77px] pb-[100px] overflow-hidden">
-          <div className="self-start md:pl-[70px] pb-2">
+          <div className="self-start md:pl-[20px] pb-2">
             <TitleWithBar title="Feedback" />
           </div>
           <SlidesFeedbacks />

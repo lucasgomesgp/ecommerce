@@ -1,8 +1,8 @@
 "use client";
 
-import "../styles/swiper-reset.css";
+import "swiper/css";
 
-import { Autoplay, EffectFade, Navigation } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState } from "react";
 
@@ -10,6 +10,7 @@ import { ISlides } from "@/utils/types/ISlides";
 import Image from "next/image";
 import Link from "next/link";
 import { register } from "swiper/element/bundle";
+import "../styles/swiper-reset.css";
 
 register();
 
@@ -35,11 +36,11 @@ export function Slider({ data }: ISlides) {
     <Swiper
       slidesPerView={1}
       spaceBetween={30}
-      pagination={widthOfPage >= 1024 ? { clickable: true } : { clickable: false }}
+      pagination={{ clickable: true, type: "progressbar" }}
       navigation={widthOfPage >= 1024 ? true : false}
-      className={`max-w-full h-[300px] md:h-[500px] lg:h-[716px] lg:max-h-[716px] pb-4 font-coreSans`}
+      className={`swiper-slides max-w-full h-[300px] md:h-[500px] lg:h-[716px] lg:max-h-[716px] pb-4 font-coreSans`}
       centeredSlides={true}
-      modules={[Autoplay, Navigation, EffectFade]}
+      modules={[Autoplay, Navigation, EffectFade, Pagination]}
       autoplay={{
         delay: 2000,
         disableOnInteraction: true,
