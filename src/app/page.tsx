@@ -19,6 +19,7 @@ import { getWomenWithLimit } from "@/services/getWomenWithLimit";
 export default async function Home() {
   const { data }: ISlides = await getSlides();
   const womenData = await getWomenWithLimit();
+
   return (
     <div>
       <Header isLoginPage={false} />
