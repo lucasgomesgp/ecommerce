@@ -10,7 +10,7 @@ import { Wishlist } from "@/svgs/wishlist";
 
 export function SideMenuUser() {
   const { data: session } = useSession();
-  const isLoggedIn = session?.user?.email;
+  const isLoggedIn = session?.user?.email || session?.user.name;
 
   return (
     <>

@@ -6,7 +6,12 @@ import { PathPage } from "@/components/PathPage";
 import { getOrders } from "@/services/getOrders";
 
 export default async function Orders() {
-  const data = await getOrders();
+  let data;
+  try {
+    data = await getOrders();
+  } catch (err) {
+    data = undefined;
+  }
   return (
     <main className="flex flex-col overflow-hidden">
       <Header />
