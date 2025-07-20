@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Heart } from "@phosphor-icons/react";
 import { IWishItems } from "@/utils/types/IWishItems";
@@ -16,11 +16,18 @@ interface Props {
   title: string;
   subTitle: string;
   price: number;
-  colors?: Array<{ name: string, value: string }>;
+  colors?: Array<{ name: string; value: string }>;
   sizes?: Array<string>;
-
 }
-export function Card({ id, title, image, subTitle, price, colors, sizes }: Props) {
+export function Card({
+  id,
+  title,
+  image,
+  subTitle,
+  price,
+  colors,
+  sizes,
+}: Props) {
   const { wishItems, setWishItems } = useContext(WishlistContext);
   const { setWishItemsOnStorage } = useWishStorage();
 
@@ -33,33 +40,37 @@ export function Card({ id, title, image, subTitle, price, colors, sizes }: Props
       price,
       quantity: 1,
       colors,
-      sizes
+      sizes,
     };
     setWishItems([...wishItems, currentItem]);
     setWishItemsOnStorage([...wishItems, currentItem]);
     toast.success("Added on wishlist");
   }
   return (
-    <Link
-      href={`/shop/product/${id}`}
-      className="w-[282px] relative hover:opacity-80 transition-opacity max-h-[441px]"
-    >
+    <div className="w-[282px] relative hover:opacity-80 transition-opacity max-h-[441px]">
       {image && (
-        <Image
-          src={image}
-          alt={title}
-          quality={100}
-          height={0}
-          width={0}
-          sizes="100vw"
-          className="rounded-xl mb-[30px] h-[370px] w-[282px]"
-          priority
-        />
+        <Link href={`/shop/product/${id}`}>
+          <Image
+            src={image}
+            alt={title}
+            quality={100}
+            height={0}
+            width={0}
+            sizes="100vw"
+            className="rounded-xl mb-[30px] h-[370px] w-[282px]"
+            priority
+          />
+        </Link>
       )}
-      <button className="absolute top-[26px] right-5 flex  hover:bg-red-700 group transition-all items-center justify-center rounded-full bg-white w-8 h-8"
+      <button
+        className="absolute top-[26px] right-5 flex  hover:bg-red-500 group transition-all items-center justify-center rounded-full bg-white w-12 h-12"
         onClick={handleSetOnWishlist}
       >
-        <Heart width={20} height={20} className="text-black group-hover:text-white" />
+        <Heart
+          width={20}
+          height={20}
+          className="text-black group-hover:text-white"
+        />
       </button>
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-1">
@@ -72,6 +83,6 @@ export function Card({ id, title, image, subTitle, price, colors, sizes }: Props
           {currencyFormatter(price)}
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
