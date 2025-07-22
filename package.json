@@ -17,6 +17,7 @@
     "@prisma/client": "^5.11.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@sweetalert2/themes": "^5.0.18",
+    "@tanstack/react-query": "^5.83.0",
     "bcrypt": "^5.1.1",
     "date-fns": "^3.6.0",
     "lottie-react": "^2.4.0",

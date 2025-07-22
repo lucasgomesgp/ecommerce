@@ -1,7 +1,8 @@
 export async function getOrders() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/orders`
+      `${process.env.NEXT_PUBLIC_API_URL}/users/orders`,
+      { cache: "no-store" }
     );
     if (!response.ok) {
       console.log("Error on response from API: ", response.status);

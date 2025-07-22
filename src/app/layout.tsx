@@ -12,13 +12,21 @@ import { Toaster } from "sonner";
 import { WishContextProvider } from "@/components/WishContextProvider";
 import { authOptions } from "@/utils/constants/authOptions";
 import { getServerSession } from "next-auth";
-
+import { QueryProvider } from "@/components/QueryProvider";
 export const metadata: Metadata = {
   title: "Euphoria",
   description: "Place where you can buy and choose your favorite products",
 };
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["400", "500", "700", "800"] });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", weight: ["400", "500", "700", "800"] });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["400", "500", "700", "800"],
+});
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500", "700", "800"],
+});
 export default async function RootLayout({
   children,
 }: {
@@ -27,16 +35,25 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${inter.variable} ${causten.variable} ${coreSans.variable}  font-causten`}>
+      <body
+        className={`${montserrat.variable} ${inter.variable} ${causten.variable} ${coreSans.variable}  font-causten`}
+      >
         <AuthClientProvider session={session}>
-          <ShoppingCartProvider>
-            <WishContextProvider>
-              <FormCheckoutProvider>
-                {children}
-                <Toaster richColors position="top-right" closeButton duration={2000} />
-              </FormCheckoutProvider>
-            </WishContextProvider>
-          </ShoppingCartProvider>
+          <QueryProvider>
+            <ShoppingCartProvider>
+              <WishContextProvider>
+                <FormCheckoutProvider>
+                  {children}
+                  <Toaster
+                    richColors
+                    position="top-right"
+                    closeButton
+                    duration={2000}
+                  />
+                </FormCheckoutProvider>
+              </WishContextProvider>
+            </ShoppingCartProvider>
+          </QueryProvider>
         </AuthClientProvider>
       </body>
     </html>

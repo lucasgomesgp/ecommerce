@@ -5,6 +5,6 @@ export async function getOrder(id: number) {
     );
     return data.json();
   } catch (err) {
-    throw new Error("Error on get order");
+    throw new Error("Error on get order: " + err);
   }
 }

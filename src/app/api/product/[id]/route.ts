@@ -17,6 +17,7 @@ export async function GET(
     const data = await content.json();
     return NextResponse.json(data);
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: err });
   }
 }
